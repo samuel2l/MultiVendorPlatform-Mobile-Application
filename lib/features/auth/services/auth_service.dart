@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
-import 'package:multivendorplatformmobile/features/models/profile.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
@@ -21,17 +20,6 @@ class AuthService {
       required String role,
       required BuildContext context}) async {
     try {
-      // User user = User(
-      //   id: '',
-      //   name: name,
-      //   password: password,
-      //   address: '',
-      //   type: '',
-      //   token: '',
-      //   email: email,
-      //   cart: [],
-      // );
-
       http.Response response = await http.post(
         Uri.parse('$uri/signup'),
         body: jsonEncode({
@@ -45,19 +33,10 @@ class AuthService {
         },
       );
       print("RESPONSE FROM API ${response.body}");
-//       http.Response currentUser = await http.get(
-//         Uri.parse('$uri/'),
-//         headers: <String, String>{
-//           'Content-Type': 'application/json; charset=UTF-8',
-//           'x-auth-token': jsonDecode(response.body)["token"]
-//         },
-//       );
-//       print("current user");
-// print(currentUser);
       httpErrorHandle(
           response: response,
           context: context,
-          onSuccess: () {
+          onSuccess: () async {
             Provider.of<UserProvider>(context, listen: false).setUserFromModel(
                 User(
                     email: email,
@@ -66,7 +45,9 @@ class AuthService {
                     cart: [],
                     wishlist: [],
                     orders: [],
-                    token: ''));
+                    token: jsonDecode(response.body)["token"]));
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString('x-auth-token', jsonDecode(response.body)["token"]);
 
             Navigator.of(context).pushNamedAndRemoveUntil(
               BottomNavBar.routeName,
@@ -144,6 +125,7 @@ class AuthService {
       String? token = prefs.getString('x-auth-token');
       print("is there a token????");
       print(token);
+    
 
       if (token == null) {
         prefs.setString('x-auth-token', '');

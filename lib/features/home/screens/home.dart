@@ -1,10 +1,8 @@
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/screens/products_by_category.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
-import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,7 +18,7 @@ class _HomeState extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
+    // final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

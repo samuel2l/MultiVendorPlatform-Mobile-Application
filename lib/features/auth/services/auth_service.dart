@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -45,9 +45,6 @@ class AuthService {
         },
       );
       print("RESPONSE FROM API ${response.body}");
-      print(response.body.runtimeType);
-      print(response.runtimeType);
-
 //       http.Response currentUser = await http.get(
 //         Uri.parse('$uri/'),
 //         headers: <String, String>{
@@ -59,30 +56,17 @@ class AuthService {
 // print(currentUser);
       httpErrorHandle(
           response: response,
-          // ignore: use_build_context_synchronously
           context: context,
           onSuccess: () {
-            print('token ${jsonDecode(response.body)["token"]} ');
-
             Provider.of<UserProvider>(context, listen: false).setUserFromModel(
                 User(
                     email: email,
-                    password: password,
                     phone: phone,
                     role: role,
-                    profile: Profile(
-                        name: '',
-                        gender: '',
-                        street: '',
-                        postalCode: '',
-                        city: '',
-                        country: ''),
                     cart: [],
                     wishlist: [],
                     orders: [],
                     token: ''));
-            // print("USEr");
-            // print(Provider.of<UserProvider>(context).user);
 
             Navigator.of(context).pushNamedAndRemoveUntil(
               BottomNavBar.routeName,
@@ -91,7 +75,6 @@ class AuthService {
             showSnackBar(context, 'Account created!');
           });
     } catch (e) {
-      // ignore: use_build_context_synchronously
       print(e.toString());
 
       showSnackBar(context, e.toString());
@@ -110,37 +93,44 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      print(response.body);
+      print("token");
+      print(jsonDecode(response.body)["token"]);
       http.Response currentUser = await http.get(
-        Uri.parse('$uri/'),
+        Uri.parse('https://multivendorapp-user-service.onrender.com/'),
         headers: <String, String>{
+          'Authorization': 'Bearer ${jsonDecode(response.body)["token"]}',
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': jsonDecode(response.body)["token"]
         },
       );
 
-      // ignore: use_build_context_synchronously
+      var userData = jsonDecode(currentUser.body);
+
       httpErrorHandle(
           response: response,
-          // ignore: use_build_context_synchronously
           context: context,
           onSuccess: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setString('x-auth-token', jsonDecode(response.body)["token"]);
-            // ignore: use_build_context_synchronously
 
-            // ignore: use_build_context_synchronously
             Provider.of<UserProvider>(context, listen: false)
-                .setUser(currentUser.body);
+                .setUserFromModel(User.fromMap({
+              "email": userData["email"],
+              "phone": userData["phone"],
+              "role": userData["role"],
+              "cart": userData["cart"],
+              "wishlist": userData["wishlist"],
+              "orders": userData["orders"],
+              "token": jsonDecode(response.body)["token"]
+            }));
             Navigator.pushNamedAndRemoveUntil(
-              // ignore: use_build_context_synchronously
               context,
               BottomNavBar.routeName,
               (route) => false,
             );
           });
     } catch (e) {
-      // ignore: use_build_context_synchronously
-
       print(e);
       showSnackBar(context, e.toString());
     }
@@ -176,8 +166,8 @@ class AuthService {
           },
         );
 
-        var userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(userRes.body);
+        // var userProvider = Provider.of<UserProvider>(context, listen: false);
+        // userProvider.setUser(userRes.body);
       }
     } catch (e) {
       showSnackBar(context, e.toString());

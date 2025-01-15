@@ -142,32 +142,43 @@ class AuthService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
+      print("is there a token????");
+      print(token);
 
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
 
-      var tokenRes = await http.post(
-        Uri.parse('$uri/tokenValid'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': token!
-        },
-      );
+      // var tokenRes = await http.post(
+      //   Uri.parse('$uri/tokenValid'),
+      //   headers: <String, String>{
+      //     'Content-Type': 'application/json; charset=UTF-8',
+      //     'x-auth-token': token!
+      //   },
+      // );
 
-      var response = jsonDecode(tokenRes.body);
+      // var response = jsonDecode(tokenRes.body);
 
-      if (response == true) {
+      if (token != '' && token != null) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),
           headers: <String, String>{
+            'Authorization': 'Bearer $token',
             'Content-Type': 'application/json; charset=UTF-8',
-            'x-auth-token': token
           },
         );
+        var userData = jsonDecode(userRes.body);
 
-        // var userProvider = Provider.of<UserProvider>(context, listen: false);
-        // userProvider.setUser(userRes.body);
+        Provider.of<UserProvider>(context, listen: false)
+            .setUserFromModel(User.fromMap({
+          "email": userData["email"],
+          "phone": userData["phone"],
+          "role": userData["role"],
+          "cart": userData["cart"],
+          "wishlist": userData["wishlist"],
+          "orders": userData["orders"],
+          "token": token
+        }));
       }
     } catch (e) {
       showSnackBar(context, e.toString());

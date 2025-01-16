@@ -30,7 +30,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   void navigateToSearchScreen(String query) {
     // Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
-  int quantity = 1; 
+  int quantity = 1;
 
   void incrementQuantity() {
     setState(() {
@@ -45,6 +45,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   void addToCart() {
+    print("addimg to art");
     productDetailsService.editCart(
         context: context, product: widget.product, amount: quantity);
   }
@@ -166,11 +167,14 @@ class _ProductDetailsState extends State<ProductDetails> {
             //     height: 300,
             //   ),
             // ),
-            Image.network(
-                      widget.product.img,
-                      fit: BoxFit.contain,
-                      height: 200,
-                    ),
+            Container(
+              width: double.infinity,
+              child: Image.network(
+                widget.product.img,
+                fit: BoxFit.cover,
+                height: 240,
+              ),
+            ),
             Container(
               color: Colors.black12,
               height: 5,
@@ -179,7 +183,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               padding: const EdgeInsets.all(8),
               child: RichText(
                 text: TextSpan(
-                  text: 'Deal Price: ',
+                  text: 'Price: ',
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,

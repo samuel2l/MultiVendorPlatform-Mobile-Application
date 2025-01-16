@@ -18,11 +18,14 @@ class ProductDetailsService extends ChangeNotifier {
       required int amount,
       bool isRemove = false}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    print("tokennnn from");
+    print(userProvider.user.token);
 
     try {
       http.Response res = await http.put(
-        Uri.parse('$uri/user/cart'),
+        Uri.parse('$productsUri/cart'),
         headers: {
+          'Authorization':'Bearer ${userProvider.user.token}',
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
         },
@@ -34,6 +37,8 @@ class ProductDetailsService extends ChangeNotifier {
           "isRemove": isRemove
         }),
       );
+      print("from apu");
+      print(res.body);
 
       httpErrorHandle(
         response: res,
@@ -43,27 +48,26 @@ class ProductDetailsService extends ChangeNotifier {
           showSnackBar(context, 'Cart updated');
           // instead of keeping the cart as part of state management you could just call api using the req.user id
           CartItem cartItem = CartItem(product: product, amount: amount);
-          if(isRemove==true){
-          userProvider.user.cart.removeWhere((item) => item.product.id == product.id);
-       
-          }else{
-          int existingItemIndex = userProvider.user.cart.indexWhere(
-            (item) => item.product.id == cartItem.product.id,
-          );
-
-          if (existingItemIndex != -1) {
-            userProvider.user.cart[existingItemIndex] = cartItem;
+          if (isRemove == true) {
+            userProvider.user.cart
+                .removeWhere((item) => item.product.id == product.id);
           } else {
-            userProvider.user.cart.add(cartItem);
-          }
+            int existingItemIndex = userProvider.user.cart.indexWhere(
+              (item) => item.product.id == cartItem.product.id,
+            );
 
+            if (existingItemIndex != -1) {
+              userProvider.user.cart[existingItemIndex] = cartItem;
+            } else {
+              userProvider.user.cart.add(cartItem);
+            }
           }
           userProvider.notifyListeners();
-
         },
       );
     } catch (e) {
       // ignore: use_build_context_synchronously
+      print(e);
       showSnackBar(context, e.toString());
     }
   }
@@ -79,11 +83,12 @@ class ProductDetailsService extends ChangeNotifier {
       http.Response res = await http.post(
         Uri.parse('$uri/product/rate'),
         headers: {
+          'Authorization': 'Bearer ${userProvider.user.token}',
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
         },
         body: jsonEncode({
-          'productId': product.id!,
+          'productId': product.id,
           'rating': rating,
         }),
       );

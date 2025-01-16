@@ -1,4 +1,3 @@
-
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/services/home_service.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
@@ -33,9 +32,7 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
       category: widget.category,
     );
 
-    productList = (data as List)
-        .map((e) => e as Map<String, dynamic>)
-        .toList();
+    productList = (data).map((e) => e as Map<String, dynamic>).toList();
 
     setState(() {});
   }
@@ -63,33 +60,23 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : productList!.isEmpty?Center(child: Text('We do not have products for ${widget.category}'),
-          ):Column(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Keep shopping for ${widget.category}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 170,
+          : productList!.isEmpty
+              ? Center(
+                  child: Text('We do not have products for ${widget.category}'),
+                )
+              : SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
                   child: GridView.builder(
-                    scrollDirection: Axis.horizontal,
+                    scrollDirection: Axis.vertical,
                     padding: const EdgeInsets.only(left: 15),
                     itemCount: productList!.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: 1.4,
-                      mainAxisSpacing: 10,
+                      crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) {
+                      print(productList!.length);
+                      print(productList);
                       final product = productList![index];
                       return GestureDetector(
                         onTap: () {
@@ -138,8 +125,6 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
                     },
                   ),
                 ),
-              ],
-            ),
     );
   }
 }

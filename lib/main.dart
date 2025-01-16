@@ -53,10 +53,10 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-      //     ? Provider.of<UserProvider>(context).user.role=='Buyer'? const BottomNavBar():const Admin()
-      //     : const Auth(),
-      home:const Home(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? Provider.of<UserProvider>(context).user.role=='Buyer'? const BottomNavBar():const Admin()
+          : const Auth(),
+      // home:const Home(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -78,7 +78,7 @@ class AuthService {
       print("token");
       print(jsonDecode(response.body)["token"]);
       http.Response currentUser = await http.get(
-        Uri.parse('https://multivendorapp-user-service.onrender.com/'),
+        Uri.parse('$uri/'),
         headers: <String, String>{
           'Authorization': 'Bearer ${jsonDecode(response.body)["token"]}',
           'Content-Type': 'application/json; charset=UTF-8',
@@ -123,23 +123,10 @@ class AuthService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
-      print("is there a token????");
-      print(token);
-    
-
+      print("gotten token is $token");
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-
-      // var tokenRes = await http.post(
-      //   Uri.parse('$uri/tokenValid'),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //     'x-auth-token': token!
-      //   },
-      // );
-
-      // var response = jsonDecode(tokenRes.body);
 
       if (token != '' && token != null) {
         http.Response userRes = await http.get(

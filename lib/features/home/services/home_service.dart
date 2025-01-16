@@ -1,3 +1,7 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +14,10 @@ class HomeService {
   }) async {
     try {
       http.Response response = await http.get(
-        Uri.parse('$uri/products/$category'),
+        Uri.parse('$productsUri/category/$category'),
       );
-
+      print("RESPONSE FROM API");
+      print(response.body);
       httpErrorHandle(
           response: response,
           // ignore: use_build_context_synchronously
@@ -20,7 +25,8 @@ class HomeService {
           onSuccess: () {
             showSnackBar(context, 'Products loaded successfully');
           });
-      return response.body;
+      var data=jsonDecode(response.body);
+      return data;
     } catch (e) {
       // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());

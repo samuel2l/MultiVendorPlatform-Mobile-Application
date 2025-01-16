@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/services/home_service.dart';
@@ -29,12 +28,12 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
   }
 
   fetchCategoryProducts() async {
-    String rawResponse = await homeService.getProductsByCategory(
+    List<dynamic> data = await homeService.getProductsByCategory(
       context: context,
       category: widget.category,
     );
 
-    productList = (jsonDecode(rawResponse) as List)
+    productList = (data as List)
         .map((e) => e as Map<String, dynamic>)
         .toList();
 
@@ -64,7 +63,8 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
+          : productList!.isEmpty?Center(child: Text('We do not have products for ${widget.category}'),
+          ):Column(
               children: [
                 Container(
                   padding:
@@ -114,7 +114,7 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Image.network(
-                                    product["images"]![0],
+                                    product["img"],
                                   ),
                                 ),
                               ),

@@ -34,10 +34,9 @@ class AdminService {
       Product product = Product(
           name: name,
           price: price,
-          description: description,
+          desc: description,
           stock: stock,
-          category: category,
-          images: imgUrls);
+          img: imgUrls[0], id: '', type: category, seller: userProvider.user.email);
       http.Response response = await http.post(
         Uri.parse('$uri/admin/add-product'),
         headers: {
@@ -134,10 +133,9 @@ class AdminService {
       Product product = Product(
           name: name,
           price: price,
-          description: description,
+          desc: description,
           stock: stock,
-          category: category,
-          images: imgUrls);
+          img: imgUrls[0], id: '', type: category, seller: userProvider.user.email);
       http.Response response = await http.patch(
         Uri.parse('$uri/admin/product/$id'),
         headers: {

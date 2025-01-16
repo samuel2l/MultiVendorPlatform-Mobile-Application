@@ -1,7 +1,7 @@
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -25,18 +25,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   void initState() {
     super.initState();
-    double totalRating = 0;
-    // for (int i = 0; i < widget.product.rating!.length; i++) {
-    //   totalRating += widget.product.rating![i].rating;
-    //   if (widget.product.rating![i].userId ==
-    //       Provider.of<UserProvider>(context, listen: false).user.id) {
-    //     myRating = widget.product.rating![i].rating;
-    //   }
-    // }
-
-    if (totalRating != 0) {
-      // avgRating = totalRating / widget.product.rating!.length;
-    }
   }
 
   void navigateToSearchScreen(String query) {
@@ -150,20 +138,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.product.id!,
-                  ),
-                  // Stars(
-                  //   rating: avgRating,
-                  // ),
-                ],
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 20,
                 horizontal: 10,
@@ -175,23 +149,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
             ),
-            CarouselSlider(
-              items: widget.product.images.map(
-                (i) {
-                  return Builder(
-                    builder: (BuildContext context) => Image.network(
-                      i,
+            // CarouselSlider(
+            //   items: widget.product.images.map(
+            //     (i) {
+            //       return Builder(
+            //         builder: (BuildContext context) => Image.network(
+            //           i,
+            //           fit: BoxFit.contain,
+            //           height: 200,
+            //         ),
+            //       );
+            //     },
+            //   ).toList(),
+            //   options: CarouselOptions(
+            //     viewportFraction: 1,
+            //     height: 300,
+            //   ),
+            // ),
+            Image.network(
+                      widget.product.img,
                       fit: BoxFit.contain,
                       height: 200,
                     ),
-                  );
-                },
-              ).toList(),
-              options: CarouselOptions(
-                viewportFraction: 1,
-                height: 300,
-              ),
-            ),
             Container(
               color: Colors.black12,
               height: 5,
@@ -221,7 +200,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(widget.product.description),
+              child: Text(widget.product.desc),
             ),
             Container(
               color: Colors.black12,

@@ -2,68 +2,78 @@
 import 'dart:convert';
 
 class Product {
+  final String id;
+
   final String name;
-  final dynamic price;
-  final String description;
+  final String desc;
+  final String img;
+  final String type;
   final int stock;
-  final String? id;
-  final String category;
-  final List<String> images;
-  final List<Map<String, dynamic>> ratings;
-  
+  final dynamic price;
+  final String seller;
+  Product({
+    required this.id,
+    required this.name,
+    required this.desc,
+    required this.img,
+    required this.type,
+    required this.stock,
+    required this.price,
+    required this.seller,
+  });
+
+
+  Product copyWith({
+    String? id,
+    String? name,
+    String? desc,
+    String? img,
+    String? type,
+    int? stock,
+    dynamic price,
+    String? seller,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      desc: desc ?? this.desc,
+      img: img ?? this.img,
+      type: type ?? this.type,
+      stock: stock ?? this.stock,
+      price: price ?? this.price,
+      seller: seller ?? this.seller,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'name': name,
-      'price': price,
-      'description': description,
-      'stock': stock,
       'id': id,
-      'category': category,
-      'images': images,
-      'ratings': ratings,
+      'name': name,
+      'desc': desc,
+      'img': img,
+      'type': type,
+      'stock': stock,
+      'price': price,
+      'seller': seller,
     };
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      name: (map['name']??'') as String,
-      price: (map['price'] ?? 0).toDouble(),
-      description: (map['description']??'') as String,
-      stock: (map['stock']??0) as int,
-      id: map['_id'] != null ? map['_id'] as String : null,
-      category: (map['category']??'') as String,
-      images: List<String>.from((map['images']??[]) as List<dynamic>),
-      ratings: map['ratings'] != null
-          ? List<Map<String, dynamic>>.from(map['ratings'] as List<dynamic>)
-          : [],
+      id: map['id'] as String,
+      name: map['name'] as String,
+      desc: map['desc'] as String,
+      img: map['img'] as String,
+      type: map['type'] as String,
+      stock: map['stock'] as int,
+      price: map['price'] as dynamic,
+      seller: map['seller'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      name: json['name'] as String,
-      price: json['price'],
-      description: json['description'] as String,
-      stock: json['stock'] as int,
-      id: json['_id'] as String?,
-      category: json['category'] as String,
-      images: List<String>.from(json['images'] as List<dynamic>),
-      ratings: json['ratings'] != null
-          ? List<Map<String, dynamic>>.from(json['ratings'] as List<dynamic>)
-          : [],
-    );
-  }
+  factory Product.fromJson(String source) => Product.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  Product({
-    required this.name,
-    required this.price,
-    required this.description,
-    required this.stock,
-    required this.category,
-    required this.images,
-    this.id,
-    this.ratings = const [],
-  });
+
 }

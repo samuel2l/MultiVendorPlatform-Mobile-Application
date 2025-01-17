@@ -103,7 +103,7 @@ class AuthService {
               "role": userData["role"],
               "cart": userData["cart"],
               "wishlist": userData["wishlist"],
-              "orders": userData["orders"],
+              "orders": userData["cart"],
               "token": jsonDecode(response.body)["token"]
             }));
             Navigator.pushNamedAndRemoveUntil(
@@ -176,7 +176,7 @@ class AuthService {
 //     }
 //   }
 // }
-  void getUserData(
+  Future<void> getUserData(
     BuildContext context,
   ) async {
     try {
@@ -186,7 +186,6 @@ class AuthService {
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-
       if (token != '' && token != null) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),

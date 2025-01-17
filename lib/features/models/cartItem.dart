@@ -15,8 +15,6 @@ class CartItem {
   }
 
   factory CartItem.fromMap(Map<String, dynamic> map) {
-    print("PRODUCT THAT IS NULL");
-    print(map);
     return CartItem(
       product: Product.fromMap(map['product'] as Map<String, dynamic>),
       amount: map['amount'] as int,

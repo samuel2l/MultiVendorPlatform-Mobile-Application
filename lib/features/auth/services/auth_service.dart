@@ -197,6 +197,7 @@ class AuthService {
         );
         var userData = jsonDecode(userRes.body);
 
+        print(userData["orders"]);
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(User.fromMap({
           "email": userData["email"],
@@ -204,11 +205,10 @@ class AuthService {
           "role": userData["role"],
           "cart": userData["cart"],
           "wishlist": userData["wishlist"],
-          "orders": userData["orders"],
+          "orders": userData["cart"],
           "token": token
         }));
       }
-      print("done?????????");
     } catch (e) {
       print("error");
       print(e);

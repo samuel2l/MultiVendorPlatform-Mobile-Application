@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:multivendorplatformmobile/features/models/cartItem.dart';
-import 'package:multivendorplatformmobile/features/models/profile.dart';
+import 'package:multivendorplatformmobile/features/models/orderItem.dart';
 
 class User {
   final String email;
@@ -32,7 +32,6 @@ class User {
     String? password,
     String? phone,
     String? role,
-    Profile? profile,
     List<CartItem>? cart,
     List<CartItem>? wishlist,
     List<CartItem>? orders,

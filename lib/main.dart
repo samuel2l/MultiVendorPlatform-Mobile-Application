@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<UserProvider>(context, listen: false);
+    var user = Provider.of<UserProvider>(context);
     return MaterialApp(
       title: 'Multivendor Platform',
       theme: ThemeData(
@@ -56,9 +56,11 @@ class _MyAppState extends State<MyApp> {
       //         ? const BottomNavBar()
       //         : const Admin()
       //     : const Auth(),
-home: user.user.token.isNotEmpty
-    ? user.user.role == 'Buyer' ? const BottomNavBar() : const Admin()
-    : const Auth(),
+      home: user.user.token.isNotEmpty
+          ? user.user.role == 'Buyer'
+              ? const BottomNavBar()
+              : const Admin()
+          : const Auth(),
     );
   }
 }

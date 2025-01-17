@@ -15,10 +15,28 @@ class CartItem {
   }
 
   factory CartItem.fromMap(Map<String, dynamic> map) {
-    return CartItem(
-      product: Product.fromMap(map['product'] as Map<String, dynamic>),
+//for old products in db in case we forget to reset db
+    if (map['product']['img'] == null || map['product']['stock'] == null) {
+      map['product']['img'] = map['product']['desc'] =
+          map['product']['type'] = map['product']['seller'] = 'ei';
+      map['product']['stock'] = 0;
+    }
+
+
+    CartItem testItem = CartItem(
+      product: Product(
+          id: map['product']["_id"],
+          name: map['product']["name"],
+          desc: map['product']["desc"],
+          img: map['product']["img"],
+          type: map['product']["type"],
+          stock: int.parse(map['product']['stock']),
+          price: map['product']["price"],
+          seller: map['product']["seller"]),
       amount: map['amount'] as int,
     );
+
+    return testItem;
   }
 
   String toJson() => json.encode(toMap());

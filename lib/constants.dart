@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 // String uri = 'http://<your ip address>:3000';
-String uri = 'https://multivendorapp-user-service.onrender.com';
-String productsUri = 'https://multivendorapp-products-microservice.onrender.com';
-String shoppingUri = 'https://multivendorplatform-shopping-service.onrender.com';
-
+// String uri = 'https://multivendorapp-user-service.onrender.com';
+String uri = "http://localhost:8001";
+String productsUri =
+    // 'https://multivendorapp-products-microservice.onrender.com';
+    'http://localhost:8002';
+String shoppingUri =
+    // 'https://multivendorplatform-shopping-service.onrender.com';
+    'http://localhost:8003';
 const appBarGradient = LinearGradient(
   colors: [
     Color.fromARGB(255, 29, 201, 192),

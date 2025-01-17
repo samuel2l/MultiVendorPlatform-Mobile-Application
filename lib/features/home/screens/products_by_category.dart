@@ -3,6 +3,7 @@ import 'package:multivendorplatformmobile/features/home/services/home_service.da
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/utils.dart';
 
 class ProductsByCategory extends StatefulWidget {
   static const String routeName = '/product-category';
@@ -27,14 +28,18 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
   }
 
   fetchCategoryProducts() async {
-    List<dynamic> data = await homeService.getProductsByCategory(
-      context: context,
-      category: widget.category,
-    );
+    try {
+      List<dynamic> data = await homeService.getProductsByCategory(
+        context: context,
+        category: widget.category,
+      );
 
-    productList = (data).map((e) => e as Map<String, dynamic>).toList();
+      productList = (data).map((e) => e as Map<String, dynamic>).toList();
 
-    setState(() {});
+      setState(() {});
+    } catch (e) {
+      showSnackBar(context, 'something went wrong');
+    }
   }
 
   @override

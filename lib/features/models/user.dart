@@ -1,20 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:multivendorplatformmobile/features/models/cartItem.dart';
-import 'package:multivendorplatformmobile/features/models/orderItem.dart';
 
 class User {
   final String email;
-
   final String phone;
   final String role;
-
+  final String token;
 
   final List<CartItem> cart;
   final List<CartItem> wishlist;
-
   final List<CartItem> orders;
-  final String token;
   User({
     required this.email,
     required this.phone,
@@ -24,8 +20,6 @@ class User {
     required this.orders,
     required this.token,
   });
-  
-  
 
   User copyWith({
     String? email,
@@ -63,7 +57,6 @@ class User {
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       email: map['email'] as String,
-
       phone: map['phone'] as String,
       role: map['role'] as String,
       cart: (map['cart'] as List<dynamic>)
@@ -75,13 +68,12 @@ class User {
       orders: (map['orders'] as List<dynamic>)
           .map((item) => CartItem.fromMap(item as Map<String, dynamic>))
           .toList(),
-      token: map['token'] as String,
+      token: map['token'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
-
-
+  factory User.fromJson(String source) =>
+      User.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -9,14 +9,14 @@ import 'package:multivendorplatformmobile/features/auth/screens/auth.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/admin/screens/admin.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class Splash extends StatefulWidget {
+  const Splash({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<Splash> createState() => _SplashState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
@@ -29,12 +29,15 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = prefs.getString('x-auth-token') ?? '';
     AuthService authService = AuthService();
     if (token.isNotEmpty) {
-      // Assume user is logged in and fetch user data
       await authService.getUserData(context);
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       print("in initialize app");
       print(userProvider.user.email);
+      print(userProvider.user.role);
+      print(userProvider.user.token);
+      print(userProvider.user.cart);
+      print(userProvider.user.orders);
 
       if (userProvider.user.role == 'Buyer') {
         Navigator.of(context).pushNamedAndRemoveUntil(

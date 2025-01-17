@@ -1,23 +1,22 @@
 import 'dart:convert';
 
-import 'package:multivendorplatformmobile/features/admin/screens/add_product.dart';
-import 'package:multivendorplatformmobile/features/admin/services/admin_service.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
+import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:flutter/material.dart';
 
-class ProductsSold extends StatefulWidget {
-  const ProductsSold({super.key});
+class SellerProducts extends StatefulWidget {
+  const SellerProducts({super.key});
 
   @override
-  State<ProductsSold> createState() => _ProductsSoldState();
+  State<SellerProducts> createState() => _SellerProductsState();
 }
 
-class _ProductsSoldState extends State<ProductsSold> {
-  final AdminService adminService = AdminService();
+class _SellerProductsState extends State<SellerProducts> {
+  final SellerService sellerService = SellerService();
   List? productList = [];
 
   void getAllProducts() async {
-    String res = await adminService.getAllProducts(context);
+    String res = await sellerService.getAllProducts(context);
 
     for (int item = 0; item < (jsonDecode(res)).length; item++) {
       productList!.add(jsonDecode(res)[item]);
@@ -69,7 +68,7 @@ class _ProductsSoldState extends State<ProductsSold> {
                 itemCount: productList!.length,
                 itemBuilder: (context, index) {
                   var product = productList![index];
-                  List<String> images = product['images'].cast<String>();
+                  String images = product['img'];
                   return Column(
                     children: [
                       // SizedBox(
@@ -79,12 +78,13 @@ class _ProductsSoldState extends State<ProductsSold> {
                       //     fit: BoxFit.fitHeight,
                       //   ),
                       // ),
-                      CarouselSlider(
-                        items: images.map((img) {
-                          return Image.network(img);
-                        }).toList(),
-                        options: CarouselOptions(viewportFraction: 1),
-                      ),
+                      // CarouselSlider(
+                      //   items: images.map((img) {
+                      //     return Image.network(img);
+                      //   }).toList(),
+                      //   options: CarouselOptions(viewportFraction: 1),
+                      // ),
+                      Image.network(images,height: 150,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -93,11 +93,11 @@ class _ProductsSoldState extends State<ProductsSold> {
                           ),
                           IconButton(
                             onPressed: () {
-                              adminService.deleteProduct(
+                              sellerService.deleteProduct(
                                   context: context, id: product['_id']);
                             },
                             icon: const Icon(Icons.delete),
-                          )
+                          ),
                         ],
                       ),
                     ],

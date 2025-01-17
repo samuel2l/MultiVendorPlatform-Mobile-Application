@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/auth.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
-import 'package:multivendorplatformmobile/features/admin/screens/admin.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});

@@ -1,5 +1,5 @@
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/admin/screens/products_sold.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:flutter/material.dart';
 
 class Admin extends StatefulWidget {
@@ -15,7 +15,7 @@ class _AdminState extends State<Admin> {
   double bottomNavBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const ProductsSold(),
+    const SellerProducts(),
 
 
     const Center(child: Text('page 2')),

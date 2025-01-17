@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/admin/services/admin_service.dart';
+import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/input_field.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
-  static const String routeName = '/admin/add-product';
+  static const String routeName = '/add-product';
 
   @override
   State<AddProduct> createState() => _AddProductState();
@@ -20,9 +20,9 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController stockController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final AdminService adminService = AdminService();
+  final SellerService sellerService = SellerService();
 
-  String selectedCategory = 'Mobiles';
+  String selectedtype = 'Electronics';
   List<File> selectedImages = [];
 
   final addProductKey = GlobalKey<FormState>();
@@ -36,14 +36,14 @@ class _AddProductState extends State<AddProduct> {
     });
   }
 
-  void addNewProduct(name, price, description, stock, category, images) {
-    adminService.addNewProduct(
+  void addNewProduct(name, price, description, stock, type, images) {
+    sellerService.addNewProduct(
         context: context,
         name: name,
         price: price,
         description: description,
         stock: stock,
-        category: category,
+        type: type,
         images: images);
   }
 
@@ -160,33 +160,96 @@ class _AddProductState extends State<AddProduct> {
                 height: 15,
               ),
               DropdownButton(
-                value: selectedCategory,
-                hint: const Text('select item category'),
+                value: selectedtype,
+                hint: const Text('select item type'),
                 items: const [
-                  DropdownMenuItem(
-                    value: 'Mobiles',
-                    child: Text('Mobiles'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Essentials',
-                    child: Text('Essentials'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Appliances',
-                    child: Text('Appliances'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Books',
-                    child: Text('Books'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Fashion',
-                    child: Text('Fashion'),
-                  ),
-                ],
+DropdownMenuItem(
+    value: 'Electronics',
+    child: Text('Electronics'),
+  ),
+  DropdownMenuItem(
+    value: 'Fashion',
+    child: Text('Fashion'),
+  ),
+  DropdownMenuItem(
+    value: 'Home and Kitchen',
+    child: Text('Home and Kitchen'),
+  ),
+  DropdownMenuItem(
+    value: 'Health and Personal Care',
+    child: Text('Health and Personal Care'),
+  ),
+  DropdownMenuItem(
+    value: 'Books and Stationery',
+    child: Text('Books and Stationery'),
+  ),
+  DropdownMenuItem(
+    value: 'Sports and Outdoors',
+    child: Text('Sports and Outdoors'),
+  ),
+  DropdownMenuItem(
+    value: 'Toys and Games',
+    child: Text('Toys and Games'),
+  ),
+  DropdownMenuItem(
+    value: 'Beauty and Cosmetics',
+    child: Text('Beauty and Cosmetics'),
+  ),
+  DropdownMenuItem(
+    value: 'Automotive',
+    child: Text('Automotive'),
+  ),
+  DropdownMenuItem(
+    value: 'Jewelry and Accessories',
+    child: Text('Jewelry and Accessories'),
+  ),
+  DropdownMenuItem(
+    value: 'Groceries and Food',
+    child: Text('Groceries and Food'),
+  ),
+  DropdownMenuItem(
+    value: 'Baby Products',
+    child: Text('Baby Products'),
+  ),
+  DropdownMenuItem(
+    value: 'Pet Supplies',
+    child: Text('Pet Supplies'),
+  ),
+  DropdownMenuItem(
+    value: 'Tools and Hardware',
+    child: Text('Tools and Hardware'),
+  ),
+  DropdownMenuItem(
+    value: 'Office Supplies',
+    child: Text('Office Supplies'),
+  ),
+  DropdownMenuItem(
+    value: 'Musical Instruments',
+    child: Text('Musical Instruments'),
+  ),
+  DropdownMenuItem(
+    value: 'Furniture',
+    child: Text('Furniture'),
+  ),
+  DropdownMenuItem(
+    value: 'Art and Craft',
+    child: Text('Art and Craft'),
+  ),
+  DropdownMenuItem(
+    value: 'Industrial and Scientific',
+    child: Text('Industrial and Scientific'),
+  ),
+  DropdownMenuItem(
+    value: 'Video Games and Consoles',
+    child: Text('Video Games and Consoles'),
+  ),
+  DropdownMenuItem(
+    value: 'Music',
+    child: Text('Music'),
+  ),                ],
                 onChanged: (value) {
                   setState(() {
-                    selectedCategory = value!;
+                    selectedtype = value!;
                   });
                 },
               ),
@@ -202,7 +265,7 @@ class _AddProductState extends State<AddProduct> {
                         double.parse(priceController.text.trim()),
                         descriptionController.text.trim(),
                         int.parse(stockController.text.trim()),
-                        selectedCategory,
+                        selectedtype,
                         selectedImages,);
                   }
                 },

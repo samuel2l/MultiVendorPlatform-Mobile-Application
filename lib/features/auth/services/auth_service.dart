@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
-import 'package:multivendorplatformmobile/features/models/cartItem.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
@@ -236,7 +235,7 @@ class AuthService {
     } catch (e) {
       print("error");
       print(e);
-      // showSnackBar(context, e.toString());
+      showSnackBar(context, e.toString());
     }
   }
 }

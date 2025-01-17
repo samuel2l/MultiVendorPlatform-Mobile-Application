@@ -1,3 +1,4 @@
+import 'package:multivendorplatformmobile/features/address/screens/address.dart';
 import 'package:multivendorplatformmobile/features/admin/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/auth.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
@@ -43,6 +44,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
                 query: query,
               ),
           settings: routeSettings);
+      case Address.routeName:
+      return MaterialPageRoute(
+          builder: (_) => Address(), settings: routeSettings);
+
     default:
       return MaterialPageRoute(
           builder: (_) => const Text('this page does not exist'),

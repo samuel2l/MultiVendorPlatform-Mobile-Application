@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
@@ -54,7 +56,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
     amountController.dispose();
     super.dispose();
   }
@@ -167,7 +169,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             //     height: 300,
             //   ),
             // ),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Image.network(
                 widget.product.img,
@@ -302,11 +304,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                 color: secondaryColor,
               ),
               onRatingUpdate: (rating) {
-                productDetailsService.rateProduct(
-                  context: context,
-                  product: widget.product,
-                  rating: rating,
-                );
+                // productDetailsService.rateProduct(
+                //   context: context,
+                //   product: widget.product,
+                //   rating: rating,
+                // );
               },
             )
           ],

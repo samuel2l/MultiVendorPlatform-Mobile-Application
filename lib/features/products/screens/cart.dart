@@ -1,4 +1,5 @@
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/address/screens/address.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/features/products/widgets/cart_product.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
@@ -22,11 +23,7 @@ class _CartState extends State<Cart> {
   }
 
   void navigateToAddress(int sum) {
-    // Navigator.pushNamed(
-    //   context,
-    //   Address.routeName,
-    //   arguments: sum.toString(),
-    // );
+    Navigator.of(context).pushNamed(Address.routeName);
   }
 
   @override
@@ -87,7 +84,7 @@ class _CartState extends State<Cart> {
                             width: 1,
                           ),
                         ),
-                        hintText: 'Search multivendorplatformmobile.in',
+                        hintText: 'Everything beyond your imagination is here',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,

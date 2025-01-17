@@ -1,4 +1,3 @@
-
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:flutter/material.dart';
 
@@ -14,13 +13,9 @@ class UserProvider extends ChangeNotifier {
 
   User get user => _user;
 
-  void setUser(User user) {
-    _user = user;
-    notifyListeners();
-  }
-
   void setUserFromModel(User user) {
     _user = user;
+    print("set user now ${_user.email}");
     notifyListeners();
   }
 }

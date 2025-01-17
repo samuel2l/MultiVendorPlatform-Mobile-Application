@@ -1,12 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/admin/screens/admin.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/auth.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
-import 'package:multivendorplatformmobile/features/home/screens/home.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/router.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +40,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<UserProvider>(context, listen: false);
     return MaterialApp(
       title: 'Multivendor Platform',
       theme: ThemeData(
@@ -53,11 +51,14 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? Provider.of<UserProvider>(context).user.role=='Buyer'? const BottomNavBar():const Admin()
-          : const Auth(),
-      // home:const Home(),
-      debugShowCheckedModeBanner: false,
+      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+      //     ? Provider.of<UserProvider>(context).user.role == 'Buyer'
+      //         ? const BottomNavBar()
+      //         : const Admin()
+      //     : const Auth(),
+home: user.user.token.isNotEmpty
+    ? user.user.role == 'Buyer' ? const BottomNavBar() : const Admin()
+    : const Auth(),
     );
   }
 }

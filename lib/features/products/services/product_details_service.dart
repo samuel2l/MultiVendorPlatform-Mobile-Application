@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'dart:convert';
 
 import 'package:multivendorplatformmobile/constants.dart';
@@ -25,7 +27,7 @@ class ProductDetailsService extends ChangeNotifier {
       http.Response res = await http.put(
         Uri.parse('$productsUri/cart'),
         headers: {
-          'Authorization':'Bearer ${userProvider.user.token}',
+          'Authorization': 'Bearer ${userProvider.user.token}',
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
         },
@@ -42,7 +44,6 @@ class ProductDetailsService extends ChangeNotifier {
 
       httpErrorHandle(
         response: res,
-        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           showSnackBar(context, 'Cart updated');
@@ -66,41 +67,7 @@ class ProductDetailsService extends ChangeNotifier {
         },
       );
     } catch (e) {
-      // ignore: use_build_context_synchronously
       print(e);
-      showSnackBar(context, e.toString());
-    }
-  }
-
-  void rateProduct({
-    required BuildContext context,
-    required Product product,
-    required double rating,
-  }) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-    try {
-      http.Response res = await http.post(
-        Uri.parse('$uri/product/rate'),
-        headers: {
-          'Authorization': 'Bearer ${userProvider.user.token}',
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
-        },
-        body: jsonEncode({
-          'productId': product.id,
-          'rating': rating,
-        }),
-      );
-
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(context, "Product rated successfully!");
-        },
-      );
-    } catch (e) {
       showSnackBar(context, e.toString());
     }
   }

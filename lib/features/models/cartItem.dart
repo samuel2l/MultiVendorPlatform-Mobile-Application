@@ -15,15 +15,18 @@ class CartItem {
   }
 
   factory CartItem.fromMap(Map<String, dynamic> map) {
+    print("PRODUCT THAT IS NULL");
+    print(map);
     return CartItem(
-      product: Product.fromMap(map['product'] as Map<String,dynamic>),
+      product: Product.fromMap(map['product'] as Map<String, dynamic>),
       amount: map['amount'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory CartItem.fromJson(String source) => CartItem.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CartItem.fromJson(String source) =>
+      CartItem.fromMap(json.decode(source) as Map<String, dynamic>);
 
   CartItem({required this.product, required this.amount});
 }

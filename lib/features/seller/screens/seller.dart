@@ -2,14 +2,14 @@ import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:flutter/material.dart';
 
-class Admin extends StatefulWidget {
-  const Admin({super.key});
+class Seller extends StatefulWidget {
+  const Seller({super.key});
   static const String routeName = '/seller';
   @override
-  State<Admin> createState() => _AdminState();
+  State<Seller> createState() => _SellerState();
 }
 
-class _AdminState extends State<Admin> {
+class _SellerState extends State<Seller> {
   int _page = 0;
   double bottomNavBarWidth = 42;
   double bottomNavBarBorderWidth = 5;
@@ -40,7 +40,7 @@ class _AdminState extends State<Admin> {
           Padding(
             padding: EdgeInsets.only(right: 28.0),
             child: Text(
-              'Admin',
+              'Seller',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
             ),
           ),

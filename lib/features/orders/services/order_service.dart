@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/models/order_item.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
-import 'package:multivendorplatformmobile/features/orders/widgets/order.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:flutter/material.dart';
@@ -56,18 +55,18 @@ class OrderService extends ChangeNotifier {
       http.Response res = await http.get(
         Uri.parse('$shoppingUri/orders'),
         headers: {
-          'Authorization':'Bearer ${userProvider.user.token}',
+          'Authorization': 'Bearer ${userProvider.user.token}',
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
         },
       );
-      print("response from get orders api");
-      print(jsonDecode(res.body));
-
+      print("response from get orders");
+      print(res.body);
       List<OrderItem> data = (jsonDecode(res.body) as List)
           .map((item) => OrderItem.fromMap(item))
           .toList();
-
+      print("dataa after casting?");
+      print(data);
       return data;
     } catch (err) {
       showSnackBar(context, err.toString());

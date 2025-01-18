@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,6 @@ class AuthService {
           });
     } catch (e) {
       print(e.toString());
-
       showSnackBar(context, e.toString());
     }
   }
@@ -105,11 +105,20 @@ class AuthService {
               "orders": userData["cart"],
               "token": jsonDecode(response.body)["token"]
             }));
+            if (userData["role"]=='Buyer'){
             Navigator.pushNamedAndRemoveUntil(
               context,
               BottomNavBar.routeName,
               (route) => false,
             );
+
+            }else{
+             Navigator.pushNamedAndRemoveUntil(
+              context,
+              Seller.routeName,
+              (route) => false,
+            ); 
+            }
           });
     } catch (e) {
       print(e);
@@ -117,64 +126,6 @@ class AuthService {
     }
   }
 
-//   void getUserData(
-//     BuildContext context,
-//   ) async {
-//     try {
-//       SharedPreferences prefs = await SharedPreferences.getInstance();
-//       String? token = prefs.getString('x-auth-token');
-//       if (token == null) {
-//         prefs.setString('x-auth-token', '');
-//       }
-
-//       if (token != '' && token != null) {
-//         print("gotten token is $token");
-
-//         http.Response userRes = await http.get(
-//           Uri.parse('$uri/'),
-//           headers: <String, String>{
-//             'Authorization': 'Bearer $token',
-//             'Content-Type': 'application/json; charset=UTF-8',
-//           },
-//         );
-//         print("user res");
-//         print(userRes.body);
-//         var userData = jsonDecode(userRes.body);
-//         print("type of list???????");
-//         print(userData["orders"]);
-//         print(userData["orders"].length);
-//         (userData["orders"] as List<dynamic>)
-//             .map((item) => {
-//                   item =
-//                       CartItem(product: item["product"], amount: item["amount"])
-//                 })
-//             .toList();
-//         print("after operation");
-//         print(userData.runtimeType);
-
-//         User user = User(
-//             email: userData["email"],
-//             phone: userData["phone"],
-//             role: userData["role"],
-//             cart: userData["cart"],
-//             wishlist: userData["wishlist"],
-//             orders: userData["orders"],
-//             token: token);
-//         print(user);
-//         print(user.runtimeType);
-//         print("${user.token} ${user.email} ${user.phone}  ");
-//         Provider.of<UserProvider>(context, listen: false)
-//             .setUserFromModel(user);
-//         print(
-//             "in get user data???????????????? ${Provider.of<UserProvider>(context, listen: false).user} ");
-//       }
-//     } catch (e) {
-//       // showSnackBar(context, e.toString());
-//       print("error");
-//       print(e);
-//     }
-//   }
-// }
   Future<void> getUserData(
     BuildContext context,
   ) async {
@@ -185,6 +136,7 @@ class AuthService {
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
+      // prefs.setString('x-auth-token', '');
       if (token != '' && token != null) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),
@@ -195,8 +147,6 @@ class AuthService {
         );
         var userData = jsonDecode(userRes.body);
 
-        print('ah the user data?');
-        print(userData);
         User user = User.fromMap({
           "email": userData["email"],
           "phone": userData["phone"],

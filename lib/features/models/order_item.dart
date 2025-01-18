@@ -11,7 +11,7 @@ class OrderItem {
   final double amount;
   final String status;
   final List<Product> items;
-  int amountBought;
+  final int amountBought;
   String date;
   OrderItem({
     required this.orderId,
@@ -28,18 +28,17 @@ class OrderItem {
       String? customerId,
       double? amount,
       String? status,
-    
       List<Product>? items,
-      int? amountBought,String? date}) {
+      int? amountBought,
+      String? date}) {
     return OrderItem(
-      orderId: orderId ?? this.orderId,
-      customerId: customerId ?? this.customerId,
-      amount: amount ?? 0,
-      status: status ?? this.status,
-      items: items ?? this.items,
-      amountBought: amountBought ?? 0,
-      date:date?? '' 
-    );
+        orderId: orderId ?? this.orderId,
+        customerId: customerId ?? this.customerId,
+        amount: amount ?? 0,
+        status: status ?? this.status,
+        items: items ?? this.items,
+        amountBought: amountBought ?? 0,
+        date: date ?? '');
   }
 
   Map<String, dynamic> toMap() {
@@ -59,13 +58,11 @@ class OrderItem {
     return OrderItem(
         orderId: map['orderId'] as String,
         customerId: map['customerId'] as String,
-        amount: map['amount'] as double,
+        amount: map["amount"].toDouble(),
         status: map['status'] as String,
         items: List<Product>.from(
           (map['items'] as List).map<Product>(
             (x) {
-              print("inside the product mapping");
-              print(x["product"]);
               amntBought = x["amount"];
               //return from api has the amount bought as part of the dict with products
               //amount bought is not part of product class so will be skipped but this property dey need
@@ -75,8 +72,8 @@ class OrderItem {
           ),
         ),
         amountBought: amntBought,
-        date: DateFormat('MMM dd, yyyy HH:mm:ss').format(DateTime.parse(map["createdAt"]))
-        );
+        date: DateFormat('MMM dd, yyyy HH:mm:ss')
+            .format(DateTime.parse(map["createdAt"])));
   }
 
   String toJson() => json.encode(toMap());

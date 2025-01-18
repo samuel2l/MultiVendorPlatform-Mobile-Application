@@ -9,6 +9,7 @@ import 'package:multivendorplatformmobile/features/products/screens/product_deta
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -48,9 +49,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       case Address.routeName:
       return MaterialPageRoute(
           builder: (_) => const Address(), settings: routeSettings);
-      case Admin.routeName:
+      case Seller.routeName:
       return MaterialPageRoute(
-          builder: (_) => const Admin(), settings: routeSettings);
+          builder: (_) => const Seller(), settings: routeSettings);
+      case SellerProducts.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const SellerProducts(), settings: routeSettings);
 
     default:
       return MaterialPageRoute(

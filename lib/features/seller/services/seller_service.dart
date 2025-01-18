@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
@@ -57,7 +58,7 @@ class SellerService {
           onSuccess: () {
             showSnackBar(context, 'Product added successfully');
             Navigator.of(context).pushNamedAndRemoveUntil(
-              SellerProducts.routeName,
+              Seller.routeName,
               (route) => false,
             );
           });

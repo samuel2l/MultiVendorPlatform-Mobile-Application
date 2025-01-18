@@ -44,11 +44,21 @@ class _SplashState extends State<Splash> {
           BottomNavBar.routeName,
           (route) => false,
         );
-      } else {
+      } else if (userProvider.user.role == 'Seller') {
         print("seller?");
         Navigator.of(context).pushNamedAndRemoveUntil(
-          Admin.routeName,
+          Seller.routeName,
           (route) => false,
+        );
+      } else {
+        Navigator.push(
+          context,MaterialPageRoute(
+            
+          builder: (context) {
+            return Center(child: Text("You are not a suitable user of this app"));
+          },
+        ),
+
         );
       }
     } else {

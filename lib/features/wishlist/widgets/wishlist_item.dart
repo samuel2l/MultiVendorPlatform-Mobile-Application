@@ -1,5 +1,4 @@
 import 'package:multivendorplatformmobile/features/models/product.dart';
-import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/features/wishlist/services/wishlist_service.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +43,16 @@ class _WishlistItemState extends State<WishlistItem> {
 
   void editWishlist(Product product, bool isRemove) {
     wishlistService.editWishlist(
+        context: context,
+        product: product,
+        amount: quantity!,
+        isRemove: isRemove);
+
+    setState(() {});
+  }
+
+  void moveToCart(Product product, bool isRemove) {
+    wishlistService.moveFromWishlistToCart(
         context: context,
         product: product,
         amount: quantity!,
@@ -145,11 +154,9 @@ class _WishlistItemState extends State<WishlistItem> {
             ),
             InkWell(
               onTap: () {
-                if(quantity!>=wishlistItem.product.stock){
-
-                }else{
-                incrementQuantity();
-
+                if (quantity! >= wishlistItem.product.stock) {
+                } else {
+                  incrementQuantity();
                 }
               },
               child: Container(
@@ -168,6 +175,13 @@ class _WishlistItemState extends State<WishlistItem> {
                 editWishlist(wishlistItem.product, false);
               },
               child: const Text('Update'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                editWishlist(wishlistItem.product, false);
+                moveToCart(wishlistItem.product, false);
+              },
+              child: const Text('Move to cart'),
             ),
             IconButton(
               onPressed: () {

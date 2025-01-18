@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -12,9 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-
-class WishlistService extends ChangeNotifier{
- void editWishlist(
+class WishlistService extends ChangeNotifier {
+  void editWishlist(
       {required BuildContext context,
       required Product product,
       required int amount,
@@ -61,6 +60,76 @@ class WishlistService extends ChangeNotifier{
               userProvider.user.wishlist.add(wishlistItem);
             }
           }
+          userProvider.notifyListeners();
+        },
+      );
+    } catch (e) {
+      print(e);
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void moveFromWishlistToCart(
+      {required BuildContext context,
+      required Product product,
+      required int amount,
+      bool isRemove = false}) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      http.Response res = await http.put(
+        Uri.parse('$productsUri/cart'),
+        headers: {
+          'Authorization': 'Bearer ${userProvider.user.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          "product": {
+            "_id": product.id,
+          },
+          "amount": amount,
+          "isRemove": isRemove
+        }),
+      );
+      print("from move to cart apiiiii?????????????????");
+      print(res.body);
+      http.Response removedProduct = await http.put(
+        Uri.parse('$productsUri/cart'),
+        headers: {
+          'Authorization': 'Bearer ${userProvider.user.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          "product": {
+            "_id": product.id,
+          },
+          "amount": amount,
+          "isRemove": true
+        }),
+      );
+      print("resoose from remove from wishlist api");
+      print(removedProduct.body);
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          showSnackBar(context, 'Moved from wishlist to cart');
+          CartItem cartItem = CartItem(product: product, amount: amount);
+          userProvider.user.wishlist
+              .removeWhere((item) => item.product.id == product.id);
+
+          int existingItemIndex = userProvider.user.cart.indexWhere(
+            (item) => item.product.id == cartItem.product.id,
+          );
+
+          if (existingItemIndex != -1) {
+            userProvider.user.cart[existingItemIndex] = cartItem;
+          } else {
+            userProvider.user.cart.add(cartItem);
+          }
+
           userProvider.notifyListeners();
         },
       );

@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
-import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';

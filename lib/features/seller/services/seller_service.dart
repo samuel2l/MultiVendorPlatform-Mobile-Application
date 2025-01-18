@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/models/product.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -56,8 +56,9 @@ class SellerService {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Product added successfully');
-            Navigator.pop(
-              context,
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              SellerProducts.routeName,
+              (route) => false,
             );
           });
     } catch (e) {
@@ -68,25 +69,28 @@ class SellerService {
   getAllProducts(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-    // try {
-    http.Response response = await http.get(
-      Uri.parse('$productsUri/seller-products'),
-      headers: {
-                  'Authorization':"Bearer ${userProvider.user.token}",
-        'Content-Type': 'application/json; charset=UTF-8',
-        'x-auth-token': userProvider.user.token
-      },
-    );
-    print("response from get sellers products api");
-    print(response.body);
-    httpErrorHandle(
-        response: response,
-        context: context,
-        onSuccess: () {
-          showSnackBar(context, 'Products loaded successfully');
-        });
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$productsUri/seller-products'),
+        headers: {
+          'Authorization': "Bearer ${userProvider.user.token}",
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token
+        },
+      );
+      print("response from get sellers products api");
+      print(response.body);
+      httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, 'Products loaded successfully');
+          });
 
-    return response.body;
+      return response.body;
+    } catch (e) {
+      showSnackBar(context, 'Something went wrong');
+    }
   }
 
   void deleteProduct({
@@ -98,7 +102,7 @@ class SellerService {
       http.Response response = await http.delete(
         Uri.parse('$productsUri/product/$id'),
         headers: {
-          'Authorization':"Bearer ${userProvider.user.token}",
+          'Authorization': "Bearer ${userProvider.user.token}",
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token
         },
@@ -108,25 +112,24 @@ class SellerService {
           response: response,
           context: context,
           onSuccess: () {
-            
             showSnackBar(context, 'Product deleted successfully');
-            
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
 
-  void updateProduct(
-      {required BuildContext context,
-      required String name,
-      required double price,
-      required String description,
-      required int stock,
-      required String type,
-       
-      required List<File> images,
-      required String id,bool available=true,}) async {
+  void updateProduct({
+    required BuildContext context,
+    required String name,
+    required double price,
+    required String description,
+    required int stock,
+    required String type,
+    required List<File> images,
+    required String id,
+    bool available = true,
+  }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       List<String> imgUrls = [];
@@ -142,7 +145,7 @@ class SellerService {
       http.Response response = await http.patch(
         Uri.parse('$productsUri/product/$id'),
         headers: {
-          'Authorization':"Bearer ${userProvider.user.token}",
+          'Authorization': "Bearer ${userProvider.user.token}",
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token
         },
@@ -153,7 +156,7 @@ class SellerService {
           "type": type,
           "stock": stock,
           "price": price,
-          "available":available
+          "available": available
         }),
       );
 
@@ -167,7 +170,6 @@ class SellerService {
             );
           });
     } catch (e) {
-
       showSnackBar(context, e.toString());
     }
   }

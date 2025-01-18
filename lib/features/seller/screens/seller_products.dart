@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/utils.dart';
 
 class SellerProducts extends StatefulWidget {
   const SellerProducts({super.key});
-
+  static const String routeName = 'seller-products';
   @override
   State<SellerProducts> createState() => _SellerProductsState();
 }
@@ -16,33 +17,35 @@ class _SellerProductsState extends State<SellerProducts> {
   List? productList = [];
 
   void getAllProducts() async {
-    String res = await sellerService.getAllProducts(context);
+    try {
+      String res = await sellerService.getAllProducts(context);
 
-    for (int item = 0; item < (jsonDecode(res)).length; item++) {
-      productList!.add(jsonDecode(res)[item]);
+      for (int item = 0; item < (jsonDecode(res)).length; item++) {
+        productList!.add(jsonDecode(res)[item]);
+      }
+      setState(() {});
+    } catch (e) {
+      showSnackBar(context, 'something went wrong');
     }
-    setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAllProducts();
   }
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return productList == null
-    // this is why we make product list nullable. so we can use a circular progress
-    //cos if there are no products it means the circular will show sahn
-    //but if nullable it will be initially null and if empty then it will be []
+        // this is why we make product list nullable. so we can use a circular progress
+        //cos if there are no products it means the circular will show sahn
+        //but if nullable it will be initially null and if empty then it will be []
         ? const Center(
             child: CircularProgressIndicator(),
           )
@@ -84,7 +87,10 @@ class _SellerProductsState extends State<SellerProducts> {
                       //   }).toList(),
                       //   options: CarouselOptions(viewportFraction: 1),
                       // ),
-                      Image.network(images,height: 150,),
+                      Image.network(
+                        images,
+                        height: 150,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

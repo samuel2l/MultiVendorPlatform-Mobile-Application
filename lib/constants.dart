@@ -9,6 +9,99 @@ String productsUri =
 String shoppingUri =
     // 'https://multivendorplatform-shopping-service.onrender.com';
     'http://localhost:8003';
+
+
+    const List<Map<String, String>> productCategories = [
+  {
+    "title": "Electronics",
+    "img":"assets/images/electronics.png"
+  },
+    {
+    "title": "Sports and Outdoors",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Home and Kitchen",
+    "img":"assets/images/vase.png"
+  },
+    {
+    "title": "Jewelry and Accessories",
+    "img":"assets/images/watch.png"
+  },
+  {
+    "title": "Health and Personal Care",
+    "img":"assets/images/vase.png"
+  },
+    {
+    "title": "Furniture",
+    "img":"assets/images/bed.png"
+  },
+  {
+    "title": "Fashion",
+    "img":"assets/images/sports.png"
+  },
+
+
+  {
+    "title": "Books and Stationery",
+    "img":"assets/images/sports.png"
+  },
+
+  {
+    "title": "Toys and Games",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Beauty and Cosmetics",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Automotive",
+    "img":"assets/images/sports.png"
+  },
+
+  {
+    "title": "Groceries and Food",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Baby Products",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Pet Supplies",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Tools and Hardware",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Office Supplies",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Musical Instruments",
+    "img":"assets/images/sports.png"
+  },
+
+  {
+    "title": "Art and Craft",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Industrial and Scientific",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Video Games and Consoles",
+    "img":"assets/images/sports.png"
+  },
+  {
+    "title": "Music",
+    "img":"assets/images/sports.png"
+  },
+];
 const appBarGradient = LinearGradient(
   colors: [
     Color.fromARGB(255, 29, 201, 192),

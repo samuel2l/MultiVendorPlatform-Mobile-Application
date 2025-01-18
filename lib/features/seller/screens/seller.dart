@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Admin extends StatefulWidget {
   const Admin({super.key});
-  static const String routeName = '/admin';
+  static const String routeName = '/seller';
   @override
   State<Admin> createState() => _AdminState();
 }

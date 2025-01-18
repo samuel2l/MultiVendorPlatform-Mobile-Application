@@ -45,6 +45,7 @@ class _AddProductState extends State<AddProduct> {
         stock: stock,
         type: type,
         images: images);
+        
   }
 
   @override

@@ -21,16 +21,16 @@ class _SearchState extends State<Search> {
   List? products;
   final SearchService searchService = SearchService();
 
-
   @override
   void initState() {
     super.initState();
-    fetchSearchedProduct();
+    getSearchedProduct();
   }
 
-  fetchSearchedProduct() async {
-
-    products = await searchService.fetchSearchedProduct(widget.query, context);
+  getSearchedProduct() async {
+    products = await searchService.getProducts(widget.query, context);
+    print("fetched product");
+    print(products);
 
     setState(() {});
   }
@@ -41,8 +41,8 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-          final userProvider = Provider.of<UserProvider>(context, listen: false);
-          print(userProvider.user.token);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    print(userProvider.user.token);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -121,31 +121,35 @@ class _SearchState extends State<Search> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : products!.isEmpty?Center(child: Text('We do not have anything named ${widget.query}'),):Column(
-              children: [
-                // const AddressBox(),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: products!.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            ProductDetails.routeName,
-                            arguments: products![index],
+          : products!.isEmpty
+              ? Center(
+                  child: Text('We do not have anything named ${widget.query}'),
+                )
+              : Column(
+                  children: [
+                    // const AddressBox(),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: products!.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                ProductDetails.routeName,
+                                arguments: products![index],
+                              );
+                            },
+                            child: SearchedProduct(
+                              product: products![index],
+                            ),
                           );
                         },
-                        child: SearchedProduct(
-                          product: products![index],
-                        ),
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
     );
   }
 }

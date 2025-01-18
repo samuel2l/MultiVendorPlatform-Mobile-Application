@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/splash.dart';
+import 'package:multivendorplatformmobile/features/home/screens/categories.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/router.dart';
 import 'package:provider/provider.dart';

@@ -1,4 +1,5 @@
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/home/screens/home.dart';
 import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
@@ -21,7 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<Widget> pages = [
     const Home(),
-const Text('ACCOUNT PAGE'),
+const Orders(),
     const Cart(),
   ];
 

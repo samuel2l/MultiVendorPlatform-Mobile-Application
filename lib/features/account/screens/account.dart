@@ -107,6 +107,7 @@
 // }
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/account/widgets/account_btn.dart';
+import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -187,7 +188,7 @@ class Account extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          // const Orders(),
+          const Orders(),
         ],
       ),
     );

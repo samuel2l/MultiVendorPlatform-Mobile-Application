@@ -185,7 +185,6 @@ class AuthService {
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-        // prefs.setString('x-auth-token', '');
       if (token != '' && token != null) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),
@@ -207,28 +206,6 @@ class AuthService {
           "wishlist": userData["wishlist"],
           "orders": userData["cart"],
         });
-
-        // print(userData["cart"]);
-        // print("cart before modification?");
-        // userData["cart"] = (userData["cart"] as List<dynamic>).map((item) {
-        //   print("map item $item");
-        //   return CartItem.fromMap(item as Map<String, dynamic>);
-        // }).toList();
-
-        // print("cart type now?");
-        // print(userData["cart"].runtimeType);
-        // User user = User(
-        //     email: userData["email"],
-        //     phone: userData["phone"],
-        //     role: userData["role"],
-        //     cart: userData["cart"],
-        //     wishlist: userData["cart"],
-        //     orders: userData["cart"],
-        //     token: token);
-
-        // print("but user dey abi?");
-        // print(user.email);
-        // print(user.cart);
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(user);
       }

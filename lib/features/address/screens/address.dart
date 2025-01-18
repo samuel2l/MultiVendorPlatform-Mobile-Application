@@ -1,8 +1,6 @@
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/address/services/address_service.dart';
-import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Address extends StatefulWidget {
   static const String routeName = '/address';

@@ -6,6 +6,7 @@ import 'package:multivendorplatformmobile/features/products/services/product_det
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:multivendorplatformmobile/features/wishlist/services/wishlist_service.dart';
 
 class ProductDetails extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -21,6 +22,8 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   final ProductDetailsService productDetailsService = ProductDetailsService();
+  final WishlistService wishlistService = WishlistService();
+
   double avgRating = 0;
   double myRating = 0;
 
@@ -35,6 +38,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   int quantity = 1;
 
   void incrementQuantity() {
+    if (quantity >= widget.product.stock) {
+      //show some dialog
+      return;
+    }
+
     setState(() {
       quantity++;
     });
@@ -52,11 +60,16 @@ class _ProductDetailsState extends State<ProductDetails> {
         context: context, product: widget.product, amount: quantity);
   }
 
+  void addToWishlist() {
+    print("adding to wishlist");
+    wishlistService.editWishlist(
+        context: context, product: widget.product, amount: quantity);
+  }
+
   TextEditingController amountController = TextEditingController();
 
   @override
   void dispose() {
-
     amountController.dispose();
     super.dispose();
   }
@@ -282,6 +295,17 @@ class _ProductDetailsState extends State<ProductDetails> {
               color: Colors.black12,
               height: 5,
             ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextButton(
+                onPressed: addToWishlist,
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(254, 216, 19, 1),
+                ),
+                child: const Text('Add to Wishlist'),
+              ),
+            ),
+
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: Text(

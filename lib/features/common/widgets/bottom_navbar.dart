@@ -2,6 +2,7 @@ import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/home/screens/home.dart';
 import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
+import 'package:multivendorplatformmobile/features/wishlist/screens/wishlist.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 
 import 'package:flutter/material.dart';
@@ -21,8 +22,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   double bottomNavBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const Home(),
+    const Wishlist(),
 const Orders(),
+
     const Cart(),
   ];
 

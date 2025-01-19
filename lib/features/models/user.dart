@@ -1,16 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'package:multivendorplatformmobile/features/models/cart_item.dart';
+import 'package:multivendorplatformmobile/features/models/profile.dart';
 
 class User {
   final String email;
   final String phone;
   final String role;
   final String token;
-
+  
   final List<CartItem> cart;
   final List<CartItem> wishlist;
   final List<CartItem> orders;
+  final Profile profile;
   User({
     required this.email,
     required this.phone,
@@ -19,6 +21,7 @@ class User {
     required this.wishlist,
     required this.orders,
     required this.token,
+    required this.profile,
   });
 
   User copyWith({
@@ -30,6 +33,7 @@ class User {
     List<CartItem>? wishlist,
     List<CartItem>? orders,
     String? token,
+    Profile? profile
   }) {
     return User(
       email: email ?? this.email,
@@ -39,6 +43,7 @@ class User {
       wishlist: wishlist ?? this.wishlist,
       orders: orders ?? this.orders,
       token: token ?? this.token,
+      profile: profile?? this.profile
     );
   }
 
@@ -51,6 +56,7 @@ class User {
       'wishlist': wishlist,
       'orders': orders,
       'token': token,
+      'profile':profile.toMap()
     };
   }
 
@@ -69,6 +75,7 @@ class User {
           .map((item) => CartItem.fromMap(item as Map<String, dynamic>))
           .toList(),
       token: map['token'],
+      profile: Profile.fromMap(map['profile'] as Map<String,dynamic>)
     );
   }
 

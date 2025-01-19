@@ -1,4 +1,6 @@
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
+import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +19,8 @@ class _SellerState extends State<Seller> {
   List<Widget> pages = [
     const SellerProducts(),
 
-
-    const Center(child: Text('page 2')),
-    const Center(child: Text('page 3')),
+const Orders(),
+    const Cart(),
   ];
 
   void updatePage(int page) {

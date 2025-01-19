@@ -106,7 +106,7 @@
 //   }
 // }
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/account/widgets/account_btn.dart';
+import 'package:multivendorplatformmobile/features/profile/widgets/account_btn.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';

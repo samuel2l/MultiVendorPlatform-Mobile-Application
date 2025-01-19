@@ -55,7 +55,7 @@ class _SplashState extends State<Splash> {
           context,MaterialPageRoute(
             
           builder: (context) {
-            return Center(child: Text("You are not a suitable user of this app"));
+            return const Center(child: Text("You are not a suitable user of this app"));
           },
         ),
 

@@ -1,4 +1,5 @@
 import 'package:multivendorplatformmobile/features/address/screens/address.dart';
+import 'package:multivendorplatformmobile/features/profile/screens/profile.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/auth.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
@@ -55,6 +56,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       case SellerProducts.routeName:
       return MaterialPageRoute(
           builder: (_) => const SellerProducts(), settings: routeSettings);
+case Profile.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const Profile(), settings: routeSettings);
 
     default:
       return MaterialPageRoute(

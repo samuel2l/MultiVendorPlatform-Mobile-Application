@@ -2,6 +2,7 @@ import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/home/screens/home.dart';
 import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
+import 'package:multivendorplatformmobile/features/profile/screens/profile.dart';
 import 'package:multivendorplatformmobile/features/wishlist/screens/wishlist.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 
@@ -23,9 +24,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<Widget> pages = [
     const Wishlist(),
-const Orders(),
-
+    const Orders(),
     const Cart(),
+    const Profile()
   ];
 
   void updatePage(int page) {
@@ -76,7 +77,7 @@ const Orders(),
                 ),
               ),
               child: const Icon(
-                Icons.person_outline_outlined,
+                Icons.heart_broken,
               ),
             ),
             label: '',
@@ -103,6 +104,24 @@ const Orders(),
             ),
             label: '',
           ),
+                    BottomNavigationBarItem(
+            icon: Container(
+              width: bottomNavBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 3 ? selectedNavBarColor : backgroundColor,
+                    width: bottomNavBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(
+                Icons.person_outline_outlined,
+              ),
+            ),
+            label: '',
+          ),
+
         ],
       ),
     );

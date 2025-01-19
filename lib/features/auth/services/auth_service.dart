@@ -33,22 +33,40 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      print("INTIAL SIGN UP RESPONSE");
+      print(response.body);
+      http.Response currentUser = await http.get(
+        Uri.parse('$uri/'),
+        headers: <String, String>{
+          'Authorization': 'Bearer ${jsonDecode(response.body)["token"]}',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': jsonDecode(response.body)["token"]
+        },
+      );
+      print("FROM GET UCRRENT USER ON SIGN UP current user");
+      print(currentUser.body);
+      var userData = jsonDecode(currentUser.body);
+      // var userData = jsonDecode(currentUser.body);
+
       print("RESPONSE FROM API ${response.body}");
       httpErrorHandle(
           response: response,
           context: context,
           onSuccess: () async {
-            Provider.of<UserProvider>(context, listen: false).setUserFromModel(
-                User(
-                    email: email,
-                    phone: phone,
-                    role: role,
-                    cart: [],
-                    wishlist: [],
-                    orders: [],
-                    token: jsonDecode(response.body)["token"]));
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setString('x-auth-token', jsonDecode(response.body)["token"]);
+
+            Provider.of<UserProvider>(context, listen: false)
+                .setUserFromModel(User.fromMap({
+              "email": userData["email"],
+              "phone": userData["phone"],
+              "role": userData["role"],
+              "cart": userData["cart"],
+              "wishlist": userData["wishlist"],
+              "orders": userData["cart"],
+              "token": jsonDecode(response.body)["token"],
+              "profile": userData["profile"],
+            }));
 
             Navigator.of(context).pushNamedAndRemoveUntil(
               BottomNavBar.routeName,
@@ -103,21 +121,21 @@ class AuthService {
               "cart": userData["cart"],
               "wishlist": userData["wishlist"],
               "orders": userData["cart"],
-              "token": jsonDecode(response.body)["token"]
+              "token": jsonDecode(response.body)["token"],
+              "profile": userData["profile"],
             }));
-            if (userData["role"]=='Buyer'){
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              BottomNavBar.routeName,
-              (route) => false,
-            );
-
-            }else{
-             Navigator.pushNamedAndRemoveUntil(
-              context,
-              Seller.routeName,
-              (route) => false,
-            ); 
+            if (userData["role"] == 'Buyer') {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                BottomNavBar.routeName,
+                (route) => false,
+              );
+            } else {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Seller.routeName,
+                (route) => false,
+              );
             }
           });
     } catch (e) {
@@ -155,6 +173,9 @@ class AuthService {
           "cart": userData["cart"],
           "wishlist": userData["wishlist"],
           "orders": userData["cart"],
+
+          "profile": userData["profile"],
+
         });
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(user);

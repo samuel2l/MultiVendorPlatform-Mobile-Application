@@ -121,6 +121,7 @@ class _CartState extends State<Cart> {
             height: 1,
           ),
           const SizedBox(height: 5),
+          user.cart.isEmpty?const Center(child: Text("You have no items in your cart"),):
           ListView.builder(
             itemCount: user.cart.length,
             shrinkWrap: true,

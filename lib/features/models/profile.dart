@@ -2,16 +2,18 @@
 import 'dart:convert';
 
 class Profile {
-
   final String name;
-    final String gender;
-      final String street;
-        final String postalCode;
-          final String city;
-          final String country;
+    final String img;
+
+  final String gender;
+  final String street;
+  final String postalCode;
+  final String city;
+  final String country;
 
   Profile({
     required this.name,
+    required this.img,
     required this.gender,
     required this.street,
     required this.postalCode,
@@ -19,9 +21,9 @@ class Profile {
     required this.country,
   });
 
-
   Profile copyWith({
     String? name,
+    String? img,
     String? gender,
     String? street,
     String? postalCode,
@@ -30,6 +32,7 @@ class Profile {
   }) {
     return Profile(
       name: name ?? this.name,
+      img: img ?? this.img,
       gender: gender ?? this.gender,
       street: street ?? this.street,
       postalCode: postalCode ?? this.postalCode,
@@ -41,6 +44,8 @@ class Profile {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
+      'img': img,
+
       'gender': gender,
       'street': street,
       'postalCode': postalCode,
@@ -52,6 +57,7 @@ class Profile {
   factory Profile.fromMap(Map<String, dynamic> map) {
     return Profile(
       name: map['name'] as String,
+      img: map['img'] as String,
       gender: map['gender'] as String,
       street: map['street'] as String,
       postalCode: map['postalCode'] as String,
@@ -62,7 +68,6 @@ class Profile {
 
   String toJson() => json.encode(toMap());
 
-  factory Profile.fromJson(String source) => Profile.fromMap(json.decode(source) as Map<String, dynamic>);
-
-
+  factory Profile.fromJson(String source) =>
+      Profile.fromMap(json.decode(source) as Map<String, dynamic>);
 }

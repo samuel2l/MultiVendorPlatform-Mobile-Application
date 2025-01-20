@@ -110,6 +110,7 @@ class _WishlistState extends State<Wishlist> {
             height: 1,
           ),
           const SizedBox(height: 5),
+          user.wishlist.isEmpty? const Center(child: Text('You have no items in your cart'),):
           ListView.builder(
             itemCount: user.wishlist.length,
             shrinkWrap: true,

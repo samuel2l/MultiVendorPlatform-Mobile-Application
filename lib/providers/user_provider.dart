@@ -11,7 +11,7 @@ class UserProvider extends ChangeNotifier {
       wishlist: [],
       orders: [],
       token: '',
-      profile: Profile(name: '', gender: '', street: '', postalCode: '', city: '', country: '')
+      profile: Profile(name: '',img:'', gender: '', street: '', postalCode: '', city: '', country: '')
       );
 
   User get user => _user;

@@ -6,6 +6,7 @@ import 'package:multivendorplatformmobile/features/products/services/product_det
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller_profile.dart';
 import 'package:multivendorplatformmobile/features/wishlist/services/wishlist_service.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -334,7 +335,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                 //   rating: rating,
                 // );
               },
-            )
+            ),
+            GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(SellerProfile.routeName,arguments: {
+                    "sellerId":widget.product.seller
+                  });
+                },
+                child: const Text(
+                  'View seller details',
+                  style: TextStyle(color: Colors.red),
+                ))
           ],
         ),
       ),

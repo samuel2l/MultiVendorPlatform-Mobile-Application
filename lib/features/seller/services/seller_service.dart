@@ -66,16 +66,15 @@ class SellerService {
     }
   }
 
-  getAllProducts(BuildContext context) async {
+  getSellerProducts(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
       http.Response response = await http.get(
-        Uri.parse('$productsUri/seller-products'),
+        Uri.parse('$productsUri/products/seller'),
         headers: {
           'Authorization': "Bearer ${userProvider.user.token}",
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token
         },
       );
       print("response from get sellers products api");

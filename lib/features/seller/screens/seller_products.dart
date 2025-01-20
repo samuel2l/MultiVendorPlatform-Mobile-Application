@@ -16,9 +16,9 @@ class _SellerProductsState extends State<SellerProducts> {
   final SellerService sellerService = SellerService();
   List? productList = [];
 
-  void getAllProducts() async {
+  void getSellerProducts() async {
     try {
-      String res = await sellerService.getAllProducts(context);
+      String res = await sellerService.getSellerProducts(context);
 
       for (int item = 0; item < (jsonDecode(res)).length; item++) {
         productList!.add(jsonDecode(res)[item]);
@@ -32,7 +32,7 @@ class _SellerProductsState extends State<SellerProducts> {
   @override
   void initState() {
     super.initState();
-    getAllProducts();
+    getSellerProducts();
   }
 
   @override
@@ -71,6 +71,8 @@ class _SellerProductsState extends State<SellerProducts> {
                 itemCount: productList!.length,
                 itemBuilder: (context, index) {
                   var product = productList![index];
+                  print("ERROR PART");
+                  print(product["img"]);
                   String images = product['img'];
                   return Column(
                     children: [

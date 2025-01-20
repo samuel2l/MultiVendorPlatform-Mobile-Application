@@ -11,6 +11,7 @@ import 'package:multivendorplatformmobile/features/search/screens/search.dart';
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller_profile.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -47,18 +48,25 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
                 query: query,
               ),
           settings: routeSettings);
-      case Address.routeName:
+    case Address.routeName:
       return MaterialPageRoute(
           builder: (_) => const Address(), settings: routeSettings);
-      case Seller.routeName:
+    case Seller.routeName:
       return MaterialPageRoute(
           builder: (_) => const Seller(), settings: routeSettings);
-      case SellerProducts.routeName:
+    case SellerProducts.routeName:
       return MaterialPageRoute(
           builder: (_) => const SellerProducts(), settings: routeSettings);
-case UserProfile.routeName:
+    case UserProfile.routeName:
       return MaterialPageRoute(
           builder: (_) => const UserProfile(), settings: routeSettings);
+    case SellerProfile.routeName:
+      final sellerId = routeSettings.arguments as Map<String,String>;
+
+      return MaterialPageRoute(
+          builder: (_) =>  SellerProfile(
+sellerId:sellerId["sellerId"]??'',
+          ), settings: routeSettings);
 
     default:
       return MaterialPageRoute(

@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
+import '../../models/profile.dart';
+
 class ProductDetailsService extends ChangeNotifier {
   //extend change notifier so we can use .notifyListeners to update in real time
   void editCart(
@@ -69,6 +71,60 @@ class ProductDetailsService extends ChangeNotifier {
     } catch (e) {
       print(e);
       showSnackBar(context, e.toString());
+    }
+  }
+
+  getSellerProfile(String sellerId, BuildContext context) async {
+    http.Response res = await http.get(
+      Uri.parse('$uri/seller-profile/$sellerId'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    print("from get profile api");
+    print(res.body);
+
+    httpErrorHandle(
+      response: res,
+      context: context,
+      onSuccess: () {
+        showSnackBar(context, 'gotten seller profile');
+      },
+    );
+    Profile profile = Profile.fromMap(jsonDecode(res.body));
+    print("did the profule cast work>>>>>");
+    print(profile);
+    return profile;
+  }
+
+  getSellerProducts(BuildContext context, String id) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$productsUri/seller-products/$id'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      print("response from get sellers products api");
+      print(response.body);
+      httpErrorHandle(
+          response: response,
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, 'Products loaded successfully');
+          });
+
+      List<Product> productList = (jsonDecode(response.body) as List)
+          .map(
+            (product) => Product.fromMap(product),
+          )
+          .toList();
+      print("did product list workkkkkk");
+      print(productList);
+      return productList;
+    } catch (e) {
+      showSnackBar(context, 'Something went wrong');
     }
   }
 }

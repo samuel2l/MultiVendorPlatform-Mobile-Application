@@ -71,8 +71,6 @@ class _SellerProductsState extends State<SellerProducts> {
                 itemCount: productList!.length,
                 itemBuilder: (context, index) {
                   var product = productList![index];
-                  print("ERROR PART");
-                  print(product["img"]);
                   String images = product['img'];
                   return Column(
                     children: [

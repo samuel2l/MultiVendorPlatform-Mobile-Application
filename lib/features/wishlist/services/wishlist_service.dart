@@ -73,7 +73,7 @@ class WishlistService extends ChangeNotifier {
       {required BuildContext context,
       required Product product,
       required int amount,
-      bool isRemove = false}) async {
+      }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
@@ -82,24 +82,22 @@ class WishlistService extends ChangeNotifier {
         headers: {
           'Authorization': 'Bearer ${userProvider.user.token}',
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
         },
         body: jsonEncode({
           "product": {
             "_id": product.id,
           },
           "amount": amount,
-          "isRemove": isRemove
+          "isRemove": false
         }),
       );
       print("from move to cart apiiiii?????????????????");
       print(res.body);
       http.Response removedProduct = await http.put(
-        Uri.parse('$productsUri/cart'),
+        Uri.parse('$productsUri/wishlist'),
         headers: {
           'Authorization': 'Bearer ${userProvider.user.token}',
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
         },
         body: jsonEncode({
           "product": {

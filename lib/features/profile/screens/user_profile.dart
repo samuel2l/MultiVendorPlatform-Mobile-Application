@@ -95,8 +95,13 @@ class _UserProfileState extends State<UserProfile> {
     Profile profile =
         Provider.of<UserProvider>(context, listen: false).user.profile;
     print("GENDERRR");
-    print(profile.gender);
+    print(profile.img);
     print(profile.gender == 'Male');
+
+    print(profile.name);
+    print(profile.city);
+    print(profile.country);
+    print(profile.postalCode);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),

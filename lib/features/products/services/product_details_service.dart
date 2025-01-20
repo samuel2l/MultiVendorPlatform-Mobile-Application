@@ -31,7 +31,6 @@ class ProductDetailsService extends ChangeNotifier {
         headers: {
           'Authorization': 'Bearer ${userProvider.user.token}',
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
         },
         body: jsonEncode({
           "product": {
@@ -41,7 +40,7 @@ class ProductDetailsService extends ChangeNotifier {
           "isRemove": isRemove
         }),
       );
-      print("from apu");
+      print("from edit cart api");
       print(res.body);
 
       httpErrorHandle(
@@ -52,6 +51,7 @@ class ProductDetailsService extends ChangeNotifier {
           // instead of keeping the cart as part of state management you could just call api using the req.user id
           CartItem cartItem = CartItem(product: product, amount: amount);
           if (isRemove == true) {
+            print("is remove is true?");
             userProvider.user.cart
                 .removeWhere((item) => item.product.id == product.id);
           } else {

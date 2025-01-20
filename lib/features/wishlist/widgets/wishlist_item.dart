@@ -51,12 +51,12 @@ class _WishlistItemState extends State<WishlistItem> {
     setState(() {});
   }
 
-  void moveToCart(Product product, bool isRemove) {
+  void moveToCart(Product product) {
     wishlistService.moveFromWishlistToCart(
         context: context,
         product: product,
         amount: quantity!,
-        isRemove: isRemove);
+);
 
     setState(() {});
   }
@@ -179,7 +179,7 @@ class _WishlistItemState extends State<WishlistItem> {
             ElevatedButton(
               onPressed: () {
                 editWishlist(wishlistItem.product, false);
-                moveToCart(wishlistItem.product, false);
+                moveToCart(wishlistItem.product);
               },
               child: const Text('Move to cart'),
             ),

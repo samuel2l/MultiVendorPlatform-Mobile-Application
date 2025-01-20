@@ -10,7 +10,29 @@ String shoppingUri =
     // 'https://multivendorplatform-shopping-service.onrender.com';
     'http://localhost:8003';
 
-
+const Map<String, Color> colorDictionary = {
+  "black": Colors.black,
+  "white": Colors.white,
+  "red": Colors.red,
+  "green": Colors.green,
+  "blue": Colors.blue,
+  "yellow": Colors.yellow,
+  "orange": Colors.orange,
+  "pink": Colors.pink,
+  "purple": Colors.purple,
+  "grey": Colors.grey,
+  "brown": Colors.brown,
+  "cyan": Colors.cyan,
+  "amber": Colors.amber,
+  "indigo": Colors.indigo,
+  "teal": Colors.teal,
+  "lime": Colors.lime,
+  "deepOrange": Colors.deepOrange,
+  "deepPurple": Colors.deepPurple,
+  "lightBlue": Colors.lightBlue,
+  "lightGreen": Colors.lightGreen,
+  "blueGrey": Colors.blueGrey,
+};
     const List<Map<String, String>> productCategories = [
   {
     "title": "Electronics",

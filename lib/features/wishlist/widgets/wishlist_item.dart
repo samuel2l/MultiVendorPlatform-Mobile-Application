@@ -23,11 +23,15 @@ class _WishlistItemState extends State<WishlistItem> {
     final wishlistItem =
         context.read<UserProvider>().user.wishlist[widget.index];
     quantity = wishlistItem.amount;
+    sizes = wishlistItem.product.sizes;
+    colors = wishlistItem.product.colors;
   }
 
   final WishlistService wishlistService = WishlistService();
 
   int? quantity;
+  List<String>? sizes;
+  List<String>? colors;
 
   void incrementQuantity() {
     setState(() {
@@ -46,23 +50,36 @@ class _WishlistItemState extends State<WishlistItem> {
         context: context,
         product: product,
         amount: quantity!,
-        isRemove: isRemove);
+        isRemove: isRemove,
+        isUpdateQuantityOnly: true);
 
     setState(() {});
   }
 
   void moveToCart(Product product) {
     wishlistService.moveFromWishlistToCart(
-        context: context,
-        product: product,
-        amount: quantity!,
-);
+      context: context,
+      product: product,
+      amount: quantity!,
+    );
 
     setState(() {});
   }
 
+  String? result;
+  void mapItemColors() {
+    Map<String, int> itemCounts = {};
+    for (var color in colors!) {
+      itemCounts[color] = (itemCounts[color] ?? 0) + 1;
+    }
+    result = itemCounts.entries
+        .map((entry) => '${entry.key}: ${entry.value}')
+        .join(', ');
+  }
+
   @override
   Widget build(BuildContext context) {
+    mapItemColors();
     final wishlistItem =
         context.watch<UserProvider>().user.wishlist[widget.index];
 
@@ -110,8 +127,8 @@ class _WishlistItemState extends State<WishlistItem> {
                   Container(
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: const Text(
-                      'In Stock',
+                    child:  Text(
+                      colors!.isNotEmpty ? 'Colors: $result' : "In stock",
                       style: TextStyle(
                         color: Colors.teal,
                       ),

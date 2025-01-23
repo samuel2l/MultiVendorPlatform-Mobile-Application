@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:multivendorplatformmobile/features/models/product.dart';
@@ -21,8 +20,13 @@ class CartItem {
           map['product']['type'] = map['product']['seller'] = 'ei';
       map['product']['stock'] = 0;
     }
+    print("MAPPPP");
+    print(map);
+    print("map product");
+    print(map["product"]["sizes"]);
+    print(map["product"]["sizes"].runtimeType);
 
-
+    print("PERHAPS CART PROBLEM FROM THE NEWLY ADDED FIELDS?");
     CartItem testItem = CartItem(
       product: Product(
           id: map['product']["_id"],
@@ -32,9 +36,12 @@ class CartItem {
           type: map['product']["type"],
           stock: int.parse(map['product']['stock']),
           price: map['product']["price"],
+          sizes: (map['product']['sizes'] as List<dynamic>).map((e) => e as String).toList(),
+          colors:(map['product']['colors'] as List<dynamic>).map((e) => e as String).toList(),
           seller: map['product']["seller"]),
       amount: map['amount'] as int,
     );
+    print("IS PROBLEM FROM THE NEWLY ADDED FIELDS?");
 
     return testItem;
   }

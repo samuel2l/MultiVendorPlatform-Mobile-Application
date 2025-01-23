@@ -20,7 +20,7 @@ const Map<String, Color> colorDictionary = {
   "orange": Colors.orange,
   "pink": Colors.pink,
   "purple": Colors.purple,
-  "grey": Colors.grey,
+  "ash": Colors.grey,
   "brown": Colors.brown,
   "cyan": Colors.cyan,
   "amber": Colors.amber,

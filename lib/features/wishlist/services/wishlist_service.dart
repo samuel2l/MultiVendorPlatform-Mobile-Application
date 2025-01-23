@@ -17,25 +17,47 @@ class WishlistService extends ChangeNotifier {
       {required BuildContext context,
       required Product product,
       required int amount,
-      bool isRemove = false}) async {
+            List<String> selectedColors = const [],
+      List<String> selectedSizes = const [],
+      
+      bool isRemove = false,bool isUpdateQuantityOnly = false}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
+    http.Response? res;
     try {
-      http.Response res = await http.put(
-        Uri.parse('$productsUri/wishlist'),
-        headers: {
-          'Authorization': 'Bearer ${userProvider.user.token}',
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
-        },
-        body: jsonEncode({
-          "product": {
-            "_id": product.id,
+      if (isUpdateQuantityOnly) {
+        res = await http.put(
+          Uri.parse('$productsUri/wishlist'),
+          headers: {
+            'Authorization': 'Bearer ${userProvider.user.token}',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
-          "amount": amount,
-          "isRemove": isRemove
-        }),
-      );
+          body: jsonEncode({
+            "product": {
+              "_id": product.id,
+            },
+            "amount": amount,
+            "isRemove": isRemove
+          }),
+        );
+      } else {
+        res = await http.put(
+          Uri.parse('$productsUri/cart'),
+          headers: {
+            'Authorization': 'Bearer ${userProvider.user.token}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            "product": {
+              "_id": product.id,
+              "sizes":selectedSizes,
+              "colors":selectedColors
+            },
+            "amount": amount,
+            "isRemove": isRemove
+          }),
+        );
+      }
       print("from wishlist apiiiii?????????????????");
       print(res.body);
 
@@ -86,6 +108,8 @@ class WishlistService extends ChangeNotifier {
         body: jsonEncode({
           "product": {
             "_id": product.id,
+            "sizes":product.sizes,
+            "colors":product.colors
           },
           "amount": amount,
           "isRemove": false

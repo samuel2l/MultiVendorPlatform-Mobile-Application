@@ -1,6 +1,9 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/rendering.dart';
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/dialogs/cart_colors_exceeded.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/dialogs/select_colors_dialog.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
@@ -8,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_profile.dart';
 import 'package:multivendorplatformmobile/features/wishlist/services/wishlist_service.dart';
+import 'package:multivendorplatformmobile/utils.dart';
 
 class ProductDetails extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -28,14 +32,14 @@ class _ProductDetailsState extends State<ProductDetails> {
   double avgRating = 0;
   double myRating = 0;
 
+  List<String> selectedColors = [];
+  List<String> selectedSizes = [];
   @override
   void initState() {
     super.initState();
   }
 
-  void navigateToSearchScreen(String query) {
-    // Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
-  }
+  void navigateToSearchScreen(String query) {}
   int quantity = 1;
 
   void incrementQuantity() {
@@ -50,21 +54,52 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   void decrementQuantity() {
+    if (quantity <= 1) {
+      return;
+    }
     setState(() {
-      if (quantity > 1) quantity--; // Ensure quantity does not go below 1
+      quantity--;
     });
   }
 
   void addToCart() {
     print("addimg to art");
-    productDetailsService.editCart(
-        context: context, product: widget.product, amount: quantity);
+    if (quantity == selectedColors.length) {
+      productDetailsService.editCart(
+          context: context,
+          product: widget.product,
+          amount: quantity,
+          selectedColors: selectedColors,
+          selectedSizes: selectedSizes);
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const SelectColorsDialog();
+        },
+      );
+    }
   }
 
   void addToWishlist() {
     print("adding to wishlist");
+    if (quantity == selectedColors.length) {
     wishlistService.editWishlist(
-        context: context, product: widget.product, amount: quantity);
+        context: context,
+        product: widget.product,
+        amount: quantity,
+        selectedColors: selectedColors,
+        selectedSizes: selectedSizes);
+
+    }else{
+            showDialog(
+        context: context,
+        builder: (context) {
+          return const SelectColorsDialog();
+        },
+      );
+
+    }
   }
 
   TextEditingController amountController = TextEditingController();
@@ -249,7 +284,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Row(
                   children: [
                     InkWell(
-                      onTap: () => decrementQuantity,
+                      onTap: () {
+                        decrementQuantity();
+                      },
                       child: Container(
                         width: 35,
                         height: 32,
@@ -306,6 +343,103 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: const Text('Add to Wishlist'),
               ),
             ),
+            widget.product.colors.isNotEmpty
+                ? SizedBox(
+                    height: 80,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: (widget.product.colors).map((color) {
+                          return GestureDetector(
+                            onDoubleTap: () {
+                              if (selectedColors.length >= quantity) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const CartColorsExceeded();
+                                  },
+                                );
+                              } else {
+                                selectedColors.add(color);
+                              }
+                              print(selectedColors);
+                            },
+                            onTap: () {
+                              if (selectedColors.contains(color)) {
+                                selectedColors.remove(color);
+                              } else {
+                                showSnackBar(context,
+                                    'this color has not been selected');
+                              }
+                              print(selectedColors);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 37,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        color: colorDictionary[color],
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8))),
+                                    child: const Center(child: Text("")),
+                                  ),
+                                  Text(color)
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+
+            widget.product.sizes.isNotEmpty
+                ? SizedBox(
+                    height: 40,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: widget.product.sizes.map((size) {
+                          return GestureDetector(
+                            onDoubleTap: () {
+                              if (selectedColors.length >= quantity) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return const CartColorsExceeded();
+                                  },
+                                );
+                              } else {
+                                selectedColors.add(size);
+                              }
+                              print(selectedSizes);
+                            },
+                            onTap: () {
+                              if (selectedSizes.contains(size)) {
+                                selectedSizes.remove(size);
+                              } else {
+                                showSnackBar(context,
+                                    'this color has not been selected');
+                              }
+                              print(selectedColors);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  height: 30,
+                                  color: colorDictionary['color'],
+                                  child: Text(size)),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
 
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -338,9 +472,8 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(SellerProfile.routeName,arguments: {
-                    "sellerId":widget.product.seller
-                  });
+                  Navigator.of(context).pushNamed(SellerProfile.routeName,
+                      arguments: {"sellerId": widget.product.seller});
                 },
                 child: const Text(
                   'View seller details',

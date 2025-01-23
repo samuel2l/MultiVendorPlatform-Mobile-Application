@@ -1,3 +1,4 @@
+import 'package:multivendorplatformmobile/features/models/cart_item.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
@@ -21,12 +22,17 @@ class _CartProductState extends State<CartProduct> {
     super.initState();
     // Initialize quantity from the cart item
     final cartItem = context.read<UserProvider>().user.cart[widget.index];
+    print(cartItem.product.colors);
     quantity = cartItem.amount;
+    colors = cartItem.product.colors;
+    sizes = cartItem.product.colors;
   }
 
   final ProductDetailsService productDetailsService = ProductDetailsService();
 
   int? quantity;
+  List<String>? colors;
+  List<String>? sizes;
 
   void incrementQuantity() {
     setState(() {
@@ -45,15 +51,29 @@ class _CartProductState extends State<CartProduct> {
         context: context,
         product: product,
         amount: quantity!,
-        isRemove: isRemove);
+        isRemove: isRemove,
+        selectedColors: [],
+        selectedSizes: [],
+        isUpdateQuantityOnly: true);
 
     setState(() {});
+  }
+
+  String? result;
+  void mapItemColors() {
+    Map<String, int> itemCounts = {};
+    for (var color in colors!) {
+      itemCounts[color] = (itemCounts[color] ?? 0) + 1;
+    }
+    result = itemCounts.entries
+        .map((entry) => '${entry.key}: ${entry.value}')
+        .join(', ');
   }
 
   @override
   Widget build(BuildContext context) {
     final cartItem = context.watch<UserProvider>().user.cart[widget.index];
-
+    colors!.isEmpty ? null : mapItemColors();
     return Column(
       children: [
         Container(
@@ -98,9 +118,9 @@ class _CartProductState extends State<CartProduct> {
                   Container(
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: const Text(
-                      'In Stock',
-                      style: TextStyle(
+                    child: Text(
+                      colors!.isNotEmpty ? 'Colors: $result' : "In stock",
+                      style: const TextStyle(
                         color: Colors.teal,
                       ),
                       maxLines: 2,

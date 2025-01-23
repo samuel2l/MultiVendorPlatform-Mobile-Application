@@ -10,7 +10,11 @@ class Product {
   final String type;
   final int stock;
   final dynamic price;
+  final List<String> sizes;
+  final List<String> colors;
+
   final String seller;
+
   Product({
     required this.id,
     required this.name,
@@ -19,6 +23,8 @@ class Product {
     required this.type,
     required this.stock,
     required this.price,
+    required this.sizes,
+    required this.colors,
     required this.seller,
   });
 
@@ -40,6 +46,8 @@ class Product {
       type: type ?? this.type,
       stock: stock ?? this.stock,
       price: price ?? this.price,
+      sizes: sizes,
+      colors: colors,
       seller: seller ?? this.seller,
     );
   }
@@ -53,6 +61,8 @@ class Product {
       'type': type,
       'stock': stock,
       'price': price,
+      'sizes': sizes,
+      'colors': colors,
       'seller': seller,
     };
   }
@@ -60,7 +70,7 @@ class Product {
   factory Product.fromMap(Map<String, dynamic> map) {
     print("insdie product from map");
     print(map);
-
+    print(map['sizes'].runtimeType);
 
     return Product(
       id: map['_id'] as String,
@@ -70,7 +80,8 @@ class Product {
       type: map['type'] as String,
       stock: map['stock'] as int,
       price: map['price'] as dynamic,
-      seller: map['seller'] as String,
+      sizes: (map['sizes'] as List<dynamic>).map((size)=>size.toString()).toList(),
+colors: (map['colors'] as List<dynamic>).map((color)=>color.toString()).toList(),      seller: map['seller'] as String,
     );
   }
 

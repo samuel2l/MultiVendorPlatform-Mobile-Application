@@ -1,4 +1,5 @@
 import 'package:multivendorplatformmobile/features/models/product.dart';
+import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/wishlist/services/wishlist_service.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -127,9 +128,9 @@ class _WishlistItemState extends State<WishlistItem> {
                   Container(
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
-                    child:  Text(
+                    child: Text(
                       colors!.isNotEmpty ? 'Colors: $result' : "In stock",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.teal,
                       ),
                       maxLines: 2,
@@ -188,14 +189,18 @@ class _WishlistItemState extends State<WishlistItem> {
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () {
-                editWishlist(wishlistItem.product, false);
+              onPressed: ()async {
+                Product product = await wishlistService.getProduct(
+                    wishlistItem.product.id, context);
+                Navigator.of(context).pushNamed(ProductDetails.routeName,
+                    arguments: product);
+
               },
-              child: const Text('Update'),
+              child: const Text('edit'),
             ),
             ElevatedButton(
               onPressed: () {
-                editWishlist(wishlistItem.product, false);
+                editWishlist(wishlistItem.product, true);
                 moveToCart(wishlistItem.product);
               },
               child: const Text('Move to cart'),

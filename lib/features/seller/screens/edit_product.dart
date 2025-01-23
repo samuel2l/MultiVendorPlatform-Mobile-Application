@@ -1,33 +1,38 @@
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/input_field.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
-  static const String routeName = '/add-product';
-
+class EditProduct extends StatefulWidget {
+  const EditProduct({super.key, required this.product});
+  static const String routeName = '/edit-product';
+  final Product product;
   @override
-  State<AddProduct> createState() => _AddProductState();
+  State<EditProduct> createState() => _EditProductState();
 }
 
-class _AddProductState extends State<AddProduct> {
+class _EditProductState extends State<EditProduct> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController stockController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final SellerService sellerService = SellerService();
   List<String> selectedSizes = [];
-  List<String> selectedColors = [];
-
   String selectedtype = 'Electronics';
   List<File> selectedImages = [];
+  List<String> selectedColors = [];
 
-  final addProductKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  final editProductKey = GlobalKey<FormState>();
   void pickImages() async {
     final ImagePicker picker = ImagePicker();
     List<XFile>? pickedFiles = await picker.pickMultiImage();
@@ -38,15 +43,36 @@ class _AddProductState extends State<AddProduct> {
     });
   }
 
-  void addNewProduct(name,description,image,type, stock,  price, ) {
-    sellerService.addNewProduct(
-        context: context,
-        name: name,
-        price: price,
-        description: description,
-        stock: stock,
-        type: type,
-        images: image,selectedColors: selectedColors,selectedSizes: selectedSizes);
+  void editProduct(name, price, description, stock, type) {
+    if (selectedImages.isEmpty) {
+      sellerService.editProduct(
+          context: context,
+          name: name,
+          price: price.toDouble(),
+          description: description,
+          stock: stock,
+          type: type,
+          id: widget.product.id,
+          selectedSizes:
+              selectedSizes.isEmpty ? widget.product.sizes : selectedSizes,
+          selectedColors:
+              selectedColors.isEmpty ? widget.product.colors : selectedColors);
+    } else {
+      sellerService.editProduct(
+          context: context,
+          name: name,
+          price: price,
+          description: description,
+          stock: stock,
+          type: type,
+          image: selectedImages[0],
+          id: widget.product.id,
+          selectedSizes:
+              selectedSizes.isEmpty ? widget.product.sizes : selectedSizes,
+          selectedColors:
+              selectedColors.isEmpty ? widget.product.colors : selectedColors);
+    }
+    setState(() {});
   }
 
   @override
@@ -67,14 +93,14 @@ class _AddProductState extends State<AddProduct> {
           decoration: const BoxDecoration(gradient: appBarGradient),
         ),
         title: const Text(
-          'Add a product',
+          'Edit Product',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Form(
-          key: addProductKey,
+          key: editProductKey,
           child: ListView(
             children: [
               GestureDetector(
@@ -134,28 +160,28 @@ class _AddProductState extends State<AddProduct> {
               ),
               InputField(
                   controller: nameController,
-                  hintText: 'Enter product name',
+                  hintText: widget.product.name,
                   maxLines: 1),
               const SizedBox(
                 height: 15,
               ),
               InputField(
                   controller: priceController,
-                  hintText: 'Enter product price',
+                  hintText: widget.product.price.toString(),
                   maxLines: 1),
               const SizedBox(
                 height: 15,
               ),
               InputField(
                   controller: descriptionController,
-                  hintText: 'Enter product description',
+                  hintText: widget.product.desc,
                   maxLines: 7),
               const SizedBox(
                 height: 15,
               ),
               InputField(
                 controller: stockController,
-                hintText: 'Enter product stock',
+                hintText: widget.product.stock.toString(),
                 maxLines: 1,
               ),
               const SizedBox(
@@ -279,38 +305,41 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               DropdownButtonFormField<String>(
-              items: colors
-                  .map((color) => DropdownMenuItem(
-                        value: color,
-                        child: Text(color),
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                if (value != null && !selectedColors.contains(value)) {
-                  setState(() {
-                    selectedColors.add(value);
-                  });
-                }
-              },
-              decoration: const InputDecoration(
-                labelText: 'Available Colors',
-                border: OutlineInputBorder(),
+                items: colors
+                    .map((color) => DropdownMenuItem(
+                          value: color,
+                          child: Text(color),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null && !selectedColors.contains(value)) {
+                    setState(() {
+                      selectedColors.add(value);
+                    });
+                  }
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Available Colors',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
               TextButton(
                 onPressed: () {
-                  //images not a form field so check for that as well
-                  if (addProductKey.currentState!.validate() &&
-                      selectedImages.isNotEmpty) {
-                    addNewProduct(
-                      nameController.text.trim(),
-                      descriptionController.text.trim(),
-                      selectedImages,
-                      selectedtype,
-                      int.parse(stockController.text.trim()),
-                      double.parse(priceController.text.trim()),
-                    );
-                  }
+                  editProduct(
+                    nameController.text.trim().isEmpty
+                        ? widget.product.name
+                        : nameController.text.trim(),
+                    priceController.text.isEmpty
+                        ? widget.product.price
+                        : double.parse(priceController.text.trim().toString()),
+                    descriptionController.text.trim().isEmpty
+                        ? widget.product.desc
+                        : descriptionController.text.trim(),
+                    stockController.text.trim().isEmpty
+                        ? widget.product.stock
+                        : int.parse(stockController.text.trim()),
+                    selectedtype,
+                  );
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: secondaryColor,

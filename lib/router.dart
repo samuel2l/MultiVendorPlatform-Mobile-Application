@@ -9,6 +9,7 @@ import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/edit_product.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_profile.dart';
@@ -61,12 +62,24 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           builder: (_) => const UserProfile(), settings: routeSettings);
     case SellerProfile.routeName:
-      final sellerId = routeSettings.arguments as Map<String,String>;
+      final sellerId = routeSettings.arguments as Map<String, String>;
 
       return MaterialPageRoute(
-          builder: (_) =>  SellerProfile(
-sellerId:sellerId["sellerId"]??'',
-          ), settings: routeSettings);
+          builder: (_) => SellerProfile(
+                sellerId: sellerId["sellerId"] ?? '',
+              ),
+          settings: routeSettings);
+    case EditProduct.routeName:
+      print("IN ROUTE SETTINGS RARGUMENTS");
+      print(routeSettings.arguments);
+      final product =
+          Product.fromMap(routeSettings.arguments as Map<String, dynamic>);
+
+      return MaterialPageRoute(
+          builder: (_) => EditProduct(
+                product: product,
+              ),
+          settings: routeSettings);
 
     default:
       return MaterialPageRoute(

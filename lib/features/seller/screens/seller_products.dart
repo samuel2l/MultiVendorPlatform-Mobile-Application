@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/edit_product.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/utils.dart';
@@ -43,9 +44,6 @@ class _SellerProductsState extends State<SellerProducts> {
   @override
   Widget build(BuildContext context) {
     return productList == null
-        // this is why we make product list nullable. so we can use a circular progress
-        //cos if there are no products it means the circular will show sahn
-        //but if nullable it will be initially null and if empty then it will be []
         ? const Center(
             child: CircularProgressIndicator(),
           )
@@ -67,6 +65,7 @@ class _SellerProductsState extends State<SellerProducts> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
+                  childAspectRatio: 3/3.3
                 ),
                 itemCount: productList!.length,
                 itemBuilder: (context, index) {
@@ -91,19 +90,33 @@ class _SellerProductsState extends State<SellerProducts> {
                         images,
                         height: 150,
                       ),
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             product['name'],
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          IconButton(
-                            onPressed: () {
-                              sellerService.deleteProduct(
-                                  context: context, id: product['_id']);
-                            },
-                            icon: const Icon(Icons.delete),
-                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  sellerService.deleteProduct(
+                                      context: context, id: product['_id']);
+                                },
+                                icon: const Icon(Icons.delete),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      EditProduct.routeName,
+                                      arguments: product);
+                                },
+                                icon: const Icon(Icons.edit),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ],

@@ -11,6 +11,7 @@ import 'package:multivendorplatformmobile/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/profile.dart';
 
@@ -30,7 +31,8 @@ class ProductDetailsService extends ChangeNotifier {
 
     http.Response? res;
     try {
-      if (isUpdateQuantityOnly) {
+      if (isUpdateQuantityOnly || isRemove) {
+        print("trying to delete?");
         res = await http.put(
           Uri.parse('$productsUri/cart'),
           headers: {
@@ -55,8 +57,8 @@ class ProductDetailsService extends ChangeNotifier {
           body: jsonEncode({
             "product": {
               "_id": product.id,
-              "sizes":selectedSizes,
-              "colors":selectedColors
+              "sizes": selectedSizes,
+              "colors": selectedColors
             },
             "amount": amount,
             "isRemove": isRemove
@@ -72,7 +74,9 @@ class ProductDetailsService extends ChangeNotifier {
         onSuccess: () {
           showSnackBar(context, 'Cart updated');
           // instead of keeping the cart as part of state management you could just call api using the req.user id
-          CartItem cartItem = CartItem(product: product, amount: amount);
+          CartItem cartItem = CartItem(
+              product: Product.fromMap(jsonDecode(res!.body)["product"]),
+              amount: amount);
           if (isRemove == true) {
             print("is remove is true?");
             userProvider.user.cart
@@ -148,6 +152,26 @@ class ProductDetailsService extends ChangeNotifier {
       return productList;
     } catch (e) {
       showSnackBar(context, 'Something went wrong');
+    }
+  }
+
+  getProduct(String productId, BuildContext context) async {
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$productsUri/$productId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print("get product api resonns");
+      print(res.body);
+      var productDetails = jsonDecode(res.body);
+      Product product = Product.fromMap(productDetails);
+      return product;
+    } catch (e) {
+      print("error");
+      print(e);
+      showSnackBar(context, e.toString());
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:multivendorplatformmobile/features/models/cart_item.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
+import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -174,10 +175,14 @@ class _CartProductState extends State<CartProduct> {
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: () {
-                editCart(cartItem.product, false);
+              onPressed: () async{
+                // editCart(cartItem.product, false);
+                Product product = await productDetailsService.getProduct(
+                    cartItem.product.id, context);
+                Navigator.of(context).pushNamed(ProductDetails.routeName,
+                    arguments: product);
               },
-              child: const Text('Update'),
+              child: const Text('edit'),
             ),
             IconButton(
               onPressed: () {

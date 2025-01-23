@@ -17,10 +17,10 @@ class WishlistService extends ChangeNotifier {
       {required BuildContext context,
       required Product product,
       required int amount,
-            List<String> selectedColors = const [],
+      List<String> selectedColors = const [],
       List<String> selectedSizes = const [],
-      
-      bool isRemove = false,bool isUpdateQuantityOnly = false}) async {
+      bool isRemove = false,
+      bool isUpdateQuantityOnly = false}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     http.Response? res;
@@ -41,8 +41,11 @@ class WishlistService extends ChangeNotifier {
           }),
         );
       } else {
+        print("DATA BEING SENT");
+        print(selectedColors);
+        print(selectedSizes);
         res = await http.put(
-          Uri.parse('$productsUri/cart'),
+          Uri.parse('$productsUri/wishlist'),
           headers: {
             'Authorization': 'Bearer ${userProvider.user.token}',
             'Content-Type': 'application/json; charset=UTF-8',
@@ -50,8 +53,8 @@ class WishlistService extends ChangeNotifier {
           body: jsonEncode({
             "product": {
               "_id": product.id,
-              "sizes":selectedSizes,
-              "colors":selectedColors
+              "sizes": selectedSizes,
+              "colors": selectedColors
             },
             "amount": amount,
             "isRemove": isRemove
@@ -67,7 +70,9 @@ class WishlistService extends ChangeNotifier {
         onSuccess: () {
           showSnackBar(context, 'Wishlist updated');
           // instead of keeping the cart as part of state management you could just call api using the req.user id
-          CartItem wishlistItem = CartItem(product: product, amount: amount);
+          CartItem wishlistItem = CartItem(
+              product: Product.fromMap(jsonDecode(res!.body)["product"]),
+              amount: amount);
           if (isRemove == true) {
             userProvider.user.wishlist
                 .removeWhere((item) => item.product.id == product.id);
@@ -91,11 +96,11 @@ class WishlistService extends ChangeNotifier {
     }
   }
 
-  void moveFromWishlistToCart(
-      {required BuildContext context,
-      required Product product,
-      required int amount,
-      }) async {
+  void moveFromWishlistToCart({
+    required BuildContext context,
+    required Product product,
+    required int amount,
+  }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
@@ -108,8 +113,8 @@ class WishlistService extends ChangeNotifier {
         body: jsonEncode({
           "product": {
             "_id": product.id,
-            "sizes":product.sizes,
-            "colors":product.colors
+            "sizes": product.sizes,
+            "colors": product.colors
           },
           "amount": amount,
           "isRemove": false
@@ -117,22 +122,7 @@ class WishlistService extends ChangeNotifier {
       );
       print("from move to cart apiiiii?????????????????");
       print(res.body);
-      http.Response removedProduct = await http.put(
-        Uri.parse('$productsUri/wishlist'),
-        headers: {
-          'Authorization': 'Bearer ${userProvider.user.token}',
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({
-          "product": {
-            "_id": product.id,
-          },
-          "amount": amount,
-          "isRemove": true
-        }),
-      );
-      print("resoose from remove from wishlist api");
-      print(removedProduct.body);
+
       httpErrorHandle(
         response: res,
         context: context,
@@ -160,4 +150,25 @@ class WishlistService extends ChangeNotifier {
       showSnackBar(context, e.toString());
     }
   }
+
+    getProduct(String productId, BuildContext context) async {
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$productsUri/$productId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print("get product api resonns");
+      print(res.body);
+      var productDetails = jsonDecode(res.body);
+      Product product = Product.fromMap(productDetails);
+      return product;
+    } catch (e) {
+      print("error");
+      print(e);
+      showSnackBar(context, e.toString());
+    }
+  }
+
 }

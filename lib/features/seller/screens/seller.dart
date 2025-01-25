@@ -1,8 +1,10 @@
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/sales.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/features/wishlist/screens/wishlist.dart';
 
 class Seller extends StatefulWidget {
   const Seller({super.key});
@@ -18,9 +20,11 @@ class _SellerState extends State<Seller> {
 
   List<Widget> pages = [
     const SellerProducts(),
-
-const Orders(),
     const Cart(),
+    const Wishlist(),
+    const Orders(),
+    const Sales()
+
   ];
 
   void updatePage(int page) {
@@ -114,6 +118,40 @@ const Orders(),
               // ),
               child: const Icon(
                 Icons.all_inbox_outlined,
+              ),
+            ),
+            label: '',
+          ),
+                    BottomNavigationBarItem(
+            icon: Container(
+              width: bottomNavBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 3 ? selectedNavBarColor : backgroundColor,
+                    width: bottomNavBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(
+                Icons.trolley,
+              ),
+            ),
+            label: '',
+          ),
+                    BottomNavigationBarItem(
+            icon: Container(
+              width: bottomNavBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 4 ? selectedNavBarColor : backgroundColor,
+                    width: bottomNavBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(
+                Icons.analytics,
               ),
             ),
             label: '',

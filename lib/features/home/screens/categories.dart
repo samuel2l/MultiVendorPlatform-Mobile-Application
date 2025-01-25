@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
@@ -12,9 +13,9 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+      // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+        // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       ),
       body: Column(
         children: [
@@ -50,6 +51,7 @@ class _CategoriesState extends State<Categories> {
                 // crossAxisCount: 2,
                 // crossAxisSpacing: 15,
                 // mainAxisSpacing: 15,
+              
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 3 / 3.6,
                   crossAxisCount: 2,
@@ -59,18 +61,28 @@ class _CategoriesState extends State<Categories> {
                 itemCount: productCategories.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
+                    decoration:  BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.light
+                ? white
+                : ash,
                         borderRadius: BorderRadius.all(Radius.circular(23))),
                     child: ListView(
                       children: [
-                        Image.asset(
-                          productCategories[index]["img"]!,
+                        // Image.asset(
+                        //   productCategories[index]["img"]!,
+                        // ),
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28),
+                              image:  DecorationImage(
+                                  image:
+                                      AssetImage( productCategories[index]["img"]!,),fit: BoxFit.fitHeight)),
                         ),
-                         Center(
+                        Center(
                             child: Text(
                           productCategories[index]["title"]!,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 18,overflow: TextOverflow.ellipsis),
                         )),
                       ],
                     ),

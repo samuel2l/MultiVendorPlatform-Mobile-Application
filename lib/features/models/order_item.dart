@@ -52,9 +52,8 @@ class OrderItem {
   }
 
   factory OrderItem.fromMap(Map<String, dynamic> map) {
-    print("inside order item from map");
-    print(map);
     int amntBought = 0;
+    
     return OrderItem(
         orderId: map['orderId'] as String,
         customerId: map['customerId'] as String,

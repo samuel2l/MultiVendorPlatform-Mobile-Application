@@ -100,20 +100,34 @@ const List<String> sizes = [
     "img":"assets/images/electronics.png"
   },
     {
-    "title": "Sports and Outdoors",
+    "title": "Sports ",
     "img":"assets/images/sports.png"
+  },
+      {
+    "title": "Jewelry and Accessories",
+    "img":"assets/images/jewell.webp"
+  },
+    {
+    "title": "Beauty and Cosmetics",
+    "img":"assets/images/kylie.png"
+  },
+    {
+    "title": "Musical Instruments",
+    "img":"assets/images/piano.jpg"
+  },
+
+    {
+    "title": "Industry and Science",
+    "img":"assets/images/sc.jpg"
   },
   {
     "title": "Home and Kitchen",
     "img":"assets/images/vase.png"
   },
-    {
-    "title": "Jewelry and Accessories",
-    "img":"assets/images/watch.png"
-  },
+
   {
     "title": "Health and Personal Care",
-    "img":"assets/images/vase.png"
+    "img":"assets/images/health.webp"
   },
     {
     "title": "Furniture",
@@ -121,31 +135,27 @@ const List<String> sizes = [
   },
   {
     "title": "Fashion",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/fashion.jpg"
   },
-
 
   {
     "title": "Books and Stationery",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/books.jpg"
   },
 
   {
     "title": "Toys and Games",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/games.webp"
   },
-  {
-    "title": "Beauty and Cosmetics",
-    "img":"assets/images/sports.png"
-  },
+
   {
     "title": "Automotive",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/automotive.webp"
   },
 
   {
     "title": "Groceries and Food",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/groc.webp"
   },
   {
     "title": "Baby Products",
@@ -153,36 +163,29 @@ const List<String> sizes = [
   },
   {
     "title": "Pet Supplies",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/pet.jpg"
   },
   {
     "title": "Tools and Hardware",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/tools.jpg"
   },
   {
     "title": "Office Supplies",
-    "img":"assets/images/sports.png"
-  },
-  {
-    "title": "Musical Instruments",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/office.jpg"
   },
 
   {
     "title": "Art and Craft",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/arts.webp"
   },
+
   {
-    "title": "Industrial and Scientific",
-    "img":"assets/images/sports.png"
-  },
-  {
-    "title": "Video Games and Consoles",
-    "img":"assets/images/sports.png"
+    "title": "Video Games ",
+    "img":"assets/images/ps5.jpg"
   },
   {
     "title": "Music",
-    "img":"assets/images/sports.png"
+    "img":"assets/images/music.png"
   },
 ];
 const appBarGradient = LinearGradient(

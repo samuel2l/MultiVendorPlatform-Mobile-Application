@@ -68,10 +68,6 @@ class Product {
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
-    print("insdie product from map");
-    print(map);
-    print(map['sizes'].runtimeType);
-
     return Product(
       id: map['_id'] as String,
       name: map['name'] as String,
@@ -80,8 +76,13 @@ class Product {
       type: map['type'] as String,
       stock: map['stock'] as int,
       price: map['price'] as dynamic,
-      sizes: (map['sizes'] as List<dynamic>).map((size)=>size.toString()).toList(),
-colors: (map['colors'] as List<dynamic>).map((color)=>color.toString()).toList(),      seller: map['seller'] as String,
+      sizes: (map['sizes'] as List<dynamic>)
+          .map((size) => size.toString())
+          .toList(),
+      colors: (map['colors'] as List<dynamic>)
+          .map((color) => color.toString())
+          .toList(),
+      seller: map['seller'] as String,
     );
   }
 

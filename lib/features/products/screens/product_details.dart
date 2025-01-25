@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/dialogs/cart_colors_exceeded.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/dialogs/select_colors_dialog.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/dialogs/stock_exceeded_dialog.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
@@ -63,9 +64,36 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   void addToCart() {
-    print("addimg to art");
+    if (quantity > widget.product.stock) {
+      if (quantity == selectedColors.length) {
+        productDetailsService.editCart(
+            context: context,
+            product: widget.product,
+            amount: quantity,
+            selectedColors: selectedColors,
+            selectedSizes: selectedSizes);
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SelectColorsDialog();
+          },
+        );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return  StockExceededDialog(stock:widget.product.stock);
+        },
+      );
+    }
+  }
+
+  void addToWishlist() {
+    print("adding to wishlist");
     if (quantity == selectedColors.length) {
-      productDetailsService.editCart(
+      wishlistService.editWishlist(
           context: context,
           product: widget.product,
           amount: quantity,
@@ -78,27 +106,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           return const SelectColorsDialog();
         },
       );
-    }
-  }
-
-  void addToWishlist() {
-    print("adding to wishlist");
-    if (quantity == selectedColors.length) {
-    wishlistService.editWishlist(
-        context: context,
-        product: widget.product,
-        amount: quantity,
-        selectedColors: selectedColors,
-        selectedSizes: selectedSizes);
-
-    }else{
-            showDialog(
-        context: context,
-        builder: (context) {
-          return const SelectColorsDialog();
-        },
-      );
-
     }
   }
 

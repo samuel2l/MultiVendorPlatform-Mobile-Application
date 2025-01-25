@@ -11,14 +11,22 @@ class UserProvider extends ChangeNotifier {
       wishlist: [],
       orders: [],
       token: '',
-      profile: Profile(name: '',img:'', gender: '', street: '', postalCode: '', city: '', country: '')
-      );
+      profile: Profile(
+          name: '',
+          img: '',
+          gender: '',
+          street: '',
+          postalCode: '',
+          city: '',
+          country: '',
+          about: ''));
 
   User get user => _user;
 
   void setUserFromModel(User user) {
     _user = user;
     print("set user now ${_user.email}");
+    print("set user now ${_user.profile.toString()}");
     notifyListeners();
   }
 }

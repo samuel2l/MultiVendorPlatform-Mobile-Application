@@ -10,6 +10,7 @@ class Profile {
   final String postalCode;
   final String city;
   final String country;
+  final String about;
 
   Profile({
     required this.name,
@@ -19,6 +20,7 @@ class Profile {
     required this.postalCode,
     required this.city,
     required this.country,
+    required this.about,
   });
 
   Profile copyWith({
@@ -29,6 +31,7 @@ class Profile {
     String? postalCode,
     String? city,
     String? country,
+        String? about
   }) {
     return Profile(
       name: name ?? this.name,
@@ -38,6 +41,7 @@ class Profile {
       postalCode: postalCode ?? this.postalCode,
       city: city ?? this.city,
       country: country ?? this.country,
+      about: about ?? this.about,
     );
   }
 
@@ -45,12 +49,12 @@ class Profile {
     return <String, dynamic>{
       'name': name,
       'img': img,
-
       'gender': gender,
       'street': street,
       'postalCode': postalCode,
       'city': city,
       'country': country,
+      'about':about
     };
   }
 
@@ -63,11 +67,9 @@ class Profile {
       postalCode: map['postalCode'] as String,
       city: map['city'] as String,
       country: map['country'] as String,
+      about: map['about'] as String,
     );
   }
 
-  String toJson() => json.encode(toMap());
 
-  factory Profile.fromJson(String source) =>
-      Profile.fromMap(json.decode(source) as Map<String, dynamic>);
 }

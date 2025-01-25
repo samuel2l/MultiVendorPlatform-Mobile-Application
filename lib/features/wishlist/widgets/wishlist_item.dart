@@ -94,7 +94,7 @@ class _WishlistItemState extends State<WishlistItem> {
             children: [
               Image.network(
                 wishlistItem.product.img.isNotEmpty == true
-                    ? wishlistItem.product.img
+                    ? wishlistItem.product.img[0]
                     : 'https://via.placeholder.com/150',
                 fit: BoxFit.contain,
                 height: 135,

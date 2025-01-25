@@ -6,7 +6,7 @@ class Product {
 
   final String name;
   final String desc;
-  final String img;
+  final List<String> img;
   final String type;
   final int stock;
   final dynamic price;
@@ -32,22 +32,26 @@ class Product {
     String? id,
     String? name,
     String? desc,
-    String? img,
+    List<String>? img,
     String? type,
     int? stock,
     dynamic price,
+    List<String>? sizes,
+
+    List<String>? colors,
+    
     String? seller,
   }) {
     return Product(
       id: id ?? this.id,
       name: name ?? this.name,
       desc: desc ?? this.desc,
-      img: img ?? this.img,
+      img: img ??this.img,
       type: type ?? this.type,
       stock: stock ?? this.stock,
       price: price ?? this.price,
-      sizes: sizes,
-      colors: colors,
+      sizes: sizes??this.sizes,
+      colors: colors??this.colors,
       seller: seller ?? this.seller,
     );
   }
@@ -72,7 +76,9 @@ class Product {
       id: map['_id'] as String,
       name: map['name'] as String,
       desc: map['desc'] as String,
-      img: map['img'] as String,
+      img: (map['img'] as List<dynamic>)
+          .map((img) => img.toString())
+          .toList(),
       type: map['type'] as String,
       stock: map['stock'] as int,
       price: map['price'] as dynamic,

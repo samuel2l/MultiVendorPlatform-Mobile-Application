@@ -20,7 +20,7 @@ class SearchedProduct extends StatelessWidget {
           child: Row(
             children: [
               Image.network(
-                product.img,
+                product.img[0],
                 fit: BoxFit.contain,
                 height: 135,
                 width: 135,

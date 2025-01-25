@@ -32,7 +32,7 @@ class CartItem {
           id: map['product']["_id"],
           name: map['product']["name"],
           desc: map['product']["desc"],
-          img: map['product']["img"],
+          img: (map['product']["img"] as List<dynamic>).map((img)=>img as String).toList(),
           type: map['product']["type"],
           stock: int.parse(map['product']['stock']),
           price: map['product']["price"],

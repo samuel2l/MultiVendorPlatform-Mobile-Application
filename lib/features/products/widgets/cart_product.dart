@@ -85,7 +85,7 @@ class _CartProductState extends State<CartProduct> {
             children: [
               Image.network(
                 cartItem.product.img.isNotEmpty == true
-                    ? cartItem.product.img
+                    ? cartItem.product.img[0]
                     : 'https://via.placeholder.com/150',
                 fit: BoxFit.contain,
                 height: 135,

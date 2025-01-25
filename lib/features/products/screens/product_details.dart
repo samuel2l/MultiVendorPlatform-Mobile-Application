@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
@@ -65,48 +66,131 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   void addToCart() {
     print("addimg to art");
-    if (quantity == selectedColors.length) {
+
+    if (widget.product.sizes.isEmpty && widget.product.colors.isEmpty) {
+      productDetailsService.editCart(
+          context: context, product: widget.product, amount: quantity);
+    } else if (widget.product.sizes.isNotEmpty &&
+        widget.product.colors.isEmpty) {
       if (quantity == selectedSizes.length) {
+        productDetailsService.editCart(
+            context: context,
+            product: widget.product,
+            amount: quantity,
+            selectedSizes: selectedSizes);
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SelectSizesDialog();
+          },
+        );
+      }
+    } else if (widget.product.sizes.isEmpty &&
+        widget.product.colors.isNotEmpty) {
+      if (quantity == selectedColors.length) {
+        productDetailsService.editCart(
+            context: context,
+            product: widget.product,
+            amount: quantity,
+            selectedColors: selectedColors);
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SelectColorsDialog();
+          },
+        );
+      }
+    } else {
+      if (quantity == selectedColors.length &&
+          quantity == selectedSizes.length) {
         productDetailsService.editCart(
             context: context,
             product: widget.product,
             amount: quantity,
             selectedColors: selectedColors,
             selectedSizes: selectedSizes);
-      } else {
+      } else if (quantity == selectedColors.length) {
         showDialog(
           context: context,
           builder: (context) {
-            return SelectSizesDialog();
+            return const SelectSizesDialog();
+          },
+        );
+      }else{
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SelectColorsDialog();
           },
         );
       }
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const SelectColorsDialog();
-        },
-      );
     }
   }
 
   void addToWishlist() {
-    print("adding to wishlist");
-    if (quantity == selectedColors.length) {
+    print("addimg to art");
+
+    if (widget.product.sizes.isEmpty && widget.product.colors.isEmpty) {
       wishlistService.editWishlist(
+          context: context, product: widget.product, amount: quantity);
+    } else if (widget.product.sizes.isNotEmpty &&
+        widget.product.colors.isEmpty) {
+      if (quantity == selectedSizes.length) {
+        wishlistService.editWishlist(
+            context: context,
+            product: widget.product,
+            amount: quantity,
+            selectedSizes: selectedSizes);
+      } else {
+        showDialog(
           context: context,
-          product: widget.product,
-          amount: quantity,
-          selectedColors: selectedColors,
-          selectedSizes: selectedSizes);
+          builder: (context) {
+            return const SelectSizesDialog();
+          },
+        );
+      }
+    } else if (widget.product.sizes.isEmpty &&
+        widget.product.colors.isNotEmpty) {
+      if (quantity == selectedColors.length) {
+        wishlistService.editWishlist(
+            context: context,
+            product: widget.product,
+            amount: quantity,
+            selectedColors: selectedColors);
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SelectColorsDialog();
+          },
+        );
+      }
     } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const SelectColorsDialog();
-        },
-      );
+      if (quantity == selectedColors.length &&
+          quantity == selectedSizes.length) {
+        wishlistService.editWishlist(
+            context: context,
+            product: widget.product,
+            amount: quantity,
+            selectedColors: selectedColors,
+            selectedSizes: selectedSizes);
+      } else if (quantity == selectedColors.length) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SelectSizesDialog();
+          },
+        );
+      }else{
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SelectColorsDialog();
+          },
+        );
+      }
     }
   }
 
@@ -208,31 +292,31 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
           ),
-          // CarouselSlider(
-          //   items: widget.product.images.map(
-          //     (i) {
-          //       return Builder(
-          //         builder: (BuildContext context) => Image.network(
-          //           i,
-          //           fit: BoxFit.contain,
-          //           height: 200,
-          //         ),
-          //       );
-          //     },
-          //   ).toList(),
-          //   options: CarouselOptions(
-          //     viewportFraction: 1,
-          //     height: 300,
-          //   ),
-          // ),
-          SizedBox(
-            width: double.infinity,
-            child: Image.network(
-              widget.product.img,
-              fit: BoxFit.cover,
-              height: 240,
+          CarouselSlider(
+            items: widget.product.img.map(
+              (i) {
+                return Builder(
+                  builder: (BuildContext context) => Image.network(
+                    i,
+                    fit: BoxFit.contain,
+                    height: 200,
+                  ),
+                );
+              },
+            ).toList(),
+            options: CarouselOptions(
+              viewportFraction: 1,
+              height: 300,
             ),
           ),
+          // SizedBox(
+          //   width: double.infinity,
+          //   child: Image.network(
+          //     widget.product.img,
+          //     fit: BoxFit.cover,
+          //     height: 240,
+          //   ),
+          // ),
           Container(
             color: Colors.black12,
             height: 5,

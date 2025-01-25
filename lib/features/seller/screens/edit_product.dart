@@ -65,7 +65,7 @@ class _EditProductState extends State<EditProduct> {
           description: description,
           stock: stock,
           type: type,
-          image: selectedImages[0],
+          images: selectedImages,
           id: widget.product.id,
           selectedSizes:
               selectedSizes.isEmpty ? widget.product.sizes : selectedSizes,

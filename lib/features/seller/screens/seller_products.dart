@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/edit_product.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
@@ -65,31 +66,22 @@ class _SellerProductsState extends State<SellerProducts> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 3/3.3
+                  childAspectRatio: 3/3.5
                 ),
                 itemCount: productList!.length,
                 itemBuilder: (context, index) {
                   var product = productList![index];
-                  String images = product['img'];
-                  return Column(
+                  List<String> images = (product['img'] as List).map((img)=>img.toString()).toList();
+                  return ListView(
                     children: [
-                      // SizedBox(
-                      //   height: 180,
-                      //   child: Image.network(
-                      //     product['images'][0],
-                      //     fit: BoxFit.fitHeight,
-                      //   ),
-                      // ),
-                      // CarouselSlider(
-                      //   items: images.map((img) {
-                      //     return Image.network(img);
-                      //   }).toList(),
-                      //   options: CarouselOptions(viewportFraction: 1),
-                      // ),
-                      Image.network(
-                        images,
-                        height: 150,
+                      SizedBox(
+
+                        child: Image.network(
+                          images[0],
+                          fit: BoxFit.fitHeight,
+                        ),
                       ),
+
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 // String uri = 'http://<your ip address>:3000';
 // String uri = 'https://multivendorapp-user-service.onrender.com';
-String uri = "http://localhost:8001";
+String uri = "http://192.168.207.11:8001";
 String productsUri =
     // 'https://multivendorapp-products-microservice.onrender.com';
-    'http://localhost:8002';
+    'http://192.168.207.11:8002';
 String shoppingUri =
     // 'https://multivendorplatform-shopping-service.onrender.com';
-    'http://localhost:8003';
+    'http://192.168.207.11:8003';
 
 const Map<String, Color> colorDictionary = {
   "black": Colors.black,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SelectColorsDialog extends StatelessWidget {
-  const SelectColorsDialog({super.key});
+class SelectSizesDialog extends StatelessWidget {
+  const SelectSizesDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

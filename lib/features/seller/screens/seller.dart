@@ -24,7 +24,6 @@ class _SellerState extends State<Seller> {
     const Wishlist(),
     const Orders(),
     const Sales()
-
   ];
 
   void updatePage(int page) {
@@ -38,9 +37,6 @@ class _SellerState extends State<Seller> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(gradient: appBarGradient),
-        ),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 28.0),
@@ -122,7 +118,7 @@ class _SellerState extends State<Seller> {
             ),
             label: '',
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Container(
               width: bottomNavBarWidth,
               decoration: BoxDecoration(
@@ -139,7 +135,7 @@ class _SellerState extends State<Seller> {
             ),
             label: '',
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Container(
               width: bottomNavBarWidth,
               decoration: BoxDecoration(

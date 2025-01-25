@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/search/screens/search.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 
 class Categories extends StatefulWidget {
@@ -10,48 +11,50 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
+    void navigateToSearch(String query){
+    Navigator.of(context).pushNamed(Search.routeName,arguments: query);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       appBar: AppBar(
-        // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+        elevation: 0,
+
+
+        title: Container(
+          height: 40,
+          width: 320,
+          // padding: const EdgeInsets.only(left: 20),
+          child: TextFormField(
+            onFieldSubmitted: navigateToSearch,
+            decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                fillColor: Colors.white,
+                filled: true,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(7)),
+                    borderSide: BorderSide.none),
+                contentPadding: EdgeInsets.all(8)),
+          ),
+        ),
+        centerTitle: false,
       ),
       body: Column(
         children: [
-          const Text(
-            'Categories ',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+          Container(
+            padding: EdgeInsets.only(left: 8),
+            alignment: Alignment.centerLeft,
+            child: const Text(
+              'Categories ',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+            ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(18.0),
               child: GridView.builder(
-                // children: [
-                //   Container(
-                //     decoration: const BoxDecoration(
-                //         color: Colors.white,
-                //         borderRadius: BorderRadius.all(Radius.circular(23))),
-                //     child: ListView(
-                //       children: [
-                //         Image.asset(
-                //           "assets/images/Rectangle 43.png",
-                //         ),
-                //         const Center(
-                //             child: Text(
-                //           "Electronics",
-                //           style: TextStyle(fontSize: 20),
-                //         )),
-
-                //       ],
-                //     ),
-                //   ),
-                //    ],
-                //                childAspectRatio: 3 / 3.3,
-                // crossAxisCount: 2,
-                // crossAxisSpacing: 15,
-                // mainAxisSpacing: 15,
-              
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 3 / 3.6,
                   crossAxisCount: 2,
@@ -68,9 +71,6 @@ class _CategoriesState extends State<Categories> {
                         borderRadius: BorderRadius.all(Radius.circular(23))),
                     child: ListView(
                       children: [
-                        // Image.asset(
-                        //   productCategories[index]["img"]!,
-                        // ),
                         Container(
                           height: 200,
                           decoration: BoxDecoration(

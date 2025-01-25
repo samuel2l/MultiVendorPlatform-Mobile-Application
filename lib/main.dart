@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/splash.dart';
-import 'package:multivendorplatformmobile/features/home/screens/categories.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/router.dart';
 import 'package:multivendorplatformmobile/theme.dart';
@@ -35,7 +33,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    
   }
 
   @override
@@ -52,7 +49,8 @@ class _MyAppState extends State<MyApp> {
       //         ? const BottomNavBar()
       //         : const Admin()
       //     : const Auth(),
-      home: const Categories(),
+      home: const Splash()
     );
   }
 }
+

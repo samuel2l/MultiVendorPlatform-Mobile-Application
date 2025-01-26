@@ -1,11 +1,6 @@
 import 'package:multivendorplatformmobile/features/models/order_item.dart';
-import 'package:multivendorplatformmobile/features/models/product.dart';
-import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
-import 'package:multivendorplatformmobile/features/wishlist/services/wishlist_service.dart';
-import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Sale extends StatefulWidget {
   const Sale({
@@ -36,8 +31,8 @@ class _SaleState extends State<Sale> {
   @override
   Widget build(BuildContext context) {
     return Container(
- color: Colors.red,
- margin: EdgeInsets.symmetric(horizontal: 8,vertical: 10),
+      color: Colors.red,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Column(
         children: [
           Container(
@@ -80,23 +75,24 @@ class _SaleState extends State<Sale> {
                     maxLines: 2,
                   ),
                 ),
-Column(children:  (widget.order.items).map((product) {
-                      return Container(
-                          color: Colors.red,
-                          height: 40,
-                          child: Column(
-                            children: [
-                              Text(product.name),
-                              product.sizes.isEmpty
-                                  ? const SizedBox.shrink()
-                                  :    Text(product.sizes.join(", ")),
-                                                                  product.colors.isEmpty
-                                  ? const SizedBox.shrink()
-                                  :    Text(product.colors.join(", "))
-                  
-                            ],
-                          ));
-                    }).toList(),)
+                Column(
+                  children: (widget.order.items).map((product) {
+                    return Container(
+                        color: Colors.red,
+                        height: 40,
+                        child: Column(
+                          children: [
+                            Text(product.name),
+                            product.sizes.isEmpty
+                                ? const SizedBox.shrink()
+                                : Text(product.sizes.join(", ")),
+                            product.colors.isEmpty
+                                ? const SizedBox.shrink()
+                                : Text(product.colors.join(", "))
+                          ],
+                        ));
+                  }).toList(),
+                )
               ],
             ),
           ),

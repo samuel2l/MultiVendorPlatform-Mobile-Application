@@ -3,10 +3,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:intl/intl.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/models/order_item.dart';
-import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';

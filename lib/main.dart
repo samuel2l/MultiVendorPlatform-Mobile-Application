@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/splash.dart';
+import 'package:multivendorplatformmobile/features/profile/screens/account.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/router.dart';
 import 'package:multivendorplatformmobile/theme.dart';
@@ -37,18 +38,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // var user = Provider.of<UserProvider>(context);
+
     return MaterialApp(
       title: 'Multivendor Platform',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
       onGenerateRoute: (settings) => generateRoute(settings),
-      // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-      //     ? Provider.of<UserProvider>(context).user.role == 'Buyer'
-      //         ? const BottomNavBar()
-      //         : const Admin()
-      //     : const Auth(),
       home: const Splash()
     );
   }

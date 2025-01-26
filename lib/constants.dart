@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 // String uri = 'http://<your ip address>:3000';
 // String uri = 'https://multivendorapp-user-service.onrender.com';
-String uri = "http://192.168.207.11:8001";
+String uri = "http://172.16.1.214:8001";
 String productsUri =
     // 'https://multivendorapp-products-microservice.onrender.com';
-    'http://192.168.207.11:8002';
+    'http://172.16.1.214:8002';
 String shoppingUri =
     // 'https://multivendorplatform-shopping-service.onrender.com';
-    'http://192.168.207.11:8003';
+    'http://172.16.1.214:8003';
 
 const Map<String, Color> colorDictionary = {
   "black": Colors.black,
@@ -33,6 +33,51 @@ const Map<String, Color> colorDictionary = {
   "lightGreen": Colors.lightGreen,
   "blueGrey": Colors.blueGrey,
 };
+   Map<String, String> sizeMapping = {
+    "US C1 / UK 0.5 / EU 16": "UK 0.5",
+    "US C2 / UK 1.5 / EU 17": "UK 1.5",
+    "US C3 / UK 2.5 / EU 18": "UK 2.5",
+    "US C4 / UK 3.5 / EU 19": "UK 3.5",
+    "US C5 / UK 4.5 / EU 20": "UK 4.5",
+    "US C6 / UK 5.5 / EU 21": "UK 5.5",
+    "US C7 / UK 6.5 / EU 22": "UK 6.5",
+    "US C8 / UK 7.5 / EU 23": "UK 7.5",
+    "US C9 / UK 8.5 / EU 24": "UK 8.5",
+    "US C10 / UK 9.5 / EU 25": "UK 9.5",
+    "US C11 / UK 10.5 / EU 26": "UK 10.5",
+    "US C12 / UK 11.5 / EU 27": "UK 11.5",
+    "US C13 / UK 12.5 / EU 28": "UK 12.5",
+    "US 1 / UK 13 / EU 29": "UK 13",
+    "US 1.5 / UK 13.5 / EU 30": "UK 13.5",
+    "US 2 / UK 1 / EU 31": "UK 1",
+    "US 2.5 / UK 1.5 / EU 31.5": "UK 1.5",
+    "US 3 / UK 2 / EU 32": "UK 2",
+    "US 3.5 / UK 2.5 / EU 33": "UK 2.5",
+    "US 4 / UK 3 / EU 34": "UK 3",
+    "US 4.5 / UK 3.5 / EU 35": "UK 3.5",
+    "US 5 / UK 3 / EU 36": "UK 3",
+    "US 5.5 / UK 3.5 / EU 36.5": "UK 3.5",
+    "US 6 / UK 4 / EU 37": "UK 4",
+    "US 6.5 / UK 4.5 / EU 37.5": "UK 4.5",
+    "US 7 / UK 5 / EU 38": "UK 5",
+    "US 7.5 / UK 5.5 / EU 38.5": "UK 5.5",
+    "US 8 / UK 6 / EU 39": "UK 6",
+    "US 8.5 / UK 6.5 / EU 40": "UK 6.5",
+    "US 9 / UK 7 / EU 40.5": "UK 7",
+    "US 9.5 / UK 7.5 / EU 41": "UK 7.5",
+    "US 10 / UK 8 / EU 42": "UK 8",
+    "US 10.5 / UK 8.5 / EU 42.5": "UK 8.5",
+    "US 11 / UK 9 / EU 43": "UK 9",
+    "US 11.5 / UK 9.5 / EU 44": "UK 9.5",
+    "US 12 / UK 10 / EU 44.5": "UK 10",
+    "US 13 / UK 11 / EU 46": "UK 11",
+    "XS": "UK XS",
+    "S": "UK S",
+    "M": "UK M",
+    "L": "UK L",
+    "XL": "UK XL",
+    "XXL": "UK XXL"
+  };
 const List<String> colors = [
     "Red",
     "Blue",

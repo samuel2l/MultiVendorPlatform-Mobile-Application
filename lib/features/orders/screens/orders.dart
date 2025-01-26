@@ -6,7 +6,7 @@ import 'package:multivendorplatformmobile/features/orders/services/order_service
 
 class Orders extends StatefulWidget {
   const Orders({super.key});
-
+  static const String routeName = '/orders';
   @override
   State<Orders> createState() => _OrdersState();
 }
@@ -27,12 +27,8 @@ class _OrdersState extends State<Orders> {
   }
 
   void fetchOrders(context) async {
-    // orders = await accountServices.fetchMyOrders(context: context);
     orders = await orderService.getOrders(context: context);
-    print("from fetch orders?????");
-    print(orders);
 
-    // print(orders![0].);
     setState(() {});
   }
 
@@ -42,13 +38,16 @@ class _OrdersState extends State<Orders> {
         ? const Center(
             child: Text("errorrrr"),
           )
-        : orders!.isEmpty
+                    : Scaffold(
+
+                appBar: AppBar(
+                  
+                ),
+                body: orders!.isEmpty
             ? const Center(
-                child: Text("you have bo orders"),
+                child: Text("you have no orders"),
               )
-            : Scaffold(
-                appBar: AppBar(),
-                body: Column(
+: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

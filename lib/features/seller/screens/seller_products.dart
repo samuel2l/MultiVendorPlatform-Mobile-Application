@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/edit_product.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';

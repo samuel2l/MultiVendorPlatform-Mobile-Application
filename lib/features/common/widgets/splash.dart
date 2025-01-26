@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
@@ -73,6 +74,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: black,
       body: Center(
         child: CircularProgressIndicator(),
       ),

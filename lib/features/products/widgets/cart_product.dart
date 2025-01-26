@@ -1,4 +1,3 @@
-import 'package:multivendorplatformmobile/features/models/cart_item.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';

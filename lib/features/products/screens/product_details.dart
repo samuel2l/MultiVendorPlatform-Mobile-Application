@@ -128,7 +128,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   void addToWishlist() {
-    print("addimg to art");
+    print("adding to wishlist");
 
     if (widget.product.sizes.isEmpty && widget.product.colors.isEmpty) {
       wishlistService.editWishlist(
@@ -460,7 +460,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           backgroundColor: Colors.transparent,
                           foregroundColor: Theme.of(context).brightness==Brightness.light?black:teal
                         ),
-                        onPressed: addToCart,
+                        onPressed: addToWishlist,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

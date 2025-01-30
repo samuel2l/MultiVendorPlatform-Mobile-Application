@@ -164,6 +164,7 @@ class AuthService {
           },
         );
         var userData = jsonDecode(userRes.body);
+        print("ah userr data?");
 
         User user = User.fromMap({
           "email": userData["email"],
@@ -173,9 +174,7 @@ class AuthService {
           "cart": userData["cart"],
           "wishlist": userData["wishlist"],
           "orders": userData["cart"],
-
           "profile": userData["profile"],
-
         });
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(user);

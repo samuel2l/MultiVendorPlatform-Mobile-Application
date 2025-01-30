@@ -1,11 +1,14 @@
+import 'dart:convert';
+
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/address/screens/address.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/features/products/widgets/cart_product.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -22,15 +25,79 @@ class _CartState extends State<Cart> {
     Navigator.pushNamed(context, Search.routeName, arguments: query);
   }
 
+  Future<void> initPaymentSheet(context) async {
+    try {
+
+      http.Response response = await http.post(
+        Uri.parse('$shoppingUri/create-payment-intent'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      final data = jsonDecode(response.body);
+      print("DATA FROM STRIPE API");
+      print(data);
+
+      final paymentIntent = data['paymentIntent'];
+      final ephemeralKey = data['ephemeralKey'];
+      final customer = data['customer'];
+      const publishableKey =
+          "pk_test_51QUj13KvYI3VPzXg09FJihE8d7S6TZhH1snWgfyn7AcwjQkDX1UMYIyqkeBusWVT7VC8B4jSllmjVfYMmF9knYho00dQKl01Bv";
+
+      Stripe.publishableKey = publishableKey;
+      BillingDetails billingDetails = const BillingDetails(
+        email: 'test@example.com',
+        phone: '+1234567890',
+        name: 'Test User',
+      );
+
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          customFlow: false,
+          merchantDisplayName: 'MOBIZATE',
+          paymentIntentClientSecret: paymentIntent,
+          customerEphemeralKeySecret: ephemeralKey,
+          customerId: customer,
+          style: ThemeMode.light,
+          billingDetails: billingDetails,
+          googlePay: const PaymentSheetGooglePay(
+            merchantCountryCode: 'IN',
+            currencyCode: 'usd',
+            testEnv: true,
+          ),
+        ),
+      );
+
+      await Stripe.instance.presentPaymentSheet().then((value) {
+      }).onError((error, stackTrace) {
+        if (error is StripeException) {
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text('${error.error.localizedMessage}')),
+          // );
+        } else {
+
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text('Stripe Error: $error')),
+          // );
+        }
+      });
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Error initializing payment: $e')),
+      // );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text(e.toString())),
+      // );
+    }
+  }
+
   void navigateToAddress(int sum) {
-    Navigator.of(context).pushNamed(Address.routeName);
+    // Navigator.of(context).pushNamed(Address.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
-    int sum = 0;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -112,7 +179,14 @@ class _CartState extends State<Cart> {
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               child: Text('Proceed to Buy (${user.cart.length} items)'),
-              onPressed: () => navigateToAddress(sum),
+              onPressed: () {
+                initPaymentSheet(context);
+              },
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) {
+              //     return PaymentScreen();
+              //   },
+              // )),
             ),
           ),
           const SizedBox(height: 15),
@@ -121,16 +195,19 @@ class _CartState extends State<Cart> {
             height: 1,
           ),
           const SizedBox(height: 5),
-          user.cart.isEmpty?const Center(child: Text("You have no items in your cart"),):
-          ListView.builder(
-            itemCount: user.cart.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return CartProduct(
-                index: index,
-              );
-            },
-          ),
+          user.cart.isEmpty
+              ? const Center(
+                  child: Text("You have no items in your cart"),
+                )
+              : ListView.builder(
+                  itemCount: user.cart.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return CartProduct(
+                      index: index,
+                    );
+                  },
+                ),
         ],
       ),
     );

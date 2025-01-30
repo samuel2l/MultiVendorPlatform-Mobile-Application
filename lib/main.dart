@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/splash.dart';
-import 'package:multivendorplatformmobile/features/profile/screens/account.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/router.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  Stripe.publishableKey = "pk_test_51QUj13KvYI3VPzXg09FJihE8d7S6TZhH1snWgfyn7AcwjQkDX1UMYIyqkeBusWVT7VC8B4jSllmjVfYMmF9knYho00dQKl01Bvyour_publishable_key";
   runApp(
     MultiProvider(
       providers: [
@@ -32,7 +33,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

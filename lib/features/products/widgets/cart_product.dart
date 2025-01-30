@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
@@ -133,45 +135,6 @@ class _CartProductState extends State<CartProduct> {
         ),
         Row(
           children: [
-            InkWell(
-              onTap: () => decrementQuantity(),
-              child: Container(
-                width: 35,
-                height: 32,
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.remove,
-                  size: 18,
-                ),
-              ),
-            ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12, width: 1.5),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Container(
-                width: 35,
-                height: 32,
-                alignment: Alignment.center,
-                child: Text(
-                  quantity.toString(),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () => incrementQuantity(),
-              child: Container(
-                width: 35,
-                height: 32,
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.add,
-                  size: 18,
-                ),
-              ),
-            ),
             const Spacer(),
             ElevatedButton(
               onPressed: () async{

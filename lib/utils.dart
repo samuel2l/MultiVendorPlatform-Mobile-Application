@@ -6,10 +6,10 @@ void httpErrorHandle({
   required BuildContext context,
   required VoidCallback onSuccess,
 }) {
+  if (response.statusCode >= 199 && response.statusCode < 300) {
+  onSuccess();
+} else {
   switch (response.statusCode) {
-    case 200:
-      onSuccess();
-      break;
     case 400:
       showSnackBar(context,'Bad request, try again');
       break;
@@ -19,6 +19,8 @@ void httpErrorHandle({
     default:
       showSnackBar(context, "something went wrong");
   }
+
+}
 }
 
 void showSnackBar(BuildContext context, String text) {

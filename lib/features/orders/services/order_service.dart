@@ -10,9 +10,10 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class OrderService extends ChangeNotifier {
-  void placeOrder({
+  Future<void> placeOrder({
     required BuildContext context,
   }) async {
+    print("IN PLACE ORDER FUNCTION?");
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
@@ -26,18 +27,19 @@ class OrderService extends ChangeNotifier {
       );
       print("response from order api");
       print(res.body);
+      print(res.statusCode);
 
       httpErrorHandle(
         response: res,
         // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
+          print("ON SUCCESS>?????????/");
           showSnackBar(context, 'Your order has been placed!');
           User user = userProvider.user.copyWith(
             cart: [],
           );
           userProvider.setUserFromModel(user);
-          Navigator.of(context).pop();
         },
       );
     } catch (e) {

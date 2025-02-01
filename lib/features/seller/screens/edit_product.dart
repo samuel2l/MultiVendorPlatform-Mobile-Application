@@ -7,6 +7,9 @@ import 'package:multivendorplatformmobile/features/common/widgets/input_field.da
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multivendorplatformmobile/features/seller/widgets/select_colors.dart';
+import 'package:multivendorplatformmobile/features/seller/widgets/select_sizes.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 
 class EditProduct extends StatefulWidget {
   const EditProduct({super.key, required this.product});
@@ -75,6 +78,36 @@ class _EditProductState extends State<EditProduct> {
     setState(() {});
   }
 
+  void showSizesDialog() async {
+    List<String>? sizesSelected = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const SelectSizes(items: sizes);
+      },
+    );
+
+    if (sizesSelected != null) {
+      setState(() {
+        selectedSizes = sizesSelected;
+      });
+    }
+  }
+
+  void showColorsDialog() async {
+    List<String>? colorsSelected = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const SelectColors(items: colors);
+      },
+    );
+
+    if (colorsSelected != null) {
+      setState(() {
+        selectedColors = colorsSelected;
+      });
+    }
+  }
+
   @override
   void dispose() {
     nameController.dispose();
@@ -86,15 +119,17 @@ class _EditProductState extends State<EditProduct> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.product.sizes);
+    print(widget.product.colors);
+    print("doinwfewf");
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(gradient: appBarGradient),
-        ),
-        title: const Text(
-          'Edit Product',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          'Edit ${widget.product.name}',
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
@@ -108,6 +143,9 @@ class _EditProductState extends State<EditProduct> {
                   pickImages();
                 },
                 child: DottedBorder(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? black
+                      : lightAsh,
                   borderType: BorderType.RRect,
                   radius: const Radius.circular(10),
                   dashPattern: const [10, 4],
@@ -285,43 +323,146 @@ class _EditProductState extends State<EditProduct> {
               const SizedBox(
                 height: 20,
               ),
-              DropdownButtonFormField<String>(
-                items: sizes
-                    .map((size) => DropdownMenuItem(
-                          value: size,
-                          child: Text(size),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null && !selectedSizes.contains(value)) {
-                    setState(() {
-                      selectedSizes.add(value);
-                    });
-                  }
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Available Sizes',
-                  border: OutlineInputBorder(),
-                ),
+              const Text("Only applies if your product has sizes"),
+              TextButton(
+                  onPressed: () {
+                    showSizesDialog();
+                  },
+                  child: const Text("Select Sizes")),
+              const SizedBox(
+                height: 10,
               ),
-              DropdownButtonFormField<String>(
-                items: colors
-                    .map((color) => DropdownMenuItem(
-                          value: color,
-                          child: Text(color),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null && !selectedColors.contains(value)) {
-                    setState(() {
-                      selectedColors.add(value);
-                    });
-                  }
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Available Colors',
-                  border: OutlineInputBorder(),
-                ),
+              widget.product.sizes.isNotEmpty
+                  ? const Text("Current sizes")
+                  : const SizedBox.shrink(),
+              widget.product.sizes.isNotEmpty
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                          children: widget.product.sizes.map(
+                        (size) {
+                          print("SIZEEEE $size");
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              // padding: const EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: ash),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(sizeMapping[size]!),
+                            ),
+                          );
+                        },
+                      ).toList()))
+                  : const SizedBox.shrink(),
+              selectedSizes.isNotEmpty
+                  ? const Text("New Selected Sizes")
+                  : const SizedBox.shrink(),
+              selectedSizes.isNotEmpty
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                          children: selectedSizes.map(
+                        (size) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              // padding: const EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: ash),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(sizeMapping[size]!),
+                            ),
+                          );
+                        },
+                      ).toList()))
+                  : const SizedBox.shrink(),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text("Only applies if your product has  colors"),
+              TextButton(
+                  onPressed: () {
+                    showColorsDialog();
+                  },
+                  child: const Text("Select Colors")),
+              const SizedBox(
+                height: 10,
+              ),
+                            widget.product.sizes.isNotEmpty
+                  ? const Text("Current colors")
+                  : const SizedBox.shrink(),
+              widget.product.colors.isNotEmpty
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                          children: widget.product.colors.map(
+                        (color) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 37,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: colorDictionary
+                                            .containsKey(color.toLowerCase())
+                                        ? colorDictionary[color.toLowerCase()]
+                                        : white,
+                                  ),
+                                  child: const Center(child: Text("")),
+                                ),
+                                Text(color)
+                              ],
+                            ),
+                          );
+                        },
+                      ).toList()))
+                  : const SizedBox.shrink(),
+              selectedColors.isNotEmpty
+                  ? const Text("New Selected Colors")
+                  : const SizedBox.shrink(),
+
+              selectedColors.isNotEmpty
+                  ? const Text("Selected Colors")
+                  : const SizedBox.shrink(),
+              selectedColors.isNotEmpty
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                          children: selectedColors.map(
+                        (color) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 37,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: colorDictionary
+                                            .containsKey(color.toLowerCase())
+                                        ? colorDictionary[color.toLowerCase()]
+                                        : white,
+                                  ),
+                                  child: const Center(child: Text("")),
+                                ),
+                                Text(color)
+                              ],
+                            ),
+                          );
+                        },
+                      ).toList()))
+                  : const SizedBox.shrink(),
+              const SizedBox(
+                height: 10,
               ),
               TextButton(
                 onPressed: () {
@@ -341,16 +482,7 @@ class _EditProductState extends State<EditProduct> {
                     selectedtype,
                   );
                 },
-                style: TextButton.styleFrom(
-                  backgroundColor: secondaryColor,
-                  elevation: 1,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text('Add Product'),
+                child: Text('Edit ${widget.product.name}'),
               ),
             ],
           ),

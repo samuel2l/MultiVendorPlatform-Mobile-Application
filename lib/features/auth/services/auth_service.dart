@@ -67,11 +67,21 @@ class AuthService {
               "token": jsonDecode(response.body)["token"],
               "profile": userData["profile"],
             }));
+            User curr = Provider.of<UserProvider>(context, listen: false).user;
+            if (curr.role=="Seller"){
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Seller.routeName,
+              (route) => false,
+            );
+
+            }else{
 
             Navigator.of(context).pushNamedAndRemoveUntil(
               BottomNavBar.routeName,
               (route) => false,
             );
+
+            }
             showSnackBar(context, 'Account created!');
           });
     } catch (e) {

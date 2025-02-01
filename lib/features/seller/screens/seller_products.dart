@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/edit_product.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 
 class SellerProducts extends StatefulWidget {
@@ -49,6 +51,9 @@ class _SellerProductsState extends State<SellerProducts> {
           )
         : Scaffold(
             floatingActionButton: FloatingActionButton(
+              backgroundColor: teal,
+              elevation: 2,
+              
               onPressed: () {
                 Navigator.pushNamed(context, AddProduct.routeName);
               },
@@ -62,25 +67,26 @@ class _SellerProductsState extends State<SellerProducts> {
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 3/3.5
-                ),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 3 / 3.5),
                 itemCount: productList!.length,
                 itemBuilder: (context, index) {
                   var product = productList![index];
-                  List<String> images = (product['img'] as List).map((img)=>img.toString()).toList();
+                  List<String> images = (product['img'] as List)
+                      .map((img) => img.toString())
+                      .toList();
                   return ListView(
                     children: [
                       SizedBox(
-
-                        child: Image.network(
-                          images[0],
-                          fit: BoxFit.fitHeight,
+                        child: CarouselSlider(
+                          items: images.map((img) {
+                            return Image.network(img);
+                          }).toList(),
+                          options: CarouselOptions(viewportFraction: 1),
                         ),
                       ),
-
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

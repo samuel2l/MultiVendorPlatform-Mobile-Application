@@ -240,12 +240,15 @@ class _ProductDetailsState extends State<ProductDetails> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.product.name,
-                    style: const TextStyle(
-                        fontSize: 27, fontWeight: FontWeight.w500),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.product.name,
+                      style: const TextStyle(
+                          fontSize: 27, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 Padding(
@@ -457,9 +460,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Theme.of(context).brightness==Brightness.light?black:teal
-                        ),
+                            backgroundColor: Colors.transparent,
+                            foregroundColor:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? black
+                                    : teal),
                         onPressed: addToWishlist,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -479,8 +484,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Theme.of(context).brightness==Brightness.light?black:teal
-                        ),
+                            backgroundColor:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? black
+                                    : teal),
                         onPressed: addToCart,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -492,9 +499,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             Image.asset("assets/images/shopping-cart.png")
                           ],
                         ),
-                      
                       ),
-
                     ),
                   ),
                 ],

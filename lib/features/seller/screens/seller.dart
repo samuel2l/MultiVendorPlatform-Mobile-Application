@@ -1,4 +1,5 @@
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/home/screens/categories.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/sales.dart';
@@ -21,7 +22,8 @@ class _SellerState extends State<Seller> {
   List<Widget> pages = [
     const SellerProducts(),
     const Cart(),
-    const Wishlist(),
+    // const Wishlist(),
+    const Categories(),
     const Orders(),
     const Sales()
   ];
@@ -35,18 +37,7 @@ class _SellerState extends State<Seller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 28.0),
-            child: Text(
-              'Seller',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-            ),
-          ),
-        ],
-      ),
+      
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
@@ -113,7 +104,7 @@ class _SellerState extends State<Seller> {
               //   ),
               // ),
               child: const Icon(
-                Icons.all_inbox_outlined,
+                Icons.receipt_outlined,
               ),
             ),
             label: '',
@@ -130,7 +121,7 @@ class _SellerState extends State<Seller> {
                 ),
               ),
               child: const Icon(
-                Icons.trolley,
+                Icons.shopping_cart_outlined,
               ),
             ),
             label: '',
@@ -147,7 +138,7 @@ class _SellerState extends State<Seller> {
                 ),
               ),
               child: const Icon(
-                Icons.analytics,
+                Icons.analytics_outlined,
               ),
             ),
             label: '',

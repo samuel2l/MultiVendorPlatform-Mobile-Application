@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/models/profile.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
+import 'package:multivendorplatformmobile/features/search/screens/search_seller_products.dart';
 
 class SellerProfile extends StatefulWidget {
   const SellerProfile({super.key, required this.sellerId});
@@ -42,6 +45,10 @@ class _SellerProfileState extends State<SellerProfile> {
   gg() async {
     await getSellerDetails();
   }
+  void navigateToSearch(String query) {
+    Navigator.of(context).pushNamed(SearchSellerProducts.routeName,
+        arguments: {"query": query, "sellerId": widget.sellerId});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +67,24 @@ class _SellerProfileState extends State<SellerProfile> {
                     child: Image.network(sellerProfile!.img),
                   ),
                 ),
+                Container(
+                        height: 40,
+                        width: 320,
+                        padding: const EdgeInsets.only(left: 20),
+                        child: TextFormField(
+                          onFieldSubmitted: navigateToSearch,
+                          decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              fillColor: Colors.white,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none),
+                              contentPadding: EdgeInsets.all(8)),
+                        ),
+                      ),
+
                 Expanded(
                     child: ListView.builder(
                   itemCount: products!.length,

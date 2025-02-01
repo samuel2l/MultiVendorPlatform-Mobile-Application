@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -25,8 +26,13 @@ class HomeService {
           onSuccess: () {
             showSnackBar(context, 'Products loaded successfully');
           });
-      var data=jsonDecode(response.body);
-      return data;
+      List<Product> products =
+          (jsonDecode(response.body) as List).map((product) {
+        print("IN CAST $product");
+        return Product.fromMap(product);
+      }).toList();
+      print("after cast?");
+      return products;
     } catch (e) {
       // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());

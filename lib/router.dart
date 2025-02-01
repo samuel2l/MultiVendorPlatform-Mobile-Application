@@ -1,6 +1,7 @@
-import 'package:multivendorplatformmobile/features/address/screens/address.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/profile/screens/user_profile.dart';
+import 'package:multivendorplatformmobile/features/search/screens/search_category_product.dart';
+import 'package:multivendorplatformmobile/features/search/screens/search_seller_products.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/auth.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
@@ -50,9 +51,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
                 query: query,
               ),
           settings: routeSettings);
-    case Address.routeName:
-      return MaterialPageRoute(
-          builder: (_) => const Address(), settings: routeSettings);
     case Seller.routeName:
       return MaterialPageRoute(
           builder: (_) => const Seller(), settings: routeSettings);
@@ -84,7 +82,22 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case Orders.routeName:
       return MaterialPageRoute(
           builder: (_) => const Orders(), settings: routeSettings);
-
+    case SearchCategoryProduct.routeName:
+      final args = routeSettings.arguments as Map<String, String>;
+      return MaterialPageRoute(
+          builder: (_) => SearchCategoryProduct(
+                query: args['query'] ?? '',
+                category: args['category'] ?? '',
+              ),
+          settings: routeSettings);
+    case SearchSellerProducts.routeName:
+      final args = routeSettings.arguments as Map<String, String>;
+      return MaterialPageRoute(
+          builder: (_) => SearchSellerProducts(
+                query: args['query'] ?? '',
+                seller: args['sellerId'] ?? '',
+              ),
+          settings: routeSettings);
     default:
       return MaterialPageRoute(
           builder: (_) => const Text('this page does not exist'),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/home/screens/products_by_category.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 
@@ -11,8 +12,8 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-    void navigateToSearch(String query){
-    Navigator.of(context).pushNamed(Search.routeName,arguments: query);
+  void navigateToSearch(String query) {
+    Navigator.of(context).pushNamed(Search.routeName, arguments: query);
   }
 
   @override
@@ -21,9 +22,7 @@ class _CategoriesState extends State<Categories> {
       // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       appBar: AppBar(
         elevation: 0,
-
-
-        title: Container(
+        title: SizedBox(
           height: 40,
           width: 320,
           // padding: const EdgeInsets.only(left: 20),
@@ -44,7 +43,7 @@ class _CategoriesState extends State<Categories> {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8),
             alignment: Alignment.centerLeft,
             child: const Text(
               'Categories ',
@@ -63,28 +62,41 @@ class _CategoriesState extends State<Categories> {
                 ),
                 itemCount: productCategories.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    decoration:  BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.light
-                ? white
-                : ash,
-                        borderRadius: BorderRadius.all(Radius.circular(23))),
-                    child: ListView(
-                      children: [
-                        Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(28),
-                              image:  DecorationImage(
-                                  image:
-                                      AssetImage( productCategories[index]["img"]!,),fit: BoxFit.fitHeight)),
-                        ),
-                        Center(
-                            child: Text(
-                          productCategories[index]["title"]!,
-                          style: const TextStyle(fontSize: 18,overflow: TextOverflow.ellipsis),
-                        )),
-                      ],
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(ProductsByCategory.routeName, arguments: {
+                        "category": productCategories[index]["title"]!
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? white
+                                  : ash,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(23))),
+                      child: ListView(
+                        children: [
+                          Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                      productCategories[index]["img"]!,
+                                    ),
+                                    fit: BoxFit.fitHeight)),
+                          ),
+                          Center(
+                              child: Text(
+                            productCategories[index]["title"]!,
+                            style: const TextStyle(
+                                fontSize: 18, overflow: TextOverflow.ellipsis),
+                          )),
+                        ],
+                      ),
                     ),
                   );
                 },

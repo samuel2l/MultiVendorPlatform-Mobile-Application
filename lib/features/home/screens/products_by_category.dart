@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/services/home_service.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/features/search/screens/search_category_product.dart';
+import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 
 class ProductsByCategory extends StatefulWidget {
@@ -18,7 +22,6 @@ class ProductsByCategory extends StatefulWidget {
 }
 
 class _ProductsByCategoryState extends State<ProductsByCategory> {
-  List<Map<String, dynamic>>? productList;
   final HomeService homeService = HomeService();
 
   @override
@@ -27,14 +30,20 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
     fetchCategoryProducts();
   }
 
+  void navigateToSearch(String query) {
+    Navigator.of(context).pushNamed(SearchCategoryProduct.routeName,
+        arguments: {"query": query, "category": widget.category});
+  }
+
+  List<Product>? products;
   fetchCategoryProducts() async {
     try {
-      List<dynamic> data = await homeService.getProductsByCategory(
+      products = await homeService.getProductsByCategory(
         context: context,
         category: widget.category,
       );
-
-      productList = (data).map((e) => e as Map<String, dynamic>).toList();
+      print("gotten data?");
+      print(products);
 
       setState(() {});
     } catch (e) {
@@ -48,11 +57,6 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: appBarGradient,
-            ),
-          ),
           title: Text(
             widget.category,
             style: const TextStyle(
@@ -61,73 +65,57 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
           ),
         ),
       ),
-      body: productList == null
+      body: products == null
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : productList!.isEmpty
+          : products!.isEmpty
               ? Center(
                   child: Text('We do not have products for ${widget.category}'),
                 )
-              : SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: GridView.builder(
-                    scrollDirection: Axis.vertical,
-                    padding: const EdgeInsets.only(left: 15),
-                    itemCount: productList!.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemBuilder: (context, index) {
-                      print(productList!.length);
-                      print(productList);
-                      final product = productList![index];
-                      return GestureDetector(
-                        onTap: () {
-                          print(Product.fromMap(productList![index]));
-                          Navigator.pushNamed(
-                            context,
-                            ProductDetails.routeName,
-                            arguments: Product.fromMap(productList![index]),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 130,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black12,
-                                    width: 0.5,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Image.network(
-                                    product["img"],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.only(
-                                left: 0,
-                                top: 5,
-                                right: 15,
-                              ),
-                              child: Text(
-                                product["name"]!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 320,
+                        padding: const EdgeInsets.only(left: 20),
+                        child: TextFormField(
+                          onFieldSubmitted: navigateToSearch,
+                          decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              fillColor: Colors.white,
+                              filled: true,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none),
+                              contentPadding: EdgeInsets.all(8)),
                         ),
-                      );
-                    },
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          padding: const EdgeInsets.only(left: 15),
+                          itemCount: products!.length,
+                          itemBuilder: (context, index) {
+                            print(products!.length);
+                            print(products);
+                            final product = products![index];
+                            return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    ProductDetails.routeName,
+                                    arguments: products![index],
+                                  );
+                                },
+                                child: SearchedProduct(product: product));
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
     );

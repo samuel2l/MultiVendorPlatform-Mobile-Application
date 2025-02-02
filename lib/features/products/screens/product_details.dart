@@ -269,8 +269,10 @@ class _ProductDetailsState extends State<ProductDetails> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 widget.product.desc,
-                style: const TextStyle(
-                  color: ash,
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? ash
+                      : lightAsh,
                   fontSize: 16,
                 ),
                 maxLines: isReadMore ? null : 3,
@@ -291,59 +293,87 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
 
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Quantity",
-                style: TextStyle(color: ash, fontSize: 18),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // margin: const EdgeInsets.only(right: 300),
-                height: 45,
-                decoration: BoxDecoration(
-                    border: Border.all(color: lightAsh),
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.transparent),
-
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GestureDetector(
-                      onTap: decrementQuantity,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.remove),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        quantity.toString(),
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: incrementQuantity,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.add),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
               child: Text(
-                "Available Colors",
-                style: TextStyle(color: ash, fontSize: 18),
+                "Quantity",
+                style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? ash
+                        : lightAsh,
+                    fontSize: 18),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    // margin: const EdgeInsets.only(right: 300),
+                    height: 45,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: lightAsh),
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.transparent),
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: decrementQuantity,
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(Icons.remove),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            quantity.toString(),
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: incrementQuantity,
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(Icons.add),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(SellerProfile.routeName,
+                            arguments: {"sellerId": widget.product.seller});
+                      },
+                      child: const Text(
+                        'View seller details',
+                        style: TextStyle(color: Colors.red),
+                      )),
+                ),
+              ],
+            ),
+            widget.product.colors.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Available Colors",
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? ash
+                                  : lightAsh,
+                          fontSize: 18),
+                    ),
+                  )
+                : const SizedBox.shrink(),
 
             widget.product.colors.isNotEmpty
                 ? SizedBox(
@@ -391,7 +421,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     child: const Center(child: Text("")),
                                   ),
-                                  Text(color)
+                                  Text(
+                                    color,
+                                    style: TextStyle(
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? ash
+                                            : lightAsh),
+                                  )
                                 ],
                               ),
                             ),
@@ -437,10 +474,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 // padding: const EdgeInsets.all(8),
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: ash),
+                                  border: Border.all(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? ash
+                                          : lightAsh),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Text(sizeMapping[size]!),
+                                child: Text(
+                                  sizeMapping[size]!,
+                                  style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? ash
+                                          : lightAsh),
+                                ),
                               ),
                             ),
                           );
@@ -534,15 +582,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             // //     // );
             // //   },
             // // ),
-            GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed(SellerProfile.routeName,
-                      arguments: {"sellerId": widget.product.seller});
-                },
-                child: const Text(
-                  'View seller details',
-                  style: TextStyle(color: Colors.red),
-                ))
           ],
         ),
       ),

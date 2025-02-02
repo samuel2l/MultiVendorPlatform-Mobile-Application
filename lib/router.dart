@@ -95,7 +95,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           builder: (_) => SearchSellerProducts(
                 query: args['query'] ?? '',
-                seller: args['sellerId'] ?? '',
+                sellerId: args['sellerId'] ?? '',
               ),
           settings: routeSettings);
     default:

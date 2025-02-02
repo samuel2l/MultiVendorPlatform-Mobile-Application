@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:multivendorplatformmobile/features/models/order_item.dart';
+import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:multivendorplatformmobile/features/seller/widgets/sale.dart';
 
@@ -18,7 +18,7 @@ class _SalesState extends State<Sales> {
     getSellerSales();
   }
 
-  List<OrderItem>? sales;
+  List<Order>? sales;
   getSellerSales() async {
     sales = await sellerService.getSellerSales(context);
     setState(() {});

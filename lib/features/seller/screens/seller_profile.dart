@@ -6,6 +6,8 @@ import 'package:multivendorplatformmobile/features/models/profile.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search_seller_products.dart';
+import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
+import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
 
 class SellerProfile extends StatefulWidget {
   const SellerProfile({super.key, required this.sellerId});
@@ -45,6 +47,7 @@ class _SellerProfileState extends State<SellerProfile> {
   gg() async {
     await getSellerDetails();
   }
+
   void navigateToSearch(String query) {
     Navigator.of(context).pushNamed(SearchSellerProducts.routeName,
         arguments: {"query": query, "sellerId": widget.sellerId});
@@ -53,58 +56,61 @@ class _SellerProfileState extends State<SellerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          title: ListTile(
+        trailing: SizedBox(
+          child: ClipOval(
+            child: Image.network(sellerProfile!.img),
+          ),
+        ),
+        title: Text("${sellerProfile!.name}'s Products ",style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis,maxLines: 1,),
+      )),
       body: sellerProfile == null || products == null
           ? const Center(
               child: Text('Sometjing went wrong'),
             )
           : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${sellerProfile!.name}'s Products "),
-                SizedBox(
-                  height: 230,
-                  child: ClipOval(
-                    child: Image.network(sellerProfile!.img),
-                  ),
-                ),
-                Container(
-                        height: 40,
-                        width: 320,
-                        padding: const EdgeInsets.only(left: 20),
-                        child: TextFormField(
-                          onFieldSubmitted: navigateToSearch,
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.search),
-                              fillColor: Colors.white,
-                              filled: true,
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(7)),
-                                  borderSide: BorderSide.none),
-                              contentPadding: EdgeInsets.all(8)),
-                        ),
-                      ),
 
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Text("About us: ${sellerProfile!.about}",style: const TextStyle(fontSize: 19),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Text("Location: ${sellerProfile!.street},${sellerProfile!.country} "),
+                ),
+                                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Text("Address: ${sellerProfile!.postalCode} "),
+                ),
+                
+                SearchField(onFieldSubmitted: navigateToSearch),
                 Expanded(
                     child: ListView.builder(
                   itemCount: products!.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(ProductDetails.routeName,arguments:products![index]);
+                        Navigator.of(context).pushNamed(
+                            ProductDetails.routeName,
+                            arguments: products![index]);
                       },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 9, vertical: 9),
-                        padding: const EdgeInsets.all(18),
-                        color: Colors.grey,
-                        child: Column(
-                          children: [
-                            Text(products![index].name),
-                            Text(products![index].desc),
-                          ],
-                        ),
+                      // child: Container(
+                      //   margin: const EdgeInsets.symmetric(
+                      //       horizontal: 9, vertical: 9),
+                      //   padding: const EdgeInsets.all(18),
+                      //   color: Colors.grey,
+                      //   child: Column(
+                      //     children: [
+                      //       Text(products![index].name),
+                      //       Text(products![index].desc),
+                      //     ],
+                      //   ),
+                      // ),
+                      child: SearchedProduct(product: 
+                      products![index]
                       ),
                     );
                   },

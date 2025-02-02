@@ -1,4 +1,4 @@
-import 'package:multivendorplatformmobile/features/models/order_item.dart';
+import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ class Sale extends StatefulWidget {
     required this.order,
   });
 
-  final OrderItem order;
+  final Order order;
 
   @override
   State<Sale> createState() => _SaleState();
@@ -82,13 +82,13 @@ class _SaleState extends State<Sale> {
                         height: 40,
                         child: Column(
                           children: [
-                            Text(product.name),
-                            product.sizes.isEmpty
+                            Text(product.product.name),
+                            product.product.sizes.isEmpty
                                 ? const SizedBox.shrink()
-                                : Text(product.sizes.join(", ")),
-                            product.colors.isEmpty
+                                : Text(product.product.sizes.join(", ")),
+                            product.product.colors.isEmpty
                                 ? const SizedBox.shrink()
-                                : Text(product.colors.join(", "))
+                                : Text(product.product.colors.join(", "))
                           ],
                         ));
                   }).toList(),

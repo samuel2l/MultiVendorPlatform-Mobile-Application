@@ -1,8 +1,8 @@
-import 'package:multivendorplatformmobile/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:multivendorplatformmobile/features/models/order_item.dart';
-import 'package:multivendorplatformmobile/features/models/product.dart';
+import 'package:multivendorplatformmobile/features/models/order.dart';
+import 'package:multivendorplatformmobile/features/orders/screens/order_details.dart';
 import 'package:multivendorplatformmobile/features/orders/services/order_service.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 
 class Orders extends StatefulWidget {
   const Orders({super.key});
@@ -12,7 +12,10 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
-  List<OrderItem>? orders;
+  List<Order>? orders;
+  List<Order> ongoingOrders = [];
+  List<Order> deliveredOrders = [];
+
   final OrderService orderService = OrderService();
   List<String> imgs = [
     'assets/images/appliances.jpeg',
@@ -28,153 +31,254 @@ class _OrdersState extends State<Orders> {
 
   void fetchOrders(context) async {
     orders = await orderService.getOrders(context: context);
+    for (var order in orders!) {
+      if (order.status == "received" || order.status == "on the way") {
+        ongoingOrders.add(order);
+      } else if (order.status == "delivered") {
+        deliveredOrders.add(order);
+      }
+    }
 
     setState(() {});
   }
 
+  bool hasDeliveredOrders = false;
+  bool hasOngoingOrders = false;
+  bool isOngoingSelected = true;
+  bool isDeliveredSelected = false;
   @override
   Widget build(BuildContext context) {
     return orders == null
         ? const Center(
-            child: Text("errorrrr"),
+            child: CircularProgressIndicator(),
           )
-                    : Scaffold(
-
-                appBar: AppBar(
-                  
-                ),
-                body: orders!.isEmpty
+        : orders!.isEmpty
             ? const Center(
-                child: Text("you have no orders"),
+                child: Text("You have no orders"),
               )
-: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            : DefaultTabController(
+                length: 2,
+                child: Scaffold(
+                  appBar: AppBar(),
+                  body: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
                       children: [
                         Container(
-                          padding: const EdgeInsets.only(
-                            left: 15,
-                          ),
-                          child: const Text(
-                            'Your Orders',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                            right: 15,
-                          ),
-                          child: Text(
-                            'See all',
-                            style: TextStyle(
-                              color: selectedNavBarColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: orders!.length,
-                        itemBuilder: (context, index) {
-                          OrderItem order = orders![index];
-
-                          return Container(
-                            height: 450,
-                            color: Colors.grey,
-                            margin: const EdgeInsets.all(20),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        width: 235,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Text(
-                                          order.orderId,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                          maxLines: 2,
-                                        ),
+                          height: MediaQuery.of(context).size.height * 0.07,
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
+                              color: Color(0xFF282828),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(14))),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isOngoingSelected = true;
+                                      isDeliveredSelected = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: isOngoingSelected ? black : null,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(14))),
+                                    child: const Center(
+                                      child: Text(
+                                        "Ongoing",
+                                        style: TextStyle(
+                                            color: white, fontSize: 22),
                                       ),
-                                      Container(
-                                        width: 235,
-                                        padding: const EdgeInsets.only(
-                                            left: 10, top: 5),
-                                        child: Text(
-                                          '\$${order.amount}',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          maxLines: 2,
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 235,
-                                        padding: const EdgeInsets.only(
-                                            left: 10, top: 5),
-                                        child: Text(
-                                          '\$${order.date}',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          maxLines: 2,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 220,
-                                        child: ListView.builder(
-                                          itemCount: order.items.length,
-                                          itemBuilder: (context, index) {
-                                            Product product =
-                                                order.items[index];
-                                            return Column(
-                                              children: [
-                                                Text(product.desc),
-                                                Text(product.name),
-                                                Text(order.amountBought
-                                                    .toString()),
-                                                Text(product.type),
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 235,
-                                        padding: const EdgeInsets.only(
-                                            left: 10, top: 5),
-                                        child: Text(
-                                          order.status,
-                                          style: const TextStyle(
-                                            color: Colors.teal,
-                                          ),
-                                          maxLines: 2,
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                              ),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isOngoingSelected = false;
+                                      isDeliveredSelected = true;
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color:
+                                            isDeliveredSelected ? black : null,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(14))),
+                                    child: const Center(
+                                      child: Text("delivered",
+                                          style: TextStyle(
+                                              color: white, fontSize: 22)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        isOngoingSelected
+                            ? ongoingOrders.isEmpty
+                                ? const Center(
+                                    child: Text("you have no ongoing orders"),
+                                  )
+                                : Expanded(
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: ListView.builder(
+                                            itemCount: ongoingOrders.length,
+                                            itemBuilder: (context, index) {
+                                              Order order =
+                                                  ongoingOrders[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return OrderDetails(
+                                                          order: order);
+                                                    },
+                                                  ));
+                                                },
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              18),
+                                                      color: Theme.of(context)
+                                                                  .brightness ==
+                                                              Brightness.light
+                                                          ? lightAsh
+                                                          : ash),
+                                                  margin:
+                                                      const EdgeInsets.all(8),
+                                                  child: Column(
+                                                    children: [
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          "Order ID: ${order.orderId}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 18),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(4),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: order.status ==
+                                                                    "received"
+                                                                ? Colors.orange
+                                                                : order.status ==
+                                                                        "on the way"
+                                                                    ? Colors
+                                                                        .blue
+                                                                    : teal,
+                                                          borderRadius: BorderRadius.circular(8)
+                                                          ),
+                                                          child: Text(
+                                                            order.status,
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        17),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: Text(
+                                                          "Date: ${order.date}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 17),
+                                                        ),
+                                                      ),
+                                                      const Divider(thickness: 0.4,),
+                                                                                                            Align(
+                                                        alignment: Alignment
+                                                            .center,
+                                                        child: Text(
+                                                            "Total Amount Paid: ${order.amount.toString()}",style: TextStyle(fontSize: 20),),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                            : deliveredOrders.isEmpty
+                                ? const Center(
+                                    child: Text("you have no ongoing orders"),
+                                  )
+                                : Expanded(
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: ListView.builder(
+                                            itemCount: deliveredOrders.length,
+                                            itemBuilder: (context, index) {
+                                              Order order =
+                                                  deliveredOrders[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return OrderDetails(
+                                                          order: order);
+                                                    },
+                                                  ));
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              18)),
+                                                  margin:
+                                                      const EdgeInsets.all(20),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                          "Order ID: ${order.orderId}"),
+                                                      Text(
+                                                          "Cost: ${order.amount.toString()}"),
+                                                      Text(order.date)
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
   }

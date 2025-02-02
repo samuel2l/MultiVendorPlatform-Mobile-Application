@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/models/order_item.dart';
+import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
@@ -220,12 +220,12 @@ class SellerService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      List<OrderItem> sellerSales = [];
+      List<Order> sellerSales = [];
 
       for (var order in (jsonDecode(response.body) as List)) {
         print("ORDER");
         print(order);
-        sellerSales.add(OrderItem.fromMap(order));
+        sellerSales.add(Order.fromMap(order));
       }
       print(sellerSales);
 

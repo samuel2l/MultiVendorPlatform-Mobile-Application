@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/models/order_item.dart';
+import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
@@ -48,7 +48,7 @@ class OrderService extends ChangeNotifier {
     }
   }
 
-  Future<List<OrderItem>> getOrders({
+  Future<List<Order>> getOrders({
     required BuildContext context,
   }) async {
     try {
@@ -64,9 +64,12 @@ class OrderService extends ChangeNotifier {
       );
       print("response from get orders");
       print(res.body);
-      List<OrderItem> data = (jsonDecode(res.body) as List)
-          .map((item) => OrderItem.fromMap(item))
-          .toList();
+      List<Order> data = (jsonDecode(res.body) as List).map((item) {
+        print("ITEM UNDER ANALYSIS");
+        print(item);
+        print(item["amount"]);
+        return Order.fromMap(item);
+      }).toList();
       print("dataa after casting?");
       print(data);
       return data;

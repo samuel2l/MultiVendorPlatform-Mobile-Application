@@ -50,14 +50,14 @@ class _AuthState extends State<Auth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyBackgroundCOlor,
+
       body: SafeArea(
         child: Column(
           children: [
             ListTile(
               title: const Text('Create account'),
               leading: Radio(
-                activeColor: secondaryColor,
+
                 value: 'signUp',
                 groupValue: auth,
                 onChanged: (value) => setState(() {
@@ -114,9 +114,6 @@ class _AuthState extends State<Auth> {
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                               hintText: 'Enter a phone number',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black26),
-                              ),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -130,9 +127,6 @@ class _AuthState extends State<Auth> {
                             controller: roleController,
                             decoration: const InputDecoration(
                               hintText: 'Enter your role in the app',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black26),
-                              ),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -149,15 +143,6 @@ class _AuthState extends State<Auth> {
                                 signUp(context);
                               }
                             },
-                            style: TextButton.styleFrom(
-                              backgroundColor: secondaryColor,
-                              elevation: 1,
-                              foregroundColor: Colors.white,
-                              minimumSize: const Size(double.infinity, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
                             child: const Text('Sign Up'),
                           ),
                         ],
@@ -168,7 +153,7 @@ class _AuthState extends State<Auth> {
             ListTile(
               title: const Text('Log in'),
               leading: Radio(
-                activeColor: secondaryColor,
+
                 value: 'logIn',
                 groupValue: auth,
                 onChanged: (value) => setState(() {
@@ -188,9 +173,6 @@ class _AuthState extends State<Auth> {
                             controller: emailController,
                             decoration: const InputDecoration(
                               hintText: 'Enter your email',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black26),
-                              ),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -205,9 +187,6 @@ class _AuthState extends State<Auth> {
                             obscureText: true,
                             decoration: const InputDecoration(
                               hintText: 'Enter your password',
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black26),
-                              ),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -223,15 +202,7 @@ class _AuthState extends State<Auth> {
                                 login(context);
                               }
                             },
-                            style: TextButton.styleFrom(
-                              backgroundColor: secondaryColor,
-                              elevation: 1,
-                              foregroundColor: Colors.white,
-                              minimumSize: const Size(double.infinity, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
+
                             child: const Text('Log In'),
                           ),
                         ],

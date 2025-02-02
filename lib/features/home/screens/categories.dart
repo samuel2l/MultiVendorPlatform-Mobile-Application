@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/screens/products_by_category.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
+import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 
 class Categories extends StatefulWidget {
@@ -22,23 +23,7 @@ class _CategoriesState extends State<Categories> {
       // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       appBar: AppBar(
         elevation: 0,
-        title: SizedBox(
-          height: 40,
-          width: 320,
-          // padding: const EdgeInsets.only(left: 20),
-          child: TextFormField(
-            onFieldSubmitted: navigateToSearch,
-            decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(7)),
-                    borderSide: BorderSide.none),
-                contentPadding: EdgeInsets.all(8)),
-          ),
-        ),
-        centerTitle: false,
+        title: SearchField(onFieldSubmitted: navigateToSearch)
       ),
       body: Column(
         children: [

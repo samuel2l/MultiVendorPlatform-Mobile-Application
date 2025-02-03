@@ -50,7 +50,7 @@ class Order {
     return Order(
       orderId: map['orderId'] as String,
       customerId: map['customerId'] as String,
-      amount: map["amount"].toDouble(),
+      amount: map["amount"]!=null?map["amount"].toDouble():map["totalAmount"].toDouble(),
       status: map['status'] as String,
       items: List<OrderItemModel>.from(
         (map['items'] as List).map<OrderItemModel>(

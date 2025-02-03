@@ -1,4 +1,3 @@
-import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 

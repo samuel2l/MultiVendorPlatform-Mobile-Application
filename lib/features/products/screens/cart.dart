@@ -6,7 +6,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/features/orders/services/order_service.dart';
-import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/features/products/widgets/cart_product.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
@@ -130,7 +129,7 @@ class _CartState extends State<Cart> {
                 style: const TextStyle(fontSize: 18),
               ),
               onPressed: () async {
-                // await initPaymentSheet(context, user, total);
+                await initPaymentSheet(context, user, total);
                await orderService.placeOrder(context: context);
               },
               // Navigator.of(context).push(MaterialPageRoute(

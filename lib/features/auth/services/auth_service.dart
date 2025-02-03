@@ -164,7 +164,7 @@ class AuthService {
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-      // prefs.setString('x-auth-token', '');
+      // prefs.setString('x-auth-token', '')
       if (token != '' && token != null) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),

@@ -1,5 +1,4 @@
 import 'package:multivendorplatformmobile/features/models/order_item_model.dart';
-import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 

@@ -1,5 +1,3 @@
-import 'package:multivendorplatformmobile/constants.dart';
-
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/search/services/search_service.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';

@@ -56,10 +56,8 @@ class _OrdersState extends State<Orders> {
             ? const Center(
                 child: Text("You have no orders"),
               )
-            : DefaultTabController(
-                length: 2,
+            : SafeArea(
                 child: Scaffold(
-                  appBar: AppBar(),
                   body: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -182,16 +180,19 @@ class _OrdersState extends State<Orders> {
                                                                   .all(4),
                                                           decoration:
                                                               BoxDecoration(
-                                                            color: order.status ==
-                                                                    "received"
-                                                                ? Colors.orange
-                                                                : order.status ==
-                                                                        "on the way"
-                                                                    ? Colors
-                                                                        .blue
-                                                                    : teal,
-                                                          borderRadius: BorderRadius.circular(8)
-                                                          ),
+                                                                  color: order.status ==
+                                                                          "received"
+                                                                      ? Colors
+                                                                          .orange
+                                                                      : order.status ==
+                                                                              "on the way"
+                                                                          ? Colors
+                                                                              .blue
+                                                                          : teal,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8)),
                                                           child: Text(
                                                             order.status,
                                                             style:
@@ -211,14 +212,19 @@ class _OrdersState extends State<Orders> {
                                                                   fontSize: 17),
                                                         ),
                                                       ),
-                                                      const Divider(thickness: 0.4,),
-                                                                                                            Align(
-                                                        alignment: Alignment
-                                                            .center,
-                                                        child: Text(
-                                                            "Total Amount Paid: ${order.amount.toString()}",style: TextStyle(fontSize: 20),),
+                                                      const Divider(
+                                                        thickness: 0.4,
                                                       ),
-
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          "Total Amount Paid: ${order.amount.toString()}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 20),
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -253,19 +259,87 @@ class _OrdersState extends State<Orders> {
                                                   ));
                                                 },
                                                 child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
                                                   decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              18)),
+                                                              18),
+                                                      color: Theme.of(context)
+                                                                  .brightness ==
+                                                              Brightness.light
+                                                          ? lightAsh
+                                                          : ash),
                                                   margin:
-                                                      const EdgeInsets.all(20),
+                                                      const EdgeInsets.all(8),
                                                   child: Column(
                                                     children: [
-                                                      Text(
-                                                          "Order ID: ${order.orderId}"),
-                                                      Text(
-                                                          "Cost: ${order.amount.toString()}"),
-                                                      Text(order.date)
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          "Order ID: ${order.orderId}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 18),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(4),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  color: order.status ==
+                                                                          "received"
+                                                                      ? Colors
+                                                                          .orange
+                                                                      : order.status ==
+                                                                              "on the way"
+                                                                          ? Colors
+                                                                              .blue
+                                                                          : teal,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8)),
+                                                          child: Text(
+                                                            order.status,
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        17),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: Text(
+                                                          "Date: ${order.date}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 17),
+                                                        ),
+                                                      ),
+                                                      const Divider(
+                                                        thickness: 0.4,
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          "Total Amount Paid: ${order.amount.toString()}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 20),
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                 ),

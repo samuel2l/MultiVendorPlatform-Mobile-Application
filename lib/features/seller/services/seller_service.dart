@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
@@ -139,9 +140,8 @@ class SellerService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
-
       http.Response? response;
-      List<String> imgUrls=[];
+      List<String> imgUrls = [];
       if (images != null) {
         final cloudinary = CloudinaryPublic('dvsd4zjxf', 'ztkl4b1w');
         for (int i = 0; i < images.length; i++) {
@@ -200,8 +200,10 @@ class SellerService {
       httpErrorHandle(
           response: response,
           context: context,
-          onSuccess: () {
-            showSnackBar(context, 'Product added successfully');
+          onSuccess: () async {
+            showSnackBar(context, 'Product updated successfully');
+            AuthService authService = AuthService();
+            await authService.getUserData(context);
             Navigator.pushNamedAndRemoveUntil(context, Seller.routeName,
                 ModalRoute.withName(Seller.routeName));
           });
@@ -220,6 +222,17 @@ class SellerService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      print("");
+      print("");
+      print("");
+      print("");
+      print("");
+      print("");
+      print("");
+      print("");
+
+      print("RESPONSE FROM GET SELLER SALES API");
+      print(response.body);
       List<Order> sellerSales = [];
 
       for (var order in (jsonDecode(response.body) as List)) {
@@ -264,6 +277,7 @@ class SellerService {
           context: context,
           onSuccess: () {
             showSnackBar(context, 'Delivery status updated successfully');
+            Navigator.pop(context,status);
           });
     } catch (e) {
       print(e);

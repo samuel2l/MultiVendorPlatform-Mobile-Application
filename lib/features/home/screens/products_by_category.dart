@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/services/home_service.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';

@@ -27,10 +27,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
         ),
       );
 
-      // Step 2: Show Payment Sheet
       await Stripe.instance.presentPaymentSheet();
 
-      // Step 3: Handle Success
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Payment Successful")));
     } catch (e) {

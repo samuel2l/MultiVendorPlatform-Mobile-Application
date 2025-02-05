@@ -7,7 +7,6 @@ import 'package:multivendorplatformmobile/theme.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
-
   @override
   State<Categories> createState() => _CategoriesState();
 }
@@ -22,9 +21,7 @@ class _CategoriesState extends State<Categories> {
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       appBar: AppBar(
-        elevation: 0,
-        title: SearchField(onFieldSubmitted: navigateToSearch)
-      ),
+          elevation: 0, title: SearchField(onFieldSubmitted: navigateToSearch)),
       body: Column(
         children: [
           Container(

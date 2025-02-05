@@ -26,21 +26,27 @@ final darkTheme = ThemeData(
       foregroundColor: white,
       // minimumSize: const Size(double.infinity, 65),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(14),
+
       ),
     ),
   ),
-  inputDecorationTheme:const InputDecorationTheme(
-     border: OutlineInputBorder(
+  inputDecorationTheme: InputDecorationTheme(
+     border: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)), // Rounded corners
       ),
     focusedBorder:  OutlineInputBorder(
-      borderSide: BorderSide(color: teal, width: 2.0),
+      borderSide:const BorderSide(color: teal, width: 0.9),
+      borderRadius: BorderRadius.circular(14)
     ),
     enabledBorder:  OutlineInputBorder(
-      borderSide: BorderSide(color: lightAsh, width: 1.0),
+      borderSide: const BorderSide(color: lightAsh, width: 0.9),
+         
+      borderRadius: BorderRadius.circular(14)
+    
+    
     ),
-    hintStyle:  TextStyle(color: lightAsh),
+    hintStyle:const  TextStyle(color: lightAsh),
   ),
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: teal, // Sets the cursor color for all text fields
@@ -70,7 +76,7 @@ final lightTheme = ThemeData(
       minimumSize: const Size.fromHeight(55),
       // minimumSize: const Size(double.infinity, 65),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(14),
       ),
     ),
   ),
@@ -78,15 +84,19 @@ final lightTheme = ThemeData(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(18.0),
     ),
-    focusedBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: teal, width: 2.0),
+    focusedBorder:  OutlineInputBorder(
+      borderSide:const BorderSide(color: teal, width: 0.9),
+      borderRadius: BorderRadius.circular(14)
+
     ),
-    enabledBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey, width: 1.0),
+    enabledBorder:  OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.grey, width: 0.9),
+      borderRadius: BorderRadius.circular(14)
     ),
     hintStyle: const TextStyle(color: Colors.grey),
   ),
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: teal, // Sets the cursor color for all text fields
   ),
+
 );

@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/empty.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/features/orders/services/order_service.dart';
 import 'package:multivendorplatformmobile/features/products/widgets/cart_product.dart';
@@ -106,12 +107,15 @@ class _CartState extends State<Cart> {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: user.wishlist.isEmpty?MainAxisAlignment.center:MainAxisAlignment.start,
         children: [
           user.cart.isEmpty
-              ? const Center(
-                  child: Text("You have no items in your cart"),
-                )
+              ? const Empty(
+                  img: "assets/images/cartempty.png",
+                  title: "Your cartt is empty",
+                  subtitle:
+                      "Looks like you have not added anything in your cart. Go ahead and explore top categories.",
+                  btnText: "Explore Categories")
               : ListView.builder(
                   itemCount: user.cart.length,
                   shrinkWrap: true,
@@ -130,13 +134,8 @@ class _CartState extends State<Cart> {
               ),
               onPressed: () async {
                 await initPaymentSheet(context, user, total);
-               await orderService.placeOrder(context: context);
+                await orderService.placeOrder(context: context);
               },
-              // Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (context) {
-              //     return PaymentScreen();
-              //   },
-              // )),
             ),
           ),
         ],

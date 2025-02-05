@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/empty.dart';
 import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/order_details.dart';
 import 'package:multivendorplatformmobile/features/orders/services/order_service.dart';
@@ -42,8 +44,6 @@ class _OrdersState extends State<Orders> {
     setState(() {});
   }
 
-  bool hasDeliveredOrders = false;
-  bool hasOngoingOrders = false;
   bool isOngoingSelected = true;
   bool isDeliveredSelected = false;
   @override
@@ -121,9 +121,13 @@ class _OrdersState extends State<Orders> {
                         ),
                         isOngoingSelected
                             ? ongoingOrders.isEmpty
-                                ? const Center(
-                                    child: Text("you have no ongoing orders"),
-                                  )
+                                ? const Empty(
+            img: "assets/images/orderempty.png",
+            title: "No ongoing orders",
+            subtitle:
+                "You currently have no ongoing orders. Go shop in our stores for the highest of quality!",
+            
+            btnText: "Explore Categories")
                                 : Expanded(
                                     child: Column(
                                       children: [
@@ -236,9 +240,13 @@ class _OrdersState extends State<Orders> {
                                     ),
                                   )
                             : deliveredOrders.isEmpty
-                                ? const Center(
-                                    child: Text("you have no ongoing orders"),
-                                  )
+                                ? const Empty(
+            img: "assets/images/orderempty.png",
+            title: "No completed orders",
+            subtitle:
+                "You have no completed orders as of Now. Our trusted vendors will surely get your products to you in no time!",
+            
+            btnText: "Explore Categories")
                                 : Expanded(
                                     child: Column(
                                       children: [

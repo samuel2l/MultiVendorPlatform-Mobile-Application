@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/onboarding.dart';
+import 'package:multivendorplatformmobile/features/auth/screens/signup.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/empty.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/splash.dart';
+import 'package:multivendorplatformmobile/features/home/screens/categories.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/router.dart';
 import 'package:multivendorplatformmobile/theme.dart';
@@ -42,6 +46,6 @@ class _MyAppState extends State<MyApp> {
         theme: lightTheme,
         darkTheme: darkTheme,
         onGenerateRoute: (settings) => generateRoute(settings),
-        home: const Splash());
+        home:const Splash());
   }
 }

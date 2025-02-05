@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/models/profile.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
@@ -8,6 +9,7 @@ import 'package:multivendorplatformmobile/features/products/services/product_det
 import 'package:multivendorplatformmobile/features/search/screens/search_seller_products.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
+import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 
 class SellerProfile extends StatefulWidget {
   const SellerProfile({super.key, required this.sellerId});
@@ -56,6 +58,7 @@ class _SellerProfileState extends State<SellerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const SellerBottomNavbar(),
       appBar: AppBar(
           title: ListTile(
         trailing: SizedBox(
@@ -63,29 +66,36 @@ class _SellerProfileState extends State<SellerProfile> {
             child: Image.network(sellerProfile!.img),
           ),
         ),
-        title: Text("${sellerProfile!.name}'s Products ",style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis,maxLines: 1,),
+        title: Text(
+          "${sellerProfile!.name}'s Products ",
+          style: const TextStyle(fontSize: 20),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
       )),
       body: sellerProfile == null || products == null
           ? const Center(
               child: Text('Sometjing went wrong'),
             )
           : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text("About us: ${sellerProfile!.about}",style: const TextStyle(fontSize: 19),),
+                  child: Text(
+                    "About us: ${sellerProfile!.about}",
+                    style: const TextStyle(fontSize: 19),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text("Location: ${sellerProfile!.street},${sellerProfile!.country} "),
+                  child: Text(
+                      "Location: ${sellerProfile!.street},${sellerProfile!.country} "),
                 ),
-                                Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Text("Address: ${sellerProfile!.postalCode} "),
                 ),
-                
                 SearchField(onFieldSubmitted: navigateToSearch),
                 Expanded(
                     child: ListView.builder(
@@ -109,9 +119,7 @@ class _SellerProfileState extends State<SellerProfile> {
                       //     ],
                       //   ),
                       // ),
-                      child: SearchedProduct(product: 
-                      products![index]
-                      ),
+                      child: SearchedProduct(product: products![index]),
                     );
                   },
                 ))

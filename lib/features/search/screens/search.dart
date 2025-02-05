@@ -1,7 +1,10 @@
+import 'package:multivendorplatformmobile/features/common/widgets/buyer_navbar.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/search/services/search_service.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
+import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +47,7 @@ class _SearchState extends State<Search> {
     print(userProvider.user.token);
 
     return Scaffold(
+      bottomNavigationBar: userProvider.user.role=='Seller'?const SellerBottomNavbar():const BuyerNavbar(),
       appBar: AppBar(
        
         title: SearchField(onFieldSubmitted: navigateToSearch)

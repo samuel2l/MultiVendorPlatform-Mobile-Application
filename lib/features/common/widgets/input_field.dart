@@ -11,8 +11,10 @@ final int maxLines;
       controller: controller,
       decoration: InputDecoration(
           hintText: hintText,
-  
-),
+          
+
+    ),
+    
       validator: (val) {
         if (val == null || val.isEmpty) {
           return 'Enter your $hintText';

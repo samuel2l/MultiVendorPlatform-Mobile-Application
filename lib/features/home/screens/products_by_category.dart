@@ -1,13 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/home/services/home_service.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
+import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search_category_product.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
+import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
+import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
+import 'package:provider/provider.dart';
 
 class ProductsByCategory extends StatefulWidget {
   static const String routeName = '/product-category';
@@ -53,7 +58,9 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
 
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<UserProvider>(context, listen: false).user;
     return Scaffold(
+      bottomNavigationBar:user.role=='Seller'? const SellerBottomNavbar(): const BottomNavBar(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
@@ -71,31 +78,31 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
                   child: Text('We do not have products for ${widget.category}'),
                 )
               : Column(
-                children: [
-                  SearchField(onFieldSubmitted: navigateToSearch),
-                  Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      padding: const EdgeInsets.only(left: 15),
-                      itemCount: products!.length,
-                      itemBuilder: (context, index) {
-                        print(products!.length);
-                        print(products);
-                        final product = products![index];
-                        return GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                ProductDetails.routeName,
-                                arguments: products![index],
-                              );
-                            },
-                            child: SearchedProduct(product: product));
-                      },
+                  children: [
+                    SearchField(onFieldSubmitted: navigateToSearch),
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        padding: const EdgeInsets.only(left: 15),
+                        itemCount: products!.length,
+                        itemBuilder: (context, index) {
+                          print(products!.length);
+                          print(products);
+                          final product = products![index];
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  ProductDetails.routeName,
+                                  arguments: products![index],
+                                );
+                              },
+                              child: SearchedProduct(product: product));
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
     );
   }
 }

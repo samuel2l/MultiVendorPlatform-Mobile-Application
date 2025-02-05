@@ -2,13 +2,41 @@ import 'package:flutter/material.dart';
 
 // String uri = 'http://<your ip address>:3000';
 // String uri = 'https://multivendorapp-user-service.onrender.com';
-String uri = "http://172.20.10.2:8001";
+String uri = "http://:8001";
 String productsUri =
     // 'https://multivendorapp-products-microservice.onrender.com';
-    'http://172.20.10.2:8002';
+    'http://:8002';
 String shoppingUri =
     // 'https://multivendorplatform-shopping-service.onrender.com';
-    'http://172.20.10.2:8003';
+    'http://:8003';
+
+class OnboardingContent {
+  String image;
+  String title;
+  String description;
+
+  OnboardingContent(
+      {required this.image, required this.title, required this.description});
+}
+
+List<OnboardingContent> contents = [
+  OnboardingContent(
+      title: 'Quality Products',
+      image: 'assets/images/eonb1.png',
+      description:
+          "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit."),
+  OnboardingContent(
+      title: 'Make Payments',
+      image: 'assets/images/eonb2.png',
+      description:
+          "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit."),
+  OnboardingContent(
+      title: 'Get your order',
+      image: 'assets/images/eonb3.png',
+      description:
+          "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit."),
+];
+
 const Map<String, Color> colorDictionary = {
   "black": Colors.black,
   "white": Colors.white,
@@ -24,7 +52,7 @@ const Map<String, Color> colorDictionary = {
   "cyan": Colors.cyan,
   "amber": Colors.amber,
   "indigo": Colors.indigo,
-  "teal": Colors.teal,
+  "teal": Color(0xFF008080),
   "lime": Colors.lime,
   "deepOrange": Colors.deepOrange,
   "deepPurple": Colors.deepPurple,

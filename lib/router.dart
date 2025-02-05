@@ -1,3 +1,5 @@
+import 'package:multivendorplatformmobile/features/auth/screens/login.dart';
+import 'package:multivendorplatformmobile/features/auth/screens/signup.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/profile/screens/user_profile.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search_category_product.dart';
@@ -19,9 +21,13 @@ import 'package:multivendorplatformmobile/features/seller/screens/seller_profile
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
-    case Auth.routeName:
+    case Signup.routeName:
       return MaterialPageRoute(
-          builder: (_) => const Auth(), settings: routeSettings);
+          builder: (_) => const Signup(), settings: routeSettings);
+    case Login.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const Login(), settings: routeSettings);
+
     case Home.routeName:
       return MaterialPageRoute(
           builder: (_) => const Home(), settings: routeSettings);
@@ -102,7 +108,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
    case Sales.routeName:
       return MaterialPageRoute(
           builder: (_) => const Sales(), settings: routeSettings);
- 
     default:
       return MaterialPageRoute(
           builder: (_) => const Text('this page does not exist'),

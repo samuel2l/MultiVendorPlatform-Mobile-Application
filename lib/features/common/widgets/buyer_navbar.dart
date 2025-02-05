@@ -1,25 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/screens/categories.dart';
 import 'package:multivendorplatformmobile/features/home/screens/home.dart';
 import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
 import 'package:multivendorplatformmobile/features/profile/screens/account.dart';
 import 'package:multivendorplatformmobile/features/wishlist/screens/wishlist.dart';
-import 'package:multivendorplatformmobile/providers/user_provider.dart';
-
-import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:multivendorplatformmobile/theme.dart';
+import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+class BuyerNavbar extends StatefulWidget {
+  const BuyerNavbar({super.key});
 
-class BottomNavBar extends StatefulWidget {
-  static const String routeName = '/nav';
-  const BottomNavBar({super.key});
   @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
+  State<BuyerNavbar> createState() => _BuyerNavbarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
-  int _page = 0;
+class _BuyerNavbarState extends State<BuyerNavbar> {
+   int _page = 0;
   double bottomNavBarWidth = 42;
   double bottomNavBarBorderWidth = 5;
 
@@ -36,13 +33,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
       _page = page;
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    final cartLength = context.watch<UserProvider>().user.cart.length;
-    return Scaffold(
-      body: pages[_page],
-      bottomNavigationBar: BottomNavigationBar(
+        final cartLength = context.watch<UserProvider>().user.cart.length;
+    return BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: selectedNavBarColor,
         unselectedItemColor: unselectedNavBarColor,
@@ -56,20 +50,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 0
-                        ? selectedNavBarColor
-                        : Theme.of(context).brightness == Brightness.light
-                            ? white
-                            : lightAsh,
+                    color: _page == 0 ? selectedNavBarColor : backgroundColor,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.home_outlined,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? black
-                    : lightAsh,
               ),
             ),
             label: '',
@@ -80,21 +67,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 1
-                        ? selectedNavBarColor
-                        : Theme.of(context).brightness == Brightness.light
-                            ? white
-                            : lightAsh,
+                    color: _page == 1 ? selectedNavBarColor : backgroundColor,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
-              child: Icon(
-                Icons.grid_view,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? black
-                    : lightAsh,
-              ),
+              child: const Icon(Icons.grid_view),
             ),
             label: '',
           ),
@@ -104,21 +82,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 2
-                        ? selectedNavBarColor
-                        : Theme.of(context).brightness == Brightness.light
-                            ? white
-                            : lightAsh,
+                    color: _page == 2 ? selectedNavBarColor : backgroundColor,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
-              child: Icon(
-                Icons.favorite_border,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? black
-                    : lightAsh,
-              ),
+              child: const Icon(Icons.favorite_border),
             ),
             label: '',
           ),
@@ -128,26 +97,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 3
-                        ? selectedNavBarColor
-                        : Theme.of(context).brightness == Brightness.light
-                            ? white
-                            : lightAsh,
+                    color: _page == 3 ? selectedNavBarColor : backgroundColor,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
               child: badges.Badge(
-                badgeStyle:  const badges.BadgeStyle(
-                  elevation: 0,
-                badgeColor:teal,
-                ),
+                badgeStyle: const badges.BadgeStyle(
+                    elevation: 0, badgeColor: Colors.white),
                 badgeContent: Text(cartLength.toString()),
-                child: Icon(
+                child: const Icon(
                   Icons.shopping_cart_outlined,
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? black
-                      : lightAsh,
                 ),
               ),
             ),
@@ -159,11 +119,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 4
-                        ? selectedNavBarColor
-                        : Theme.of(context).brightness == Brightness.light
-                            ? white
-                            : lightAsh,
+                    color: _page == 4 ? selectedNavBarColor : backgroundColor,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
@@ -175,7 +131,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             label: '',
           ),
         ],
-      ),
-    );
+      );
   }
 }

@@ -3,8 +3,12 @@ import 'dart:io';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/buyer_navbar.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/profile.dart';
+import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/features/profile/services/profile_service.dart';
+import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +49,8 @@ class _UserProfileState extends State<UserProfile> {
             ? 'untouched name'
             : nameController.text,
         img: selectedImage,
-        gender: _selectedCategory!=null?_selectedCategory!:'untouched gender',
+        gender:
+            _selectedCategory != null ? _selectedCategory! : 'untouched gender',
         street: streetController.text.isEmpty
             ? 'untouched street'
             : streetController.text,
@@ -94,15 +99,11 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     Profile profile =
         Provider.of<UserProvider>(context, listen: false).user.profile;
-    print("GENDERRR");
-    print(profile.img);
-    print(profile.gender == 'Male');
-
-    print(profile.name);
-    print(profile.city);
-    print(profile.country);
-    print(profile.postalCode);
+    User user = Provider.of<UserProvider>(context, listen: false).user;
     return Scaffold(
+      bottomNavigationBar:user.role == 'Seller'
+          ? const SellerBottomNavbar()
+          : const BuyerNavbar(),
       appBar: AppBar(
         title: const Text('Edit Profile'),
       ),

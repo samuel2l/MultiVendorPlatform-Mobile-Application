@@ -1,12 +1,8 @@
 // ignore_for_file: avoid_print
-
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/rendering.dart';
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
-// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/products/widgets/dialogs/cart_colors_exceeded.dart';
 import 'package:multivendorplatformmobile/features/products/widgets/dialogs/cart_sizes_exceeded.dart';

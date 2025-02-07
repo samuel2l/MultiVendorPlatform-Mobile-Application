@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/input_field.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multivendorplatformmobile/features/seller/widgets/select_colors.dart';
 import 'package:multivendorplatformmobile/features/seller/widgets/select_sizes.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 
 class AddProduct extends StatefulWidget {
@@ -106,7 +104,6 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            bottomNavigationBar: const SellerBottomNavbar(),
       appBar: AppBar(
         elevation: 0,
         title: const Text(

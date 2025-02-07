@@ -1,11 +1,9 @@
-
-import 'package:multivendorplatformmobile/features/common/widgets/buyer_navbar.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/search/services/search_service.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,15 +50,24 @@ class _SearchCategoryProductState extends State<SearchCategoryProduct> {
     print(userProvider.user.token);
 
     return Scaffold(
-      bottomNavigationBar: userProvider.user.role=='Seller'?const SellerBottomNavbar():const BuyerNavbar(),
-
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-
-          
-          title: SearchField(onFieldSubmitted: navigateToSearch)
-        ),
+        child: AppBar(actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                userProvider.user.role == 'Seller'
+                    ? Seller.routeName
+                    : BottomNavBar.routeName, // Route name of the home screen
+                (route) => false, // Removes all previous routes
+              );
+            },
+            child: Container(
+                margin: const EdgeInsets.only(right: 10),
+                child: const Icon(Icons.home_outlined)),
+          )
+        ], title: SearchField(onFieldSubmitted: navigateToSearch)),
       ),
       body: products == null
           ? const Center(
@@ -72,7 +79,6 @@ class _SearchCategoryProductState extends State<SearchCategoryProduct> {
                 )
               : Column(
                   children: [
-
                     const SizedBox(height: 10),
                     Expanded(
                       child: ListView.builder(

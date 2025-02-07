@@ -21,6 +21,7 @@ class _CategoriesState extends State<Categories> {
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
           elevation: 0, title: SearchField(onFieldSubmitted: navigateToSearch)),
       body: Column(
         children: [
@@ -58,7 +59,7 @@ class _CategoriesState extends State<Categories> {
                                   ? white
                                   : ash,
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(23))),
+                              const BorderRadius.all(Radius.circular(23),),),
                       child: ListView(
                         children: [
                           Container(

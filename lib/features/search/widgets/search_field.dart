@@ -24,7 +24,7 @@ class SearchField extends StatelessWidget {
             ),
             prefixIcon: Image.asset("assets/images/search-normal.png"),
             contentPadding: const EdgeInsets.all(14),
-            hintText: "Search",
+            hintText: "Search CyberMart",
             hintStyle: const TextStyle(fontSize: 17)),
       ),
     );

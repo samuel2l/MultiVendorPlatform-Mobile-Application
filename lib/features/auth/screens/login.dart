@@ -1,9 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:multivendorplatformmobile/features/auth/screens/login.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/signup.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/input_field.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 
 class Login extends StatefulWidget {
@@ -14,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final signUpKey = GlobalKey<FormState>();
+  final loginKey = GlobalKey<FormState>();
 
   final AuthService authService = AuthService();
   TextEditingController phoneController = TextEditingController();
@@ -76,7 +74,7 @@ class _LoginState extends State<Login> {
               height: 40,
             ),
             Form(
-              key: signUpKey, // Add the key here
+              key: loginKey, // Add the key here
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -109,12 +107,9 @@ class _LoginState extends State<Login> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                   TextButton(
                     onPressed: () {
-                      if (signUpKey.currentState!.validate()) {
+                      if (loginKey.currentState!.validate()) {
                         // signUp(context);
-                        print(emailController.text);
-                        print(passwordController.text);
-                        print(phoneController.text);
-                        print(selectedValue);
+                        login(context);
                       }
                     },
                     child: const Text(

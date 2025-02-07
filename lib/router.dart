@@ -5,7 +5,6 @@ import 'package:multivendorplatformmobile/features/profile/screens/user_profile.
 import 'package:multivendorplatformmobile/features/search/screens/search_category_product.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search_seller_products.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
-import 'package:multivendorplatformmobile/features/auth/screens/auth.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/home/screens/home.dart';
 import 'package:multivendorplatformmobile/features/home/screens/products_by_category.dart';
@@ -105,10 +104,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
                 sellerId: args['sellerId'] ?? '',
               ),
           settings: routeSettings);
-   case Sales.routeName:
+    case Sales.routeName:
       return MaterialPageRoute(
           builder: (_) => const Sales(), settings: routeSettings);
     default:
+      print(routeSettings.name);
+
       return MaterialPageRoute(
           builder: (_) => const Text('this page does not exist'),
           settings: routeSettings);

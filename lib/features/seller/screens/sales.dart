@@ -3,7 +3,6 @@ import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/order_details.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/edit_dlivery_status.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/sale.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 
 class Sales extends StatefulWidget {
@@ -38,117 +37,129 @@ class _SalesState extends State<Sales> {
       ),
       body: sales == null
           ? const Center(
-              child: Text('you have no sales ao'),
+              child: CircularProgressIndicator(
+                color: teal,
+              ),
             )
-          : Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: sales!.length,
-                          itemBuilder: (context, index) {
-                            Order order = sales![index];
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) {
-                                    return OrderDetails(order: order);
+          : sales!.isEmpty
+              ? const Center(
+                  child: Text('you have no sales ao'),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: sales!.length,
+                              itemBuilder: (context, index) {
+                                Order order = sales![index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) {
+                                        return OrderDetails(order: order);
+                                      },
+                                    ));
                                   },
-                                ));
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(18),
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? lightAsh
-                                        : ash),
-                                margin: const EdgeInsets.all(8),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Order ID: ${order.orderId}",
-                                        style: const TextStyle(fontSize: 18),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.edit),
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                builder: (context) {
-                                                  return EditDliveryStatus(
-                                                      order: order);
-                                                  // return EditDliveryStatus();
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? lightAsh
+                                            : ash),
+                                    margin: const EdgeInsets.all(8),
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "Order ID: ${order.orderId}",
+                                            style:
+                                                const TextStyle(fontSize: 18),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              IconButton(
+                                                icon: const Icon(Icons.edit),
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return EditDliveryStatus(
+                                                          order: order);
+                                                      // return EditDliveryStatus();
+                                                    },
+                                                  ));
                                                 },
-                                              ));
-                                            },
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.all(4),
-                                            decoration: BoxDecoration(
-                                                color:
-                                                    order.status == "received"
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.all(4),
+                                                decoration: BoxDecoration(
+                                                    color: order.status ==
+                                                            "received"
                                                         ? Colors.orange
                                                         : order.status ==
                                                                 "on the way"
                                                             ? Colors.blue
                                                             : teal,
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
-                                            child: Text(
-                                              order.status,
-                                              style:
-                                                  const TextStyle(fontSize: 17),
-                                            ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8)),
+                                                child: Text(
+                                                  order.status,
+                                                  style: const TextStyle(
+                                                      fontSize: 17),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Text(
+                                            "Date: ${order.date}",
+                                            style:
+                                                const TextStyle(fontSize: 17),
+                                          ),
+                                        ),
+                                        const Divider(
+                                          thickness: 0.4,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Total Amount Paid: ${order.amount.toString()}",
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Text(
-                                        "Date: ${order.date}",
-                                        style: const TextStyle(fontSize: 17),
-                                      ),
-                                    ),
-                                    const Divider(
-                                      thickness: 0.4,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "Total Amount Paid: ${order.amount.toString()}",
-                                        style: const TextStyle(fontSize: 20),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    )
+                  ],
+                ),
     );
   }
 }

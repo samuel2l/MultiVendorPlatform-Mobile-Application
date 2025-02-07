@@ -3,13 +3,10 @@ import 'dart:io';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/buyer_navbar.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/profile.dart';
-import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/features/profile/services/profile_service.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 import 'package:provider/provider.dart';
 
 class UserProfile extends StatefulWidget {
@@ -99,11 +96,7 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     Profile profile =
         Provider.of<UserProvider>(context, listen: false).user.profile;
-    User user = Provider.of<UserProvider>(context, listen: false).user;
     return Scaffold(
-      bottomNavigationBar:user.role == 'Seller'
-          ? const SellerBottomNavbar()
-          : const BuyerNavbar(),
       appBar: AppBar(
         title: const Text('Edit Profile'),
       ),
@@ -138,15 +131,16 @@ class _UserProfileState extends State<UserProfile> {
               ),
               Positioned(
                 bottom: 5,
-                left: 260,
+                left: 254,
                 child: GestureDetector(
                   onTap: pickImages,
                   child: Container(
                     padding: const EdgeInsets.all(3),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? white
+                          : teal,
                       shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0XFFFEC400)),
                     ),
                     child: const Icon(
                       Icons.edit_outlined,

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/features/auth/screens/signup.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +66,7 @@ class _SplashState extends State<Splash> {
     } else {
       print("auth??");
       Navigator.of(context).pushNamedAndRemoveUntil(
-        Auth.routeName,
+        Signup.routeName,
         (route) => false,
       );
     }

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/input_field.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multivendorplatformmobile/features/seller/widgets/select_colors.dart';
 import 'package:multivendorplatformmobile/features/seller/widgets/select_sizes.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 
 class EditProduct extends StatefulWidget {
@@ -126,8 +124,8 @@ class _EditProductState extends State<EditProduct> {
     print("doinwfewf");
 
     return Scaffold(
-            bottomNavigationBar: const SellerBottomNavbar(),
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
         title: Text(
           'Edit ${widget.product.name}',
@@ -485,7 +483,7 @@ class _EditProductState extends State<EditProduct> {
                     selectedtype,
                   );
                 },
-                child: Text('Edit ${widget.product.name}'),
+                child: Text('Edit ${widget.product.name}',maxLines: 1,overflow: TextOverflow.ellipsis,),
               ),
             ],
           ),

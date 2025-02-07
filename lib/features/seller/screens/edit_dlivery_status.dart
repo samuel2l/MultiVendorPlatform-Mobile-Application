@@ -1,10 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/order.dart';
 import 'package:multivendorplatformmobile/features/products/services/product_details_service.dart';
 import 'package:multivendorplatformmobile/features/seller/services/seller_service.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 
 class EditDliveryStatus extends StatefulWidget {
   const EditDliveryStatus({super.key, required this.order});
@@ -28,7 +26,6 @@ class _EditDliveryStatusState extends State<EditDliveryStatus> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const SellerBottomNavbar(),
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

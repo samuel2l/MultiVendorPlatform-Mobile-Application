@@ -9,7 +9,9 @@ import 'package:multivendorplatformmobile/features/products/services/product_det
 import 'package:multivendorplatformmobile/features/search/screens/search_seller_products.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
+import 'package:multivendorplatformmobile/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class SellerProfile extends StatefulWidget {
   const SellerProfile({super.key, required this.sellerId});
@@ -57,74 +59,95 @@ class _SellerProfileState extends State<SellerProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: const SellerBottomNavbar(),
-      appBar: AppBar(
-          title: ListTile(
-        trailing: SizedBox(
-          child: ClipOval(
-            child: Image.network(sellerProfile!.img),
-          ),
-        ),
-        title: Text(
-          "${sellerProfile!.name}'s Products ",
-          style: const TextStyle(fontSize: 20),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-      )),
-      body: sellerProfile == null || products == null
-          ? const Center(
-              child: Text('Sometjing went wrong'),
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text(
-                    "About us: ${sellerProfile!.about}",
-                    style: const TextStyle(fontSize: 19),
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    return sellerProfile == null || products == null
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: ListTile(
+                trailing: SizedBox(
+                  child: ClipOval(
+                    child: Image.network(sellerProfile!.img),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text(
-                      "Location: ${sellerProfile!.street},${sellerProfile!.country} "),
+                title: Text(
+                  "${sellerProfile!.name}'s Products ",
+                  style: const TextStyle(fontSize: 20),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text("Address: ${sellerProfile!.postalCode} "),
-                ),
-                SearchField(onFieldSubmitted: navigateToSearch),
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: products!.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                            ProductDetails.routeName,
-                            arguments: products![index]);
-                      },
-                      // child: Container(
-                      //   margin: const EdgeInsets.symmetric(
-                      //       horizontal: 9, vertical: 9),
-                      //   padding: const EdgeInsets.all(18),
-                      //   color: Colors.grey,
-                      //   child: Column(
-                      //     children: [
-                      //       Text(products![index].name),
-                      //       Text(products![index].desc),
-                      //     ],
-                      //   ),
-                      // ),
-                      child: SearchedProduct(product: products![index]),
-                    );
+              ),
+              actions: [
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamedAndRemoveUntil(
+  context, 
+userProvider.user.role=='Seller'?Seller.routeName:BottomNavBar.routeName  ,  // Route name of the home screen
+  (route) => false, // Removes all previous routes
+);
                   },
-                ))
+
+                  child:Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    child: const Icon(Icons.home_outlined)),
+                )
               ],
             ),
-    );
+            body: sellerProfile == null || products == null
+                ? const Center(
+                    child: Text('Sometjing went wrong'),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Text(
+                          "About us: ${sellerProfile!.about}",
+                          style: const TextStyle(fontSize: 19),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Text(
+                            "Location: ${sellerProfile!.street},${sellerProfile!.country} "),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Text("Address: ${sellerProfile!.postalCode} "),
+                      ),
+                      SearchField(onFieldSubmitted: navigateToSearch),
+                      Expanded(
+                          child: ListView.builder(
+                        itemCount: products!.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  ProductDetails.routeName,
+                                  arguments: products![index]);
+                            },
+                            // child: Container(
+                            //   margin: const EdgeInsets.symmetric(
+                            //       horizontal: 9, vertical: 9),
+                            //   padding: const EdgeInsets.all(18),
+                            //   color: Colors.grey,
+                            //   child: Column(
+                            //     children: [
+                            //       Text(products![index].name),
+                            //       Text(products![index].desc),
+                            //     ],
+                            //   ),
+                            // ),
+                            child: SearchedProduct(product: products![index]),
+                          );
+                        },
+                      ))
+                    ],
+                  ),
+          );
   }
 }

@@ -125,7 +125,8 @@ class _CartState extends State<Cart> {
                     );
                   },
                 ),
-          Padding(
+user.cart.isNotEmpty
+              ?          Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               child: Text(
@@ -137,7 +138,7 @@ class _CartState extends State<Cart> {
                 await orderService.placeOrder(context: context);
               },
             ),
-          ),
+          ):const SizedBox.shrink()
         ],
       ),
     );

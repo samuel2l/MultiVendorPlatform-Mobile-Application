@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search_category_product.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
 import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
+import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:provider/provider.dart';
@@ -60,13 +60,28 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
   Widget build(BuildContext context) {
     User user = Provider.of<UserProvider>(context, listen: false).user;
     return Scaffold(
-      bottomNavigationBar:user.role=='Seller'? const SellerBottomNavbar(): const BottomNavBar(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
           title: Text(
             widget.category,
           ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  user.role == 'Seller'
+                      ? Seller.routeName
+                      : BottomNavBar.routeName, // Route name of the home screen
+                  (route) => false, // Removes all previous routes
+                );
+              },
+              child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: const Icon(Icons.home_outlined)),
+            )
+          ],
         ),
       ),
       body: products == null

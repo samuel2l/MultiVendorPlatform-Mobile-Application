@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:multivendorplatformmobile/constants.dart';
+import 'package:multivendorplatformmobile/features/auth/screens/login.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
@@ -68,19 +69,16 @@ class AuthService {
               "profile": userData["profile"],
             }));
             User curr = Provider.of<UserProvider>(context, listen: false).user;
-            if (curr.role=="Seller"){
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              Seller.routeName,
-              (route) => false,
-            );
-
-            }else{
-
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              BottomNavBar.routeName,
-              (route) => false,
-            );
-
+            if (curr.role == "Seller") {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                Seller.routeName,
+                (route) => false,
+              );
+            } else {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                BottomNavBar.routeName,
+                (route) => false,
+              );
             }
             showSnackBar(context, 'Account created!');
           });
@@ -164,7 +162,7 @@ class AuthService {
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-      // prefs.setString('x-auth-token', '')
+      prefs.setString('x-auth-token', '');
       if (token != '' && token != null) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),
@@ -189,6 +187,24 @@ class AuthService {
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(user);
       }
+    } catch (e) {
+      print("error");
+      print(e);
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  logOut(
+    BuildContext context,
+  ) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      prefs.setString('x-auth-token', '');
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        Login.routeName,
+        (route) => false,
+      );
     } catch (e) {
       print("error");
       print(e);

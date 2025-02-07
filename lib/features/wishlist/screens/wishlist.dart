@@ -1,9 +1,5 @@
-import 'package:multivendorplatformmobile/constants.dart';
-import 'package:multivendorplatformmobile/features/common/widgets/buyer_navbar.dart';
 import 'package:multivendorplatformmobile/features/common/widgets/empty.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search.dart';
-import 'package:multivendorplatformmobile/features/search/widgets/search_field.dart';
-import 'package:multivendorplatformmobile/features/seller/widgets/seller_bottom_navbar.dart';
 import 'package:multivendorplatformmobile/features/wishlist/widgets/wishlist_item.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +26,7 @@ class _WishlistState extends State<Wishlist> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: SearchField(onFieldSubmitted: navigateToSearch)
+          
         ),
       ),
       body: Column(

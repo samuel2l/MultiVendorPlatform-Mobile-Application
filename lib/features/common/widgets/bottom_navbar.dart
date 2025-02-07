@@ -67,9 +67,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
               child: Icon(
                 Icons.home_outlined,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? black
-                    : lightAsh,
+                color:_page==0?teal :Theme.of(context).brightness == Brightness.light
+                      ? black
+                      : lightAsh,
               ),
             ),
             label: '',
@@ -91,9 +91,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
               child: Icon(
                 Icons.grid_view,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? black
-                    : lightAsh,
+                color:_page==1?teal :Theme.of(context).brightness == Brightness.light
+                      ? black
+                      : lightAsh,
               ),
             ),
             label: '',
@@ -115,9 +115,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
               child: Icon(
                 Icons.favorite_border,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? black
-                    : lightAsh,
+                color: _page==2?teal :Theme.of(context).brightness == Brightness.light
+                      ? black
+                      : lightAsh,
               ),
             ),
             label: '',
@@ -139,13 +139,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
               child: badges.Badge(
                 badgeStyle:  const badges.BadgeStyle(
-                  elevation: 0,
+               
                 badgeColor:teal,
                 ),
                 badgeContent: Text(cartLength.toString()),
                 child: Icon(
                   Icons.shopping_cart_outlined,
-                  color: Theme.of(context).brightness == Brightness.light
+                  color:_page==3?teal :Theme.of(context).brightness == Brightness.light
                       ? black
                       : lightAsh,
                 ),
@@ -168,8 +168,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   ),
                 ),
               ),
-              child: const Icon(
+              child:  Icon(
                 Icons.person_outline_outlined,
+                color:_page==4?teal :Theme.of(context).brightness == Brightness.light
+                      ? black
+                      : lightAsh,
               ),
             ),
             label: '',

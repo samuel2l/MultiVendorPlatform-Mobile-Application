@@ -1,11 +1,14 @@
 import 'package:multivendorplatformmobile/constants.dart';
 import 'package:multivendorplatformmobile/features/home/screens/categories.dart';
-import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/products/screens/cart.dart';
-import 'package:multivendorplatformmobile/features/seller/screens/sales.dart';
+import 'package:multivendorplatformmobile/features/profile/screens/account.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller_products.dart';
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/wishlist/screens/wishlist.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:multivendorplatformmobile/providers/user_provider.dart';
+import 'package:multivendorplatformmobile/theme.dart';
+import 'package:provider/provider.dart';
 
 class Seller extends StatefulWidget {
   const Seller({super.key});
@@ -21,11 +24,10 @@ class _SellerState extends State<Seller> {
 
   List<Widget> pages = [
     const SellerProducts(),
-    const Cart(),
-    // const Wishlist(),
     const Categories(),
-    const Orders(),
-    const Sales()
+    const Wishlist(),
+    const Cart(),
+    const Account(),
   ];
 
   void updatePage(int page) {
@@ -37,7 +39,6 @@ class _SellerState extends State<Seller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
@@ -59,7 +60,7 @@ class _SellerState extends State<Seller> {
                 ),
               ),
               child: const Icon(
-                Icons.home_outlined,
+                Icons.shopify,
               ),
             ),
             label: '',
@@ -77,12 +78,12 @@ class _SellerState extends State<Seller> {
                 ),
               ),
               child: const Icon(
-                Icons.analytics_outlined,
+                Icons.grid_view,
               ),
             ),
             label: '',
           ),
-          // CART
+
           BottomNavigationBarItem(
             icon: Container(
               width: bottomNavBarWidth,
@@ -94,17 +95,8 @@ class _SellerState extends State<Seller> {
                   ),
                 ),
               ),
-              // child: Badge(
-              //   // elevation: 0,
-              //   // badgeContent: Text(userCartLen.toString()),
-              //   // badgeColor: Colors.white,
-
-              //   child: const Icon(
-              //     Icons.shopping_cart_outlined,
-              //   ),
-              // ),
               child: const Icon(
-                Icons.receipt_outlined,
+                Icons.favorite_outline,
               ),
             ),
             label: '',
@@ -120,8 +112,23 @@ class _SellerState extends State<Seller> {
                   ),
                 ),
               ),
-              child: const Icon(
-                Icons.shopping_cart_outlined,
+              child: badges.Badge(
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: teal,
+                ),
+                badgeContent: Text(Provider.of<UserProvider>(context)
+                    .user
+                    .cart
+                    .length
+                    .toString()),
+                child: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: _page == 3
+                      ? teal
+                      : Theme.of(context).brightness == Brightness.light
+                          ? black
+                          : lightAsh,
+                ),
               ),
             ),
             label: '',
@@ -138,7 +145,7 @@ class _SellerState extends State<Seller> {
                 ),
               ),
               child: const Icon(
-                Icons.analytics_outlined,
+                Icons.person_outlined,
               ),
             ),
             label: '',

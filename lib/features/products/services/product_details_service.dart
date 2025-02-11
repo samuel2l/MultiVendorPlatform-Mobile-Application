@@ -107,6 +107,7 @@ class ProductDetailsService extends ChangeNotifier {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
+    
     print("from get profile api");
     print(res.body);
 

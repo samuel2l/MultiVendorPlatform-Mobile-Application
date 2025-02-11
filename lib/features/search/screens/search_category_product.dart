@@ -6,6 +6,7 @@ import 'package:multivendorplatformmobile/features/search/widgets/searched_produ
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 import 'package:provider/provider.dart';
 
 class SearchCategoryProduct extends StatefulWidget {
@@ -23,6 +24,7 @@ class SearchCategoryProduct extends StatefulWidget {
 class _SearchCategoryProductState extends State<SearchCategoryProduct> {
   List? products;
   final SearchService searchService = SearchService();
+  bool isAscending = true; // Track sorting order
 
   @override
   void initState() {
@@ -33,10 +35,22 @@ class _SearchCategoryProductState extends State<SearchCategoryProduct> {
   getSearchedProduct() async {
     products = await searchService.searchProductsInCategory(
         widget.query, widget.category, context);
-    print("fetched product");
-    print(products);
-
     setState(() {});
+  }
+
+  void sortProducts() {
+    if (products != null) {
+      products!.sort((a, b) {
+        double priceA = a.price.toDouble();
+        double priceB = b.price.toDouble();
+        return isAscending
+            ? priceA.compareTo(priceB)
+            : priceB.compareTo(priceA);
+      });
+
+      isAscending = !isAscending; // Toggle sort order
+      setState(() {});
+    }
   }
 
   void navigateToSearch(String query) {
@@ -47,39 +61,69 @@ class _SearchCategoryProductState extends State<SearchCategoryProduct> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    print(userProvider.user.token);
 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: AppBar(actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                userProvider.user.role == 'Seller'
-                    ? Seller.routeName
-                    : BottomNavBar.routeName, // Route name of the home screen
-                (route) => false, // Removes all previous routes
-              );
-            },
-            child: Container(
+        child: AppBar(
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  userProvider.user.role == 'Seller'
+                      ? Seller.routeName
+                      : BottomNavBar.routeName,
+                  (route) => false,
+                );
+              },
+              child: Container(
                 margin: const EdgeInsets.only(right: 10),
-                child: const Icon(Icons.home_outlined)),
-          )
-        ], title: SearchField(onFieldSubmitted: navigateToSearch)),
+                child: const Icon(Icons.home_outlined),
+              ),
+            ),
+          ],
+          title: SearchField(onFieldSubmitted: navigateToSearch),
+        ),
       ),
       body: products == null
           ? const Center(
-              child: CircularProgressIndicator(),
-            )
+              child: CircularProgressIndicator(
+              color: teal,
+            ))
           : products!.isEmpty
               ? Center(
-                  child: Text('We do not have anything named ${widget.query}'),
-                )
+                  child: Text('We do not have anything named ${widget.query}'))
               : Column(
                   children: [
                     const SizedBox(height: 10),
+
+                    // Sort Buttona
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Sort by Price",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: sortProducts,
+                            icon: Icon(isAscending
+                                ? Icons.arrow_upward
+                                : Icons.arrow_downward),
+                            label: Text(
+                                isAscending ? "Low to High" : "High to Low"),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // Product List
                     Expanded(
                       child: ListView.builder(
                         itemCount: products!.length,

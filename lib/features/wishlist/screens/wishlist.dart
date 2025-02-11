@@ -23,32 +23,28 @@ class _WishlistState extends State<Wishlist> {
     final user = context.watch<UserProvider>().user;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-          
-        ),
+      appBar: AppBar(
+        title: Text("${user.profile.name}'s wishlist",overflow: TextOverflow.ellipsis,maxLines: 1,),
       ),
       body: Column(
-        mainAxisAlignment: user.wishlist.isEmpty?MainAxisAlignment.center:MainAxisAlignment.start,
+        mainAxisAlignment: user.wishlist.isEmpty
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
         children: [
-
           user.wishlist.isEmpty
               ? const Empty(
-            img: "assets/images/wishlistempty.png",
-            title: "Your wishlist is empty",
-            subtitle:
-                "Looks like you have not added anything in your wishlist. Go ahead and explore top categories.",
-            
-            btnText: "Explore Categories")
-           
-
+                  img: "assets/images/ewish.png",
+                  title: "Your wishlist is empty",
+                  subtitle:
+                      "Looks like you have not added anything in your wishlist. Go ahead and explore top categories.",
+                  btnText: "Explore Categories")
               : ListView.builder(
                   itemCount: user.wishlist.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
+                    
                     return WishlistItem(
-                      index: index,
+                      item: user.wishlist[index]
                     );
                   },
                 ),

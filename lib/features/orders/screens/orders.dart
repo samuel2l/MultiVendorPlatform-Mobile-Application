@@ -57,6 +57,7 @@ class _OrdersState extends State<Orders> {
           )
         : Scaffold(
           appBar: AppBar(
+            surfaceTintColor: Colors.transparent,
 
             title: Text(" ${user.profile.name}'s Orders"),
           ),

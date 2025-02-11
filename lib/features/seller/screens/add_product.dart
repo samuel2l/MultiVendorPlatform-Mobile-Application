@@ -29,7 +29,7 @@ class _AddProductState extends State<AddProduct> {
 
   String selectedtype = 'Electronics';
   List<File> selectedImages = [];
-
+  bool isLoading = false;
   final addProductKey = GlobalKey<FormState>();
   void pickImages() async {
     final ImagePicker picker = ImagePicker();
@@ -105,6 +105,7 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
         title: const Text(
           'Add a product',
@@ -387,6 +388,8 @@ class _AddProductState extends State<AddProduct> {
                   //images not a form field so check for that as well
                   if (addProductKey.currentState!.validate() &&
                       selectedImages.isNotEmpty) {
+                    isLoading = true;
+                    setState(() {});
                     addNewProduct(
                       nameController.text.trim(),
                       descriptionController.text.trim(),
@@ -397,7 +400,11 @@ class _AddProductState extends State<AddProduct> {
                     );
                   }
                 },
-                child: const Text('Add Product'),
+                child: isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : const Text('Add Product'),
               ),
             ],
           ),

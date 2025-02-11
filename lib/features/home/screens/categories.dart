@@ -21,8 +21,9 @@ class _CategoriesState extends State<Categories> {
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-          elevation: 0, title: SearchField(onFieldSubmitted: navigateToSearch)),
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          title: SearchField(onFieldSubmitted: navigateToSearch)),
       body: Column(
         children: [
           Container(
@@ -54,12 +55,13 @@ class _CategoriesState extends State<Categories> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? white
-                                  : ash,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(23),),),
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? white
+                            : ash,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(23),
+                        ),
+                      ),
                       child: ListView(
                         children: [
                           Container(

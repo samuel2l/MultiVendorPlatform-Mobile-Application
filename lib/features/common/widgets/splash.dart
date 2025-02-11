@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/signup.dart';
 import 'package:multivendorplatformmobile/features/auth/services/auth_service.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/onboarding.dart';
 import 'package:multivendorplatformmobile/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,17 +30,13 @@ class _SplashState extends State<Splash> {
     // Fetch user data or perform necessary startup logic
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('x-auth-token') ?? '';
+    print("gotten token???");
+    print(token);
     AuthService authService = AuthService();
     if (token.isNotEmpty) {
       await authService.getUserData(context);
 
       final userProvider = Provider.of<UserProvider>(context, listen: false);
-      print("in initialize app");
-      print(userProvider.user.email);
-      print(userProvider.user.role);
-      print(userProvider.user.token);
-      print(userProvider.user.cart);
-      print(userProvider.user.orders);
 
       if (userProvider.user.role == 'Buyer') {
         Navigator.of(context).pushNamedAndRemoveUntil(
@@ -53,20 +50,15 @@ class _SplashState extends State<Splash> {
           (route) => false,
         );
       } else {
-        Navigator.push(
-          context,MaterialPageRoute(
-            
-          builder: (context) {
-            return const Center(child: Text("You are not a suitable user of this app"));
-          },
-        ),
-
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          Onboarding.routeName,
+          (route) => false,
         );
       }
     } else {
       print("auth??");
       Navigator.of(context).pushNamedAndRemoveUntil(
-        Signup.routeName,
+        Onboarding.routeName,
         (route) => false,
       );
     }
@@ -74,10 +66,20 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: black,
-      body: Center(
-        child: CircularProgressIndicator(),
+    return  Scaffold(
+
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+        children: [
+          Container(height: 100,),
+         Image.asset("assets/images/elogo.png")
+          ,
+          const Center(
+            child: CircularProgressIndicator(color: teal,strokeWidth: 7,),
+          ),
+          const SizedBox(height: 40,)
+        ],
       ),
     );
   }

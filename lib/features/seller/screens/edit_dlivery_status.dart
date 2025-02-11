@@ -18,9 +18,9 @@ class _EditDliveryStatusState extends State<EditDliveryStatus> {
   String selectedStatus = '';
   @override
   void initState() {
-    // TODO: implement initState
-    selectedStatus = widget.order.status;
     super.initState();
+
+    selectedStatus = widget.order.status;
   }
 
   @override
@@ -54,8 +54,7 @@ class _EditDliveryStatusState extends State<EditDliveryStatus> {
                   child: Text(value),
                 );
               }).toList(),
-              style: const TextStyle(fontSize: 17, color: Colors.black),
-              dropdownColor: Colors.white,
+
               underline: Container(height: 0), // Removes the default underline
             ),
             const SizedBox(

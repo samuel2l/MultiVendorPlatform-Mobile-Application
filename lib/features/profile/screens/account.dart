@@ -60,7 +60,7 @@ class Account extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).brightness == Brightness.light
                     ? white
-                    : black,
+                    : const Color.fromARGB(255, 18, 18, 19),
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40)),

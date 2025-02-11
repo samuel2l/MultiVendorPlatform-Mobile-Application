@@ -39,8 +39,13 @@ class _UserProfileState extends State<UserProfile> {
   final List<String> _categories = ['Male', 'Female'];
 
   String? _selectedCategory;
-
+  bool isLoading = false;
   void updateProfile() {
+    isLoading = true;
+    setState(() {
+      
+    });
+
     profileService.updateProfile(
         name: nameController.text.isEmpty
             ? 'untouched name'
@@ -61,6 +66,7 @@ class _UserProfileState extends State<UserProfile> {
             ? 'untouched country'
             : countryController.text,
         context: context);
+
   }
 
   final nameController = TextEditingController();
@@ -98,6 +104,7 @@ class _UserProfileState extends State<UserProfile> {
         Provider.of<UserProvider>(context, listen: false).user.profile;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Text('Edit Profile'),
       ),
       body: ListView(
@@ -154,12 +161,15 @@ class _UserProfileState extends State<UserProfile> {
           const SizedBox(
             height: 20,
           ),
-          Text(
-            profile.name,
-            style: const TextStyle(
-                fontSize: 24,
-                color: Color(0XFF5A5A5A),
-                fontWeight: FontWeight.w500),
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0),
+            child: Text(
+              profile.name,
+              style: const TextStyle(
+                  fontSize: 24,
+                  color: Color(0XFF5A5A5A),
+                  fontWeight: FontWeight.w500),
+            ),
           ),
           const SizedBox(
             height: 10,
@@ -175,18 +185,6 @@ class _UserProfileState extends State<UserProfile> {
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.yellow,
-                  ),
-                ),
               ),
             ),
           ),
@@ -200,18 +198,6 @@ class _UserProfileState extends State<UserProfile> {
                 contentPadding: const EdgeInsets.all(18),
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.yellow,
-                  ),
                 ),
               ),
             ),
@@ -227,18 +213,6 @@ class _UserProfileState extends State<UserProfile> {
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.yellow,
-                  ),
-                ),
               ),
             ),
           ),
@@ -253,18 +227,6 @@ class _UserProfileState extends State<UserProfile> {
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.yellow,
-                  ),
-                ),
               ),
             ),
           ),
@@ -278,18 +240,6 @@ class _UserProfileState extends State<UserProfile> {
                 contentPadding: const EdgeInsets.all(18),
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide(
-                    color: Colors.yellow,
-                  ),
                 ),
               ),
             ),
@@ -320,7 +270,7 @@ class _UserProfileState extends State<UserProfile> {
                 onPressed: () {
                   updateProfile();
                 },
-                child: const Text(
+                child: isLoading?const Center(child: CircularProgressIndicator(),): const Text(
                   'Update',
                   style: TextStyle(fontSize: 24),
                 )),

@@ -1,3 +1,4 @@
+import 'package:multivendorplatformmobile/features/models/cart_item.dart';
 import 'package:multivendorplatformmobile/features/models/product.dart';
 import 'package:multivendorplatformmobile/features/products/screens/product_details.dart';
 import 'package:multivendorplatformmobile/features/wishlist/services/wishlist_service.dart';
@@ -6,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WishlistItem extends StatefulWidget {
-  final int index;
+  final CartItem item;
   const WishlistItem({
     super.key,
-    required this.index,
+    required this.item,
   });
 
   @override
@@ -20,12 +21,6 @@ class _WishlistItemState extends State<WishlistItem> {
   @override
   void initState() {
     super.initState();
-    // Initialize quantity from the cart item
-    final wishlistItem =
-        context.read<UserProvider>().user.wishlist[widget.index];
-    quantity = wishlistItem.amount;
-    sizes = wishlistItem.product.sizes;
-    colors = wishlistItem.product.colors;
   }
 
   final WishlistService wishlistService = WishlistService();
@@ -34,23 +29,11 @@ class _WishlistItemState extends State<WishlistItem> {
   List<String>? sizes;
   List<String>? colors;
 
-  void incrementQuantity() {
-    setState(() {
-      quantity = quantity! + 1;
-    });
-  }
-
-  void decrementQuantity() {
-    setState(() {
-      if (quantity! > 1) quantity = quantity! - 1;
-    });
-  }
-
   void editWishlist(Product product, bool isRemove) {
     wishlistService.editWishlist(
         context: context,
         product: product,
-        amount: quantity!,
+        amount: widget.item.amount,
         isRemove: isRemove,
         isUpdateQuantityOnly: true);
 
@@ -61,29 +44,27 @@ class _WishlistItemState extends State<WishlistItem> {
     wishlistService.moveFromWishlistToCart(
       context: context,
       product: product,
-      amount: quantity!,
+      amount: widget.item.amount,
     );
 
     setState(() {});
   }
 
   String? result;
-  void mapItemColors() {
-    Map<String, int> itemCounts = {};
-    for (var color in colors!) {
-      itemCounts[color] = (itemCounts[color] ?? 0) + 1;
-    }
-    result = itemCounts.entries
-        .map((entry) => '${entry.key}: ${entry.value}')
-        .join(', ');
-  }
+  // void mapItemColors() {
+  //   Map<String, int> itemCounts = {};
+  //   for (var color in colors!) {
+  //     itemCounts[color] = (itemCounts[color] ?? 0) + 1;
+  //   }
+  //   result = itemCounts.entries
+  //       .map((entry) => '${entry.key}: ${entry.value}')
+  //       .join(', ');
+  // }
 
   @override
   Widget build(BuildContext context) {
-    mapItemColors();
-    final wishlistItem =
-        context.watch<UserProvider>().user.wishlist[widget.index];
-
+    // mapItemColors();
+    print(widget.item.product.img);
     return Column(
       children: [
         Container(
@@ -92,21 +73,14 @@ class _WishlistItemState extends State<WishlistItem> {
           ),
           child: Row(
             children: [
-              Image.network(
-                wishlistItem.product.img.isNotEmpty == true
-                    ? wishlistItem.product.img[0]
-                    : 'https://via.placeholder.com/150',
-                fit: BoxFit.contain,
-                height: 135,
-                width: 135,
-              ),
+              Image.network(widget.item.product.img[0],height: 155,width:155,),
               Column(
                 children: [
                   Container(
                     width: 235,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
-                      wishlistItem.product.name,
+                      widget.item.product.name,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
@@ -117,7 +91,7 @@ class _WishlistItemState extends State<WishlistItem> {
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Text(
-                      '\$${wishlistItem.product.price}',
+                      '\$${widget.item.product.price}',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -129,7 +103,7 @@ class _WishlistItemState extends State<WishlistItem> {
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Text(
-                      colors!.isNotEmpty ? 'Colors: $result' : "In stock",
+                     "Amount added: ${widget.item.amount.toString()}",
                       style: const TextStyle(
                         color: Colors.teal,
                       ),
@@ -142,72 +116,31 @@ class _WishlistItemState extends State<WishlistItem> {
           ),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            InkWell(
-              onTap: () => decrementQuantity(),
-              child: Container(
-                width: 35,
-                height: 32,
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.remove,
-                  size: 18,
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:8.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  Product product = await wishlistService.getProduct(
+                      widget.item.product.id, context);
+                  Navigator.of(context)
+                      .pushNamed(ProductDetails.routeName, arguments: product);
+                },
+                child: const Text('edit'),
               ),
-            ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12, width: 1.5),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Container(
-                width: 35,
-                height: 32,
-                alignment: Alignment.center,
-                child: Text(
-                  quantity.toString(),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                if (quantity! >= wishlistItem.product.stock) {
-                } else {
-                  incrementQuantity();
-                }
-              },
-              child: Container(
-                width: 35,
-                height: 32,
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.add,
-                  size: 18,
-                ),
-              ),
-            ),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: ()async {
-                Product product = await wishlistService.getProduct(
-                    wishlistItem.product.id, context);
-                Navigator.of(context).pushNamed(ProductDetails.routeName,
-                    arguments: product);
-
-              },
-              child: const Text('edit'),
             ),
             ElevatedButton(
               onPressed: () {
-                editWishlist(wishlistItem.product, true);
-                moveToCart(wishlistItem.product);
+                editWishlist(widget.item.product, true);
+                moveToCart(widget.item.product);
+                
               },
               child: const Text('Move to cart'),
             ),
             IconButton(
               onPressed: () {
-                editWishlist(wishlistItem.product, true);
+                editWishlist(widget.item.product, true);
               },
               icon: const Icon(Icons.delete, color: Colors.red),
             ),

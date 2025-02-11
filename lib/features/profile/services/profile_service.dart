@@ -75,8 +75,7 @@ class ProfileService {
           context: context,
           onSuccess: () async {
             print("before updated profile???????");
-            Profile updatedProfile =
-                Profile.fromMap(jsonDecode(response.body));
+            Profile updatedProfile = Profile.fromMap(jsonDecode(response.body));
             print("updatyed profileee?????");
             print(updatedProfile);
 
@@ -85,11 +84,8 @@ class ProfileService {
             print("UPDATED USER PROFILEEEEE");
             print(user.profile);
 
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              BottomNavBar.routeName,
-              (route) => false,
-            );
-            showSnackBar(context, 'Account created!');
+            Navigator.of(context).pop();
+            showSnackBar(context, 'Profile updated!');
           });
     } catch (e) {
       print(e.toString());

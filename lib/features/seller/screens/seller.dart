@@ -54,49 +54,86 @@ class _SellerState extends State<Seller> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 0 ? selectedNavBarColor : backgroundColor,
+                    color: _page == 0
+                        ? selectedNavBarColor
+                        : Theme.of(context).brightness == Brightness.light
+                            ? white
+                            : lightAsh,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.shopify,
+                color: _page == 0
+                    ? teal
+                    : Theme.of(context).brightness == Brightness.light
+                        ? black
+                        : lightAsh,
               ),
             ),
             label: '',
           ),
-          // ACCOUNT
           BottomNavigationBarItem(
             icon: Container(
               width: bottomNavBarWidth,
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 1 ? selectedNavBarColor : backgroundColor,
+                    color: _page == 1
+                        ? selectedNavBarColor
+                        : Theme.of(context).brightness == Brightness.light
+                            ? white
+                            : lightAsh,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.grid_view,
+                color: _page == 1
+                    ? teal
+                    : Theme.of(context).brightness == Brightness.light
+                        ? black
+                        : lightAsh,
               ),
             ),
             label: '',
           ),
-
           BottomNavigationBarItem(
             icon: Container(
               width: bottomNavBarWidth,
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 2 ? selectedNavBarColor : backgroundColor,
+                    color: _page == 2
+                        ? selectedNavBarColor
+                        : Theme.of(context).brightness == Brightness.light
+                            ? white
+                            : lightAsh,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
-              child: const Icon(
-                Icons.favorite_outline,
+              child: badges.Badge(
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: teal,
+                ),
+                badgeContent: Text(
+                  Provider.of<UserProvider>(context)
+                      .user
+                      .wishlist
+                      .length
+                      .toString(),
+                ),
+                child: Icon(
+                  Icons.favorite_outline,
+                  color: _page == 2
+                      ? teal
+                      : Theme.of(context).brightness == Brightness.light
+                          ? black
+                          : lightAsh,
+                ),
               ),
             ),
             label: '',
@@ -107,7 +144,11 @@ class _SellerState extends State<Seller> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 3 ? selectedNavBarColor : backgroundColor,
+                    color: _page == 3
+                        ? selectedNavBarColor
+                        : Theme.of(context).brightness == Brightness.light
+                            ? white
+                            : lightAsh,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
@@ -139,13 +180,22 @@ class _SellerState extends State<Seller> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 4 ? selectedNavBarColor : backgroundColor,
+                    color: _page == 4
+                        ? selectedNavBarColor
+                        : Theme.of(context).brightness == Brightness.light
+                            ? white
+                            : lightAsh,
                     width: bottomNavBarBorderWidth,
                   ),
                 ),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.person_outlined,
+                color: _page == 4
+                    ? teal
+                    : Theme.of(context).brightness == Brightness.light
+                        ? black
+                        : lightAsh,
               ),
             ),
             label: '',

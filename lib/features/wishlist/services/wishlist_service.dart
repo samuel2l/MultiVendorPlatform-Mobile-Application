@@ -84,6 +84,7 @@ class WishlistService extends ChangeNotifier {
             if (existingItemIndex != -1) {
               userProvider.user.wishlist[existingItemIndex] = wishlistItem;
             } else {
+
               userProvider.user.wishlist.add(wishlistItem);
             }
           }
@@ -151,7 +152,7 @@ class WishlistService extends ChangeNotifier {
     }
   }
 
-    getProduct(String productId, BuildContext context) async {
+  getProduct(String productId, BuildContext context) async {
     try {
       http.Response res = await http.get(
         Uri.parse('$productsUri/$productId'),
@@ -170,5 +171,4 @@ class WishlistService extends ChangeNotifier {
       showSnackBar(context, e.toString());
     }
   }
-
 }

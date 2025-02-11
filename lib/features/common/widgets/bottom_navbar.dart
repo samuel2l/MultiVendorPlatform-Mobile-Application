@@ -40,6 +40,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     final cartLength = context.watch<UserProvider>().user.cart.length;
+    final wishlistLength = context.watch<UserProvider>().user.wishlist.length;
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
@@ -113,11 +114,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   ),
                 ),
               ),
-              child: Icon(
-                Icons.favorite_border,
-                color: _page==2?teal :Theme.of(context).brightness == Brightness.light
-                      ? black
-                      : lightAsh,
+              child: badges.Badge(
+                               badgeStyle:  const badges.BadgeStyle(
+               
+                badgeColor:teal,
+                ),
+                badgeContent: Text(cartLength.toString()),
+                child: Icon(
+                  Icons.favorite_border,
+                  color: _page==2?teal :Theme.of(context).brightness == Brightness.light
+                        ? black
+                        : lightAsh,
+                ),
               ),
             ),
             label: '',
@@ -133,6 +141,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         : Theme.of(context).brightness == Brightness.light
                             ? white
                             : lightAsh,
+                            
                     width: bottomNavBarBorderWidth,
                   ),
                 ),

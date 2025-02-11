@@ -14,30 +14,24 @@ class CartItem {
   }
 
   factory CartItem.fromMap(Map<String, dynamic> map) {
-//for old products in db in case we forget to reset db
-    if (map['product']['img'] == null || map['product']['stock'] == null) {
-      map['product']['img'] = map['product']['desc'] =
-          map['product']['type'] = map['product']['seller'] = 'ei';
-      map['product']['stock'] = 0;
-    }
-    print("MAPPPP");
-    print(map);
-    print("map product");
-    print(map["product"]["sizes"]);
-    print(map["product"]["sizes"].runtimeType);
-
-    print("PERHAPS CART PROBLEM FROM THE NEWLY ADDED FIELDS?");
+    print("problem???");
     CartItem testItem = CartItem(
       product: Product(
           id: map['product']["_id"],
           name: map['product']["name"],
           desc: map['product']["desc"],
-          img: (map['product']["img"] as List<dynamic>).map((img)=>img as String).toList(),
+          img:map['product']["img"]!=null? (map['product']["img"] as List<dynamic>)
+              .map((img) => img as String)
+              .toList():[],
           type: map['product']["type"],
           stock: int.parse(map['product']['stock']),
           price: map['product']["price"],
-          sizes: (map['product']['sizes'] as List<dynamic>).map((e) => e as String).toList(),
-          colors:(map['product']['colors'] as List<dynamic>).map((e) => e as String).toList(),
+          sizes: map['product']['sizes']!=null?(map['product']['sizes'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList() : [],
+          colors:map['product']['colors']!=null?  (map['product']['colors'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList() : [],
           seller: map['product']["seller"]),
       amount: map['amount'] as int,
     );

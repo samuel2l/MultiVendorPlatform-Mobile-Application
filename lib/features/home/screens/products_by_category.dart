@@ -11,6 +11,7 @@ import 'package:multivendorplatformmobile/features/search/widgets/search_field.d
 import 'package:multivendorplatformmobile/features/search/widgets/searched_product.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 import 'package:multivendorplatformmobile/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -86,7 +87,9 @@ class _ProductsByCategoryState extends State<ProductsByCategory> {
       ),
       body: products == null
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: teal,
+              ),
             )
           : products!.isEmpty
               ? Center(

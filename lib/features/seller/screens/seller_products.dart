@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/empty.dart';
 import 'package:multivendorplatformmobile/features/models/user.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/add_product.dart';
 import 'package:multivendorplatformmobile/features/seller/screens/edit_product.dart';
@@ -33,7 +34,8 @@ class _SellerProductsState extends State<SellerProducts> {
       }
       setState(() {});
     } catch (e) {
-      showSnackBar(context, 'something went wrong');
+      // showSnackBar(context, 'something went wrong');
+      print(e);
     }
   }
 
@@ -77,9 +79,7 @@ class _SellerProductsState extends State<SellerProducts> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             body: productList!.isEmpty
-                ? const Center(
-                    child: Text("you have no products"),
-                  )
+                ? const Empty(img: "assets/images/nop.png", title: "You have no products", subtitle: "start adding products!", btnText: "")
                 : Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GridView.builder(
@@ -140,6 +140,9 @@ class _SellerProductsState extends State<SellerProducts> {
                                           sellerService.deleteProduct(
                                               context: context,
                                               id: product['_id']);
+                                              setState(() {
+                                                
+                                              });
                                         },
                                         icon: const Icon(Icons.delete),
                                       ),

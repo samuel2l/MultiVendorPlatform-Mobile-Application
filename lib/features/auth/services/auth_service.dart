@@ -162,7 +162,7 @@ class AuthService {
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-      prefs.setString('x-auth-token', '');
+//  prefs.setString('x-auth-token', '');
       if (token != '' && token != null) {
         http.Response userRes = await http.get(
           Uri.parse('$uri/'),
@@ -173,6 +173,9 @@ class AuthService {
         );
         var userData = jsonDecode(userRes.body);
         print("ah userr data?");
+        print(userData);
+        print("the wishlist??");
+        print(userData["wishlist"]);
 
         User user = User.fromMap({
           "email": userData["email"],
@@ -184,6 +187,9 @@ class AuthService {
           "orders": userData["cart"],
           "profile": userData["profile"],
         });
+        print("USER WISHLISTTTTT");
+        print(user.wishlist);
+
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(user);
       }

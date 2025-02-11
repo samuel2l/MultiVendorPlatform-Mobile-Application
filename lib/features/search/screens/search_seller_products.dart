@@ -6,6 +6,7 @@ import 'package:multivendorplatformmobile/features/search/widgets/searched_produ
 import 'package:multivendorplatformmobile/features/seller/screens/seller.dart';
 import 'package:multivendorplatformmobile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:multivendorplatformmobile/theme.dart';
 import 'package:provider/provider.dart';
 
 class SearchSellerProducts extends StatefulWidget {
@@ -23,11 +24,30 @@ class SearchSellerProducts extends StatefulWidget {
 class _SearchSellerProductsState extends State<SearchSellerProducts> {
   List? products;
   final SearchService searchService = SearchService();
-
+  bool isAscending = true;
   @override
   void initState() {
     super.initState();
     getSearchedProduct();
+  }
+
+  void sortProducts() {
+    if (products != null) {
+      products!.sort((a, b) {
+        print("an b");
+        print(a);
+        print(a.price.runtimeType);
+        print(b);
+        double priceA = a.price.toDouble();
+        double priceB = b.price.toDouble();
+        return isAscending
+            ? priceA.compareTo(priceB)
+            : priceB.compareTo(priceA);
+      });
+
+      isAscending = !isAscending; // Toggle sort order
+      setState(() {});
+    }
   }
 
   getSearchedProduct() async {
@@ -71,7 +91,7 @@ class _SearchSellerProductsState extends State<SearchSellerProducts> {
       ),
       body: products == null
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: teal,),
             )
           : products!.isEmpty
               ? Center(
@@ -80,6 +100,14 @@ class _SearchSellerProductsState extends State<SearchSellerProducts> {
               : Column(
                   children: [
                     // const AddressBox(),
+                    ElevatedButton.icon(
+                      onPressed: sortProducts,
+                      icon: Icon(isAscending
+                          ? Icons.arrow_upward
+                          : Icons.arrow_downward),
+                      label: Text(isAscending ? "Low to High" : "High to Low"),
+                    ),
+
                     const SizedBox(height: 10),
                     Expanded(
                       child: ListView.builder(

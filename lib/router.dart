@@ -1,5 +1,6 @@
 import 'package:multivendorplatformmobile/features/auth/screens/login.dart';
 import 'package:multivendorplatformmobile/features/auth/screens/signup.dart';
+import 'package:multivendorplatformmobile/features/common/widgets/onboarding.dart';
 import 'package:multivendorplatformmobile/features/orders/screens/orders.dart';
 import 'package:multivendorplatformmobile/features/profile/screens/user_profile.dart';
 import 'package:multivendorplatformmobile/features/search/screens/search_category_product.dart';
@@ -23,6 +24,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case Signup.routeName:
       return MaterialPageRoute(
           builder: (_) => const Signup(), settings: routeSettings);
+    case Onboarding.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const Onboarding(), settings: routeSettings);
+
     case Login.routeName:
       return MaterialPageRoute(
           builder: (_) => const Login(), settings: routeSettings);
@@ -111,7 +116,22 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       print(routeSettings.name);
 
       return MaterialPageRoute(
-          builder: (_) => const Text('this page does not exist'),
+          builder: (_) => Scaffold(
+                body: Center(
+                  child: Builder(builder: (context) {
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                            builder: (context) {
+                              return const Signup();
+                            },
+                          ), (route) => false);
+                        },
+                        child: const Text("Unavailable page,go to signup"));
+                  }),
+                ),
+              ),
           settings: routeSettings);
   }
 }

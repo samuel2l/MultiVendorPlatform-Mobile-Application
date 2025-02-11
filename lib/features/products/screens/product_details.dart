@@ -31,6 +31,9 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   List<String> selectedColors = [];
   List<String> selectedSizes = [];
+  Map<String, int> selectedColorsDict = {};
+    Map<String, int> selectedSizessDict = {};
+
   int quantity = 1;
   bool isReadMore = false;
 
@@ -60,8 +63,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   void addToCart() {
-    print("addimg to art");
-
     if (widget.product.sizes.isEmpty && widget.product.colors.isEmpty) {
       productDetailsService.editCart(
           context: context, product: widget.product, amount: quantity);
@@ -200,8 +201,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
       ),
       extendBodyBehindAppBar: true,
@@ -358,6 +359,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ],
             ),
+            widget.product.colors.isNotEmpty?Text("double tap to select size/color and tap to deselect"):SizedBox.shrink(),
             widget.product.colors.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -391,12 +393,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 );
                               } else {
                                 selectedColors.add(color);
+                                selectedColorsDict[color] =
+                                    (selectedColorsDict[color] ?? 0) + 1;
+                                    setState(() {
+                                      
+                                    });
                               }
                               print(selectedColors);
                             },
                             onTap: () {
                               if (selectedColors.contains(color)) {
                                 selectedColors.remove(color);
+                                selectedColorsDict[color] = (selectedColorsDict[color] ?? 0) - 1;
+                                setState(() {
+                                  
+                                });
                               } else {
                                 showSnackBar(context,
                                     'this color has not been selected');
@@ -417,7 +428,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           ? colorDictionary[color.toLowerCase()]
                                           : white,
                                     ),
-                                    child: const Center(child: Text("")),
+                                    child:  Center(child: Text(selectedColorsDict[color].toString()=="null"?"0":selectedColorsDict[color].toString(),style: TextStyle(
+                                      color: color=="white"?black:white
+                                    ),)),
                                   ),
                                   Text(
                                     color,
@@ -443,52 +456,57 @@ class _ProductDetailsState extends State<ProductDetails> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: widget.product.sizes.map((size) {
-                          return GestureDetector(
-                            onDoubleTap: () {
-                              if (selectedSizes.length >= quantity) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const CartSizesExceeded();
-                                  },
-                                );
-                              } else {
-                                selectedSizes.add(size);
-                              }
-                              print(selectedSizes);
-                            },
-                            onTap: () {
-                              if (selectedSizes.contains(size)) {
-                                selectedSizes.remove(size);
-                              } else {
-                                showSnackBar(
-                                    context, 'this size has not been selected');
-                              }
-                              print(selectedSizes);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                // padding: const EdgeInsets.all(8),
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? ash
-                                          : lightAsh),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  sizeMapping[size]!,
-                                  style: TextStyle(
-                                      color: Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? ash
-                                          : lightAsh),
+                          return Column(
+                            children: [
+                              GestureDetector(
+                                onDoubleTap: () {
+                                  if (selectedSizes.length >= quantity) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const CartSizesExceeded();
+                                      },
+                                    );
+                                  } else {
+                                    selectedSizes.add(size);
+                                  }
+                                  print(selectedSizes);
+                                },
+                                onTap: () {
+                                  if (selectedSizes.contains(size)) {
+                                    selectedSizes.remove(size);
+                                    
+                                  } else {
+                                    showSnackBar(
+                                        context, 'this size has not been selected');
+                                  }
+                                  print(selectedSizes);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    // padding: const EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? ash
+                                              : lightAsh),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      sizeMapping[size]!,
+                                      style: TextStyle(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? ash
+                                              : lightAsh),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           );
                         }).toList(),
                       ),

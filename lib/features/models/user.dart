@@ -60,6 +60,14 @@ class User {
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
+    print("issue");
+    print(map["wishlist"]);
+    print("nah");
+
+    print(map["cart"]);
+    print("nah");
+    print(map["orders"]);
+    print("nah");
     return User(
         email: map['email'] as String,
         phone: map['phone'] as String,
@@ -70,7 +78,7 @@ class User {
         wishlist: (map['wishlist'] as List<dynamic>)
             .map((item) => CartItem.fromMap(item as Map<String, dynamic>))
             .toList(),
-        orders: (map['orders'] as List<dynamic>)
+        orders: (map['cart'] as List<dynamic>)
             .map((item) => CartItem.fromMap(item as Map<String, dynamic>))
             .toList(),
         token: map['token'],
@@ -82,4 +90,3 @@ class User {
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 }
-

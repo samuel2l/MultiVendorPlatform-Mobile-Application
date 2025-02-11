@@ -121,7 +121,7 @@ class _CartProductState extends State<CartProduct> {
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Text(
-                      colors!.isNotEmpty ? 'Colors: $result' : "In stock",
+                      colors!.isNotEmpty ? 'Colors: $result' : "${cartItem.amount} in cart",
                       style: const TextStyle(
                         color: Colors.teal,
                       ),

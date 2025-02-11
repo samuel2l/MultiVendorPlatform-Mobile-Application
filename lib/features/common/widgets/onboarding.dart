@@ -42,7 +42,7 @@ class _OnboardingState extends State<Onboarding> {
                 style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).brightness == Brightness.light
-                        ? white
+                        ? black
                         : teal),
               ),
               onTap: () {

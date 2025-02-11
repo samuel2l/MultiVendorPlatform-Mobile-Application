@@ -105,13 +105,18 @@ class _CartState extends State<Cart> {
     }
     print("NEW TOTAL $total");
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        title: Text(" ${user.profile.name}'s cart"),
+      ),
       body: Column(
-        mainAxisAlignment: user.wishlist.isEmpty?MainAxisAlignment.center:MainAxisAlignment.start,
+        mainAxisAlignment: user.cart.isEmpty
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.spaceBetween,
         children: [
           user.cart.isEmpty
               ? const Empty(
-                  img: "assets/images/cartempty.png",
+                  img: "assets/images/np.png",
                   title: "Your cartt is empty",
                   subtitle:
                       "Looks like you have not added anything in your cart. Go ahead and explore top categories.",
@@ -125,20 +130,21 @@ class _CartState extends State<Cart> {
                     );
                   },
                 ),
-user.cart.isNotEmpty
-              ?          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              child: Text(
-                'Checkout \$$total (${user.cart.length} items)',
-                style: const TextStyle(fontSize: 18),
-              ),
-              onPressed: () async {
-                await initPaymentSheet(context, user, total);
-                await orderService.placeOrder(context: context);
-              },
-            ),
-          ):const SizedBox.shrink()
+          user.cart.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    child: Text(
+                      'Checkout \$$total (${user.cart.length} items)',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    onPressed: () async {
+                      await initPaymentSheet(context, user, total);
+                      await orderService.placeOrder(context: context);
+                    },
+                  ),
+                )
+              : const SizedBox.shrink()
         ],
       ),
     );

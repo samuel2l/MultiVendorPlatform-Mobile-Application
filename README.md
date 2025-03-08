@@ -61,7 +61,7 @@ Each service is independently scalable and optimized for performance.
 
 ## 📌 Upcoming Features (To-Do)  
 - **Live Order Tracking** – Track real-time delivery status  
-
+- **Complete UI for pop ups**
 ---
 
 ## 🛠 Tech Stack  

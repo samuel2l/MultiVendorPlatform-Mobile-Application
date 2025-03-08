@@ -73,6 +73,7 @@ Each service is independently scalable and optimized for performance.
 
 ## 🛠 Running project  
 - To be able to run project you need to replace the <your ip address > holder with your ip address inside the constats.dart file
+- follow [Flutter Stripe package docs](https://pub.dev/packages/flutter_stripe) to integrate stripe for android and ios
 - the other services need to be up and running. The steps to run each service are in their readme's
 
 - **Shopping Microservice:**  

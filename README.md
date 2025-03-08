@@ -70,7 +70,23 @@ Each service is independently scalable and optimized for performance.
 - **Database:** MongoDB  
 - **Payments:** Stripe  
 - **Notifications:** Email & Push  
- 
 
+## 🛠 Running project  
+- To be able to run project you need to replace the <your ip address > holder with your ip address inside the constats.dart file
+- the other services need to be up and running. The steps to run each service are in their readme's
+
+- **Shopping Microservice:**  
+  [MultiVendorApp-Products-Microservice](https://github.com/samuel2l/MultivendorPlatform-Shopping-Service)
+
+- **Notification Microservice:**  
+  [MultiVendorPlatform-Notification-Microservice](https://github.com/samuel2l/MultiVendorPlatform-Notification-Microservice)
+
+- **Products Microservice:**  
+  [MultiVendorApp-Products-Microservice](https://github.com/samuel2l/MultiVendorApp-Products-Microservice)
+
+- **User Microservice:**  
+  [MultiVendorApp-User-Service](https://github.com/samuel2l/MultiVendorApp-User-Service)
+
+- **Other related repository**: The web version of this app, designed by [haariswaqas](https://github.com/haariswaqas//MultivendorPlatform-Shopping-Frontend)
 ---
 

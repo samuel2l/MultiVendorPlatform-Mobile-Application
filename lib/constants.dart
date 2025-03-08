@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 // String uri = 'http://<your ip address>:3000';
 // String uri = 'https://multivendorapp-user-service.onrender.com';
 
-String uri = "http://192.168.97.11:8001";
+String uri = "http://<your ip address>:8001";
 String productsUri =
-    // 'https://multivendorapp-products-microservice.onrender.com';
-    'http://192.168.97.11:8002';
+    'http://<your ip address>:8002';
 String shoppingUri =
-    // 'https://multivendorplatform-shopping-service.onrender.com';
-    'http://192.168.97.11:8003';
+    'http://<your ip address>:8003';
 
 class OnboardingContent {
   String image;

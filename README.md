@@ -73,6 +73,11 @@ Each service is independently scalable and optimized for performance.
 
 ## 🛠 Running project  
 - To be able to run project you need to replace the <your ip address > holder with your ip address inside the constats.dart file
+- in the seller/services/seller_service.dart replace the cloudinary keys with yours ie.       final cloudinary = CloudinaryPublic('dvsd4zjxf', 'ztkl4b1w');
+- the keys used in this project have been destroyed so you may get some cloudinary error if you do not have your own keys
+- the 'dvsd4zjxf' and 'ztkl4b1w' should be from your cloudinary.Get your keys from [cloudinary's website](https://console.cloudinary.com/)
+- replace the cloudinary keys in the profile/services/profile_service.dart as well
+
 - follow [Flutter Stripe package docs](https://pub.dev/packages/flutter_stripe) to integrate stripe for android and ios
 - the other services need to be up and running. The steps to run each service are in their readme's
 

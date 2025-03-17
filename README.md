@@ -79,6 +79,9 @@ Each service is independently scalable and optimized for performance.
 - replace the cloudinary keys in the profile/services/profile_service.dart as well
 
 - follow [Flutter Stripe package docs](https://pub.dev/packages/flutter_stripe) to integrate stripe for android and ios
+
+- in the payments/screen/payments.dart file replace the publishableKey with your stripe publishablae key from the stripe website
+
 - the other services need to be up and running. The steps to run each service are in their readme's
 
 - **Shopping Microservice:**  
